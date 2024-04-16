@@ -1,13 +1,13 @@
 class_name Card extends Area2D
 
-signal card_clicked(card_selected: bool)
+signal card_clicked(selected: bool)
 
 @export var attributes: CardAttributes
 
 var mouse_entered_card: bool = false
-var card_selected: bool = false
+var selected: bool = false
 var prevent_selection: bool = false
-var card_played: bool = false
+var played: bool = false
 
 
 func _ready():
@@ -23,9 +23,9 @@ func _ready():
 func _unhandled_input(event):
 	if (event.is_action_pressed("mouse_left_click")
 	and mouse_entered_card):
-		if !card_played and (!prevent_selection or card_selected):
-			card_selected = !card_selected
-			emit_signal("card_clicked")
+		if !played and (!prevent_selection or selected):
+			selected = !selected
+			emit_signal("card_clicked", selected)
 
 		self.get_viewport().set_input_as_handled()
 
@@ -35,3 +35,6 @@ func _on_mouse_entered():
 
 func _on_mouse_exited():
 	mouse_entered_card = false
+
+func _on_cards_selected(max_cards_selected):
+	prevent_selection = max_cards_selected

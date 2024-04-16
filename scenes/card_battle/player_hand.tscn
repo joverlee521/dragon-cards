@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=3 uid="uid://doyrkrxsr5qy3"]
+
+[ext_resource type="Script" path="res://scenes/card_battle/player_hand.gd" id="1_8y015"]
+
+[node name="PlayerHand" type="ColorRect"]
+offset_left = 344.0
+offset_top = 784.0
+offset_right = 1632.0
+offset_bottom = 1032.0
+color = Color(0.984314, 0.568627, 1, 1)
+script = ExtResource("1_8y015")
