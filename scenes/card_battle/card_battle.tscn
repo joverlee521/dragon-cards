@@ -1,0 +1,25 @@
+[gd_scene load_steps=5 format=3 uid="uid://dgy6vpaplva53"]
+
+[ext_resource type="PackedScene" uid="uid://doyrkrxsr5qy3" path="res://scenes/card_battle/player_hand.tscn" id="1_0v8t6"]
+[ext_resource type="Script" path="res://scenes/card_battle/card_battle.gd" id="1_qgs4d"]
+[ext_resource type="PackedScene" uid="uid://dpv1vfcpjsw7v" path="res://scenes/card_battle/play_deck.tscn" id="2_2b5yi"]
+[ext_resource type="PackedScene" uid="uid://b4ahtmuys6o0y" path="res://scenes/card_battle/discard_deck.tscn" id="3_wmd2a"]
+
+[node name="CardBattle" type="Node"]
+script = ExtResource("1_qgs4d")
+
+[node name="PlayerHand" parent="." instance=ExtResource("1_0v8t6")]
+offset_left = 320.0
+offset_right = 1608.0
+
+[node name="PlayDeck" parent="." instance=ExtResource("2_2b5yi")]
+position = Vector2(1736, 864)
+
+[node name="DiscardDeck" parent="." instance=ExtResource("3_wmd2a")]
+position = Vector2(133, 880)
+
+[node name="PlayedCard" type="Marker2D" parent="."]
+position = Vector2(840, 288)
+
+[connection signal="cards_played" from="PlayerHand" to="." method="_on_cards_played"]
+[connection signal="card_dealt" from="PlayDeck" to="PlayerHand" method="_on_deck_dealt_card"]

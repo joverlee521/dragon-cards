@@ -16,10 +16,6 @@ func _ready():
 	if cards.is_empty():
 		$DeckImage.hide()
 
-	# Uncomment for debugging
-	#for i in range(10):
-		#add_card(CardAttributes.new(i,i,i, load("res://art/cards/back01.png")))
-
 
 func add_card(card: CardAttributes) -> void:
 	cards.append(card)
@@ -30,12 +26,14 @@ func add_card(card: CardAttributes) -> void:
 func remove_card(index: int) -> CardAttributes:
 	var removed_card = cards.pop_at(index)
 	check_cards_empty()
+	update_card_count()
 	return removed_card
 
 
 func remove_all_cards() -> Array[CardAttributes]:
 	var removed_cards = cards.duplicate(true)
 	check_cards_empty()
+	update_card_count()
 	return removed_cards
 
 

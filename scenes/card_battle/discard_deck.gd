@@ -10,3 +10,7 @@ func _ready():
 
 func refresh_cards() -> void:
 	emit_signal("cards_refreshed", remove_all_cards())
+
+
+func _on_cards_discarded(cards: Array[CardAttributes]) -> void:
+	cards.map(add_card)
