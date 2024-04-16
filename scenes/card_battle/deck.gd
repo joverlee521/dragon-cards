@@ -4,7 +4,7 @@ signal cards_depleted
 
 @export var image: CompressedTexture2D
 
-var cards: Array = []
+var cards: Array[CardAttributes] = []
 
 
 func _ready():
