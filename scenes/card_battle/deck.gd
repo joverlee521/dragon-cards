@@ -48,6 +48,10 @@ func peek_cards(num: int) -> void:
 	emit_signal("cards_peeked", peeked_cards)
 
 
+func peek_all_cards() -> void:
+	peek_cards(len(cards))
+
+
 func shuffle() -> void:
 	cards.shuffle()
 
