@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=3 uid="uid://b4ahtmuys6o0y"]
+
+[ext_resource type="PackedScene" uid="uid://dl4gghili6mnw" path="res://scenes/card_battle/deck.tscn" id="1_lvpo2"]
+[ext_resource type="Script" path="res://scenes/card_battle/discard_deck.gd" id="2_4p1ol"]
+
+[node name="DiscardDeck" instance=ExtResource("1_lvpo2")]
+script = ExtResource("2_4p1ol")
+image = null
+card_scene = null

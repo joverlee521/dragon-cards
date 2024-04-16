@@ -29,12 +29,20 @@ func add_card(card: CardAttributes) -> void:
 
 func remove_card(index: int) -> CardAttributes:
 	var removed_card = cards.pop_at(index)
+	check_cards_empty()
+	return removed_card
 
+
+func remove_all_cards() -> Array[CardAttributes]:
+	var removed_cards = cards.duplicate(true)
+	check_cards_empty()
+	return removed_cards
+
+
+func check_cards_empty() -> void:
 	if cards.is_empty():
 		$DeckImage.hide()
 		cards_depleted.emit()
-
-	return removed_card
 
 
 func peek_cards(num: int) -> void:

@@ -14,3 +14,7 @@ func deal_card() -> void:
 
 	new_card.attributes = new_card_attr
 	emit_signal("card_dealt", new_card)
+
+
+func _on_cards_refreshed(cards: Array[CardAttributes]) -> void:
+	cards.map(add_card)
