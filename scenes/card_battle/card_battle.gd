@@ -15,7 +15,6 @@ func deal_hand() -> void:
 
 
 func deal_cards(num: int) -> void:
-	print("DEAL CARDS")
 	for n in range(num):
 		await get_tree().create_timer(0.2).timeout
 		$PlayDeck.deal_card()

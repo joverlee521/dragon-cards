@@ -5,8 +5,7 @@ signal cards_peeked(cards: Array[Card])
 
 @export var image: CompressedTexture2D
 @export var card_scene: PackedScene
-
-var cards: Array[CardAttributes] = []
+@export var cards: Array[CardAttributes] = []
 
 
 func _ready():

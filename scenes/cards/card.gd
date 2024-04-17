@@ -14,7 +14,6 @@ func _ready():
 	if attributes:
 		if attributes.card_background:
 			$CardBackground.texture = attributes.card_background
-			print(attributes.card_background)
 		if attributes.card_border:
 			$CardBackground/CardBorder.texture = attributes.card_border
 		if attributes.card_art:

@@ -6,11 +6,6 @@ signal card_dealt(new_card: Card)
 
 func _ready():
 	super()
-	# Uncomment for debugging
-	for i in range(20):
-		add_card(CardAttributes.new(i,i,i, load("res://art/cards/back01.png")))
-
-	shuffle()
 
 
 func deal_card() -> void:
