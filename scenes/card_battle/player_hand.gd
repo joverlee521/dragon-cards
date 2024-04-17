@@ -6,6 +6,7 @@ signal cards_selected(max_cards_selected: bool)
 signal cards_played(cards: Array[Card])
 signal cards_discarded(cards: Array[Card])
 
+# Card arrangements
 const max_selected: int = 1
 var card_y: int
 var card_x_spacing: int
@@ -15,14 +16,23 @@ var max_hand_size: int:
 		set_card_x_spacing()
 var cards: Array[Card] = []
 
+# Player stats
+var max_stamina: int = 5
+var current_stamina: int = 5:
+	set(value):
+		current_stamina = value
+		set_play_card_button()
+		$Stamina.text = "%s / %s" % [str(current_stamina), str(max_stamina)]
+
 
 func _ready():
 	# Ignore mouse events here so the individual cards can be clicked
 	mouse_filter = Control.MOUSE_FILTER_IGNORE
 	card_y = get_rect().size.y/2
 	set_card_x_spacing()
-	$PlayCard.set_disabled(true)
+	set_play_card_button()
 	$DiscardCard.set_disabled(true)
+	$Stamina.text = "%s / %s" % [str(current_stamina), str(max_stamina)]
 
 
 func set_card_x_spacing() -> void:
@@ -49,7 +59,7 @@ func position_all_cards() -> void:
 func remove_selected_cards() -> Array[Card]:
 	$PlayCard.set_disabled(true)
 	$DiscardCard.set_disabled(true)
-	var selected_cards = cards.filter(func(card): return card.is_selected)
+	var selected_cards = get_selected_cards()
 	for card in selected_cards:
 		cards.erase(card)
 		remove_child(card)
@@ -57,6 +67,26 @@ func remove_selected_cards() -> Array[Card]:
 	position_all_cards()
 	emit_signal("cards_selected", false)
 	return selected_cards
+
+
+func get_selected_cards() -> Array[Card]:
+	return cards.filter(func(card): return card.is_selected)
+
+
+func get_selected_cards_stamina_cost() -> int:
+	var selected_cards = get_selected_cards()
+	return selected_cards.reduce(func(accum, card): return accum + card.attributes.stamina_cost, 0)
+
+
+func set_play_card_button() -> void:
+	if current_stamina == 0:
+		$PlayCard.set_disabled(true)
+	elif len(get_selected_cards()) == 0:
+		$PlayCard.set_disabled(true)
+	elif get_selected_cards_stamina_cost() > current_stamina:
+		$PlayCard.set_disabled(true)
+	else:
+		$PlayCard.set_disabled(false)
 
 
 func _on_deck_dealt_card(new_card):
@@ -73,8 +103,8 @@ func _on_deck_dealt_card(new_card):
 
 
 func _on_card_clicked():
-	var selected_cards = cards.filter(func(card): return card.is_selected)
-	$PlayCard.set_disabled(selected_cards.is_empty())
+	var selected_cards = get_selected_cards()
+	set_play_card_button()
 	$DiscardCard.set_disabled(selected_cards.is_empty())
 
 	position_all_cards()
@@ -82,6 +112,10 @@ func _on_card_clicked():
 
 
 func _on_play_cards():
+	var stamina_cost = get_selected_cards_stamina_cost()
+	assert(stamina_cost <= current_stamina, "Cards cost more stamina than current stamina")
+	current_stamina -= stamina_cost
+
 	var selected_cards = remove_selected_cards()
 	emit_signal("cards_played", selected_cards)
 

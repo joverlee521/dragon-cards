@@ -28,5 +28,22 @@ offset_bottom = -80.0
 theme_override_font_sizes/font_size = 50
 text = "Discard"
 
+[node name="StaminaLabel" type="Label" parent="."]
+layout_mode = 0
+offset_left = 232.0
+offset_top = -288.0
+offset_right = 416.0
+offset_bottom = -208.0
+theme_override_font_sizes/font_size = 30
+text = "Stamina"
+
+[node name="Stamina" type="Label" parent="."]
+offset_left = 464.0
+offset_top = -288.0
+offset_right = 648.0
+offset_bottom = -208.0
+theme_override_font_sizes/font_size = 30
+text = "0"
+
 [connection signal="pressed" from="PlayCard" to="." method="_on_play_cards"]
 [connection signal="pressed" from="DiscardCard" to="." method="_on_discard_cards"]
