@@ -27,7 +27,7 @@ region = Rect2(135, 273, 96, 18)
 [resource]
 script = ExtResource("1_cjsar")
 name = "Smash"
-type = "Attack"
+DamageTypes = Array[int]([1])
 attack = 2
 defense = 0
 stamina_cost = 1

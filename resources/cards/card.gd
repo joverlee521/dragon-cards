@@ -1,9 +1,11 @@
 class_name CardAttributes extends Resource
 
+enum DAMAGE_TYPES {CUTTING, BLUNT, FIRE, ICE, LIGHTNING, WATER, LIGHT, DARK, DEFAULT}
+
 @export_group("CardInfo")
 @export var name : String
 #Consider making type into an enum for categorization. Spell, Physical, Armor e.g.
-@export var type : String
+@export var DamageTypes : Array[DAMAGE_TYPES]
 
 @export_group("Stats")
 @export var attack: int

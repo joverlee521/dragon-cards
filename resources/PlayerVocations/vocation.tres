@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="Vocations" load_steps=2 format=3 uid="uid://bea8tx15bp58r"]
+
+[ext_resource type="Script" path="res://resources/PlayerVocations/vocation.gd" id="1_lp2x1"]
+
+[resource]
+script = ExtResource("1_lp2x1")
+vocation_name = ""
+max_health = 0
+max_stamina = 0
+max_hand_size = 0
+max_discards = 0

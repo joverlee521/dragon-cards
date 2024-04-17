@@ -27,7 +27,7 @@ region = Rect2(135, 273, 96, 18)
 [resource]
 script = ExtResource("3_j5ge1")
 name = "CastMagic"
-type = "Magic"
+DamageTypes = Array[int]([8])
 attack = 4
 defense = 0
 stamina_cost = 2
