@@ -11,6 +11,9 @@ var is_played: bool = false
 
 
 func _ready():
+	set_attributes()
+
+func set_attributes():
 	if attributes:
 		if attributes.card_background:
 			$CardBackground.texture = attributes.card_background
@@ -26,7 +29,16 @@ func _ready():
 			$CardBackground/CardDescriptionPlate/CardDescription.text = attributes.card_description
 		if attributes.card_name:
 			$CardBackground/CardNamePlate/CardName.text = attributes.card_name
-
+		if attributes.stamina_cost:
+			$CardBackground/CardStaminaContainer/StaminaCost.text = str(attributes.stamina_cost)
+		if attributes.attack and attributes.attack > 0:
+			$CardBackground/CardAttackContainer/CardAttack.text = str(attributes.attack)
+		else:
+			$CardBackground/CardAttackContainer.visible = false
+		if attributes.defense and attributes.defense > 0:
+			$CardBackground/CardDefenseContainer/CardDefense.text = str(attributes.defense)
+		else:
+			$CardBackground/CardDefenseContainer.visible = false
 
 # Custom handler for input to work around overlapping Area2D objects both getting input
 # See https://github.com/godotengine/godot/issues/29825

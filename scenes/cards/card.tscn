@@ -1,10 +1,45 @@
-[gd_scene load_steps=4 format=3 uid="uid://c87eb4clrv66s"]
+[gd_scene load_steps=15 format=3 uid="uid://c87eb4clrv66s"]
 
 [ext_resource type="Script" path="res://scenes/cards/card.gd" id="1_gjuhc"]
 [ext_resource type="Resource" uid="uid://b3nwx43xccah1" path="res://resources/cards/CastMagic.tres" id="2_l3co0"]
+[ext_resource type="Texture2D" uid="uid://b8yvew12myo05" path="res://art/PixelCardArt/FantasyCardPack/pixelCardAssest_V01.png" id="3_gxn1y"]
+[ext_resource type="Texture2D" uid="uid://oupeb7ksmnv8" path="res://art/PixelCardArt/CardRPGPack/Card RPG items/armor_cloth5.png" id="4_ryf00"]
+[ext_resource type="Texture2D" uid="uid://iph45183s2ur" path="res://art/PixelCardArt/FantasyCardPack/squareCircle_vector.png" id="4_v33r7"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_iqydd"]
-size = Vector2(180, 259)
+size = Vector2(188, 264)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_p2cm6"]
+atlas = ExtResource("3_gxn1y")
+region = Rect2(366, 4, 100, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3cpgh"]
+atlas = ExtResource("3_gxn1y")
+region = Rect2(226, 337, 100, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_f6p2r"]
+atlas = ExtResource("4_v33r7")
+region = Rect2(1058, 1064, 500, 500)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1p83o"]
+atlas = ExtResource("4_v33r7")
+region = Rect2(1577, 1608, 500, 500)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1hron"]
+atlas = ExtResource("4_v33r7")
+region = Rect2(2115, 1608, 500, 500)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kx144"]
+atlas = ExtResource("4_ryf00")
+region = Rect2(0, 0, 60, 55)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kg6lr"]
+atlas = ExtResource("3_gxn1y")
+region = Rect2(135, 224, 96, 29)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pthgu"]
+atlas = ExtResource("3_gxn1y")
+region = Rect2(135, 273, 96, 18)
 
 [node name="Card" type="Area2D"]
 position = Vector2(911, 509)
@@ -12,47 +47,125 @@ script = ExtResource("1_gjuhc")
 attributes = ExtResource("2_l3co0")
 
 [node name="CardCollisionShape" type="CollisionShape2D" parent="."]
-position = Vector2(0, 0.5)
+z_index = 2
 shape = SubResource("RectangleShape2D_iqydd")
 
 [node name="CardBackground" type="Sprite2D" parent="."]
 position = Vector2(1.52588e-05, -0.500008)
 scale = Vector2(1.88, 2.05469)
+texture = SubResource("AtlasTexture_p2cm6")
 region_rect = Rect2(481, 4, 100, 128)
 
 [node name="CardBorder" type="Sprite2D" parent="CardBackground"]
 position = Vector2(-1.4782e-05, 0.730044)
+texture = SubResource("AtlasTexture_3cpgh")
 region_rect = Rect2(120, 337, 100, 128)
+
+[node name="CardStaminaContainer" type="Sprite2D" parent="CardBackground"]
+position = Vector2(30.851, -30.4182)
+scale = Vector2(0.03, 0.03)
+texture = SubResource("AtlasTexture_f6p2r")
+region_rect = Rect2(120, 337, 100, 128)
+
+[node name="StaminaCost" type="Label" parent="CardBackground/CardStaminaContainer"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -427.305
+offset_top = -477.122
+offset_right = -55.1496
+offset_bottom = -18.1224
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 336
+text = "2"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="CardAttackContainer" type="Sprite2D" parent="CardBackground"]
+position = Vector2(30.851, -13.8707)
+scale = Vector2(0.03, 0.03)
+texture = SubResource("AtlasTexture_1p83o")
+region_rect = Rect2(120, 337, 100, 128)
+
+[node name="CardAttack" type="Label" parent="CardBackground/CardAttackContainer"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -445.035
+offset_top = -477.122
+offset_right = -72.8801
+offset_bottom = -18.1224
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 336
+text = "2"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="CardDefenseContainer" type="Sprite2D" parent="CardBackground"]
+position = Vector2(30.851, 3.059)
+scale = Vector2(0.03, 0.03)
+texture = SubResource("AtlasTexture_1hron")
+region_rect = Rect2(120, 337, 100, 128)
+
+[node name="CardDefense" type="Label" parent="CardBackground/CardDefenseContainer"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -445.033
+offset_top = -489.862
+offset_right = -72.8779
+offset_bottom = -30.8621
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 336
+text = "2"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
 
 [node name="CardArt" type="Sprite2D" parent="CardBackground"]
 position = Vector2(0, -14)
 scale = Vector2(0.6, 0.6)
+texture = SubResource("AtlasTexture_kx144")
 
 [node name="CardDescriptionPlate" type="Sprite2D" parent="CardBackground"]
 position = Vector2(0.531914, 33.5083)
 scale = Vector2(0.786791, 1.32075)
+texture = SubResource("AtlasTexture_kg6lr")
 region_rect = Rect2(16, 223, 96, 29)
 
-[node name="CardDescription" type="RichTextLabel" parent="CardBackground/CardDescriptionPlate"]
+[node name="CardDescription" type="Label" parent="CardBackground/CardDescriptionPlate"]
+layout_direction = 2
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -95.0
-offset_top = -27.5
+offset_top = -28.5
 offset_right = -1.0
-offset_bottom = -1.5
+offset_bottom = -0.5
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 4
-theme_override_font_sizes/normal_font_size = 10
-text = "
-"
+theme_override_font_sizes/font_size = 10
+text = "Card Description Goes Here"
+autowrap_mode = 3
 
 [node name="CardNamePlate" type="Sprite2D" parent="CardBackground"]
 position = Vector2(0.531927, -45.019)
 scale = Vector2(0.78679, 0.757076)
+texture = SubResource("AtlasTexture_pthgu")
 region_rect = Rect2(16, 273, 96, 18)
 
 [node name="CardName" type="Label" parent="CardBackground/CardNamePlate"]
@@ -61,13 +174,14 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -97.0
-offset_top = -22.0
-offset_right = 1.0
-offset_bottom = 1.0
+offset_left = -98.0282
+offset_top = -21.8571
+offset_right = -0.0281982
+offset_bottom = 1.14292
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_font_sizes/font_size = 0
+text = "Card Title"
 horizontal_alignment = 1
 
 [connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]

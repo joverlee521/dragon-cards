@@ -1,7 +1,7 @@
 class_name CardBattle extends Node
 
 
-var battle_hand_size = 8
+var battle_hand_size = 7
 
 
 func _ready():

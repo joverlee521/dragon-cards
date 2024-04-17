@@ -9,6 +9,8 @@ func _ready():
 
 
 func deal_card() -> void:
+	if len(cards) == 0:
+		return
 	var new_card = card_scene.instantiate()
 	var new_card_attr = remove_card(0)
 
