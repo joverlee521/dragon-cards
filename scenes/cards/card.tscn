@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://c87eb4clrv66s"]
 
 [ext_resource type="Script" path="res://scenes/cards/card.gd" id="1_gjuhc"]
-[ext_resource type="Texture2D" uid="uid://dh1bjajpx0ecb" path="res://art/cards/back01.png" id="1_llcn3"]
+[ext_resource type="Resource" uid="uid://b3nwx43xccah1" path="res://resources/cards/CastMagic.tres" id="2_l3co0"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_iqydd"]
 size = Vector2(180, 259)
@@ -9,14 +9,66 @@ size = Vector2(180, 259)
 [node name="Card" type="Area2D"]
 position = Vector2(911, 509)
 script = ExtResource("1_gjuhc")
+attributes = ExtResource("2_l3co0")
 
 [node name="CardCollisionShape" type="CollisionShape2D" parent="."]
 position = Vector2(0, 0.5)
 shape = SubResource("RectangleShape2D_iqydd")
 
-[node name="CardImage" type="Sprite2D" parent="."]
-scale = Vector2(0.5, 0.5)
-texture = ExtResource("1_llcn3")
+[node name="CardBackground" type="Sprite2D" parent="."]
+position = Vector2(1.52588e-05, -0.500008)
+scale = Vector2(1.88, 2.05469)
+region_rect = Rect2(481, 4, 100, 128)
+
+[node name="CardBorder" type="Sprite2D" parent="CardBackground"]
+position = Vector2(-1.4782e-05, 0.730044)
+region_rect = Rect2(120, 337, 100, 128)
+
+[node name="CardArt" type="Sprite2D" parent="CardBackground"]
+position = Vector2(0, -14)
+scale = Vector2(0.6, 0.6)
+
+[node name="CardDescriptionPlate" type="Sprite2D" parent="CardBackground"]
+position = Vector2(0.531914, 33.5083)
+scale = Vector2(0.786791, 1.32075)
+region_rect = Rect2(16, 223, 96, 29)
+
+[node name="CardDescription" type="RichTextLabel" parent="CardBackground/CardDescriptionPlate"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -95.0
+offset_top = -27.5
+offset_right = -1.0
+offset_bottom = -1.5
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/normal_font_size = 10
+text = "
+"
+
+[node name="CardNamePlate" type="Sprite2D" parent="CardBackground"]
+position = Vector2(0.531927, -45.019)
+scale = Vector2(0.78679, 0.757076)
+region_rect = Rect2(16, 273, 96, 18)
+
+[node name="CardName" type="Label" parent="CardBackground/CardNamePlate"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -97.0
+offset_top = -22.0
+offset_right = 1.0
+offset_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 0
+horizontal_alignment = 1
 
 [connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
 [connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]

@@ -1,9 +1,41 @@
-[gd_resource type="Resource" script_class="CardAttributes" load_steps=2 format=3 uid="uid://dnktjebw8h1tn"]
+[gd_resource type="Resource" script_class="CardAttributes" load_steps=10 format=3 uid="uid://dnktjebw8h1tn"]
 
 [ext_resource type="Script" path="res://resources/cards/card.gd" id="1_wgfc6"]
+[ext_resource type="Texture2D" uid="uid://b8yvew12myo05" path="res://art/PixelCardArt/FantasyCardPack/pixelCardAssest_V01.png" id="1_xdbqu"]
+[ext_resource type="Texture2D" uid="uid://w205ld2akb5j" path="res://art/PixelCardArt/FantasyCardPack/pixelCardAssest.png" id="2_1mkod"]
+[ext_resource type="Texture2D" uid="uid://dprdwm5gkcvg2" path="res://art/PixelCardArt/CardRPGPack/Card RPG items/weapon_sword4.png" id="2_grcoh"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hjf3d"]
+atlas = ExtResource("2_grcoh")
+region = Rect2(0, 0, 65, 65)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xbu6t"]
+atlas = ExtResource("2_1mkod")
+region = Rect2(481, 4, 100, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_70g71"]
+atlas = ExtResource("1_xdbqu")
+region = Rect2(120, 337, 100, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_g1fp1"]
+atlas = ExtResource("2_1mkod")
+region = Rect2(16, 223, 96, 29)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cbeei"]
+atlas = ExtResource("2_1mkod")
+region = Rect2(16, 273, 96, 18)
 
 [resource]
 script = ExtResource("1_wgfc6")
+name = "Card"
+type = "This is a card, yo"
 attack = 0
 defense = 0
 stamina_cost = 0
+card_background = SubResource("AtlasTexture_xbu6t")
+card_border = SubResource("AtlasTexture_70g71")
+card_art = SubResource("AtlasTexture_hjf3d")
+card_description_plate = SubResource("AtlasTexture_g1fp1")
+card_name_plate = SubResource("AtlasTexture_cbeei")
+card_description = "This is a card, yo"
+card_name = "Card"

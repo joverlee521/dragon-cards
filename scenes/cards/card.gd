@@ -12,8 +12,21 @@ var is_played: bool = false
 
 func _ready():
 	if attributes:
-		if attributes.sprite:
-			$CardImage.texture = attributes.sprite
+		if attributes.card_background:
+			$CardBackground.texture = attributes.card_background
+			print(attributes.card_background)
+		if attributes.card_border:
+			$CardBackground/CardBorder.texture = attributes.card_border
+		if attributes.card_art:
+			$CardBackground/CardArt.texture = attributes.card_art
+		if attributes.card_description_plate:
+			$CardBackground/CardDescriptionPlate.texture = attributes.card_description_plate
+		if attributes.card_name_plate:
+			$CardBackground/CardNamePlate.texture = attributes.card_name_plate
+		if attributes.card_description:
+			$CardBackground/CardDescriptionPlate/CardDescription.text = attributes.card_description
+		if attributes.card_name:
+			$CardBackground/CardNamePlate/CardName.text = attributes.card_name
 
 
 # Custom handler for input to work around overlapping Area2D objects both getting input
