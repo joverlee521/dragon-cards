@@ -21,5 +21,6 @@ position = Vector2(133, 880)
 [node name="PlayedCard" type="Marker2D" parent="."]
 position = Vector2(840, 288)
 
+[connection signal="cards_discarded" from="PlayerHand" to="." method="_on_cards_discarded"]
 [connection signal="cards_played" from="PlayerHand" to="." method="_on_cards_played"]
 [connection signal="card_dealt" from="PlayDeck" to="PlayerHand" method="_on_deck_dealt_card"]

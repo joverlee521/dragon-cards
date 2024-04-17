@@ -32,3 +32,13 @@ func _on_cards_played(cards: Array[Card]) -> void:
 	played_card.queue_free()
 
 	deal_cards(1)
+
+
+func _on_cards_discarded(cards: Array[Card]) -> void:
+	assert(len(cards) == 1, "Can only discard one card")
+	var discarded_card = cards[0]
+
+	$DiscardDeck.add_card(discarded_card.attributes)
+	discarded_card.queue_free()
+
+	deal_cards(1)
