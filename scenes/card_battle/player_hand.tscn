@@ -30,17 +30,34 @@ text = "Discard"
 
 [node name="StaminaLabel" type="Label" parent="."]
 layout_mode = 0
-offset_left = 232.0
+offset_left = 208.0
 offset_top = -288.0
-offset_right = 416.0
+offset_right = 392.0
 offset_bottom = -208.0
 theme_override_font_sizes/font_size = 30
 text = "Stamina"
 
 [node name="Stamina" type="Label" parent="."]
-offset_left = 464.0
+layout_mode = 0
+offset_left = 360.0
 offset_top = -288.0
-offset_right = 648.0
+offset_right = 544.0
+offset_bottom = -208.0
+theme_override_font_sizes/font_size = 30
+text = "0"
+
+[node name="DiscardLabel" type="Label" parent="."]
+offset_left = 552.0
+offset_top = -288.0
+offset_right = 736.0
+offset_bottom = -208.0
+theme_override_font_sizes/font_size = 30
+text = "Discards"
+
+[node name="Discard" type="Label" parent="."]
+offset_left = 704.0
+offset_top = -288.0
+offset_right = 888.0
 offset_bottom = -208.0
 theme_override_font_sizes/font_size = 30
 text = "0"

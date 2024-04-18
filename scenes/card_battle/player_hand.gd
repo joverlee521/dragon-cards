@@ -18,11 +18,17 @@ var cards: Array[Card] = []
 
 # Player stats
 var max_stamina: int = 5
-var current_stamina: int = 5:
+var remaining_stamina: int = max_stamina:
 	set(value):
-		current_stamina = value
+		remaining_stamina = value
 		set_play_card_button()
-		$Stamina.text = "%s / %s" % [str(current_stamina), str(max_stamina)]
+		$Stamina.text = "%s / %s" % [str(remaining_stamina), str(max_stamina)]
+var max_discards: int = 3
+var remaining_discards: int = max_discards:
+	set(value):
+		remaining_discards = value
+		set_discard_card_button()
+		$Discard.text = "%s / %s" % [str(remaining_discards), str(max_discards)]
 
 
 func _ready():
@@ -31,8 +37,9 @@ func _ready():
 	card_y = get_rect().size.y/2
 	set_card_x_spacing()
 	set_play_card_button()
-	$DiscardCard.set_disabled(true)
-	$Stamina.text = "%s / %s" % [str(current_stamina), str(max_stamina)]
+	set_discard_card_button()
+	$Stamina.text = "%s / %s" % [str(remaining_stamina), str(max_stamina)]
+	$Discard.text = "%s / %s" % [str(remaining_discards), str(max_discards)]
 
 
 func set_card_x_spacing() -> void:
@@ -57,13 +64,13 @@ func position_all_cards() -> void:
 
 
 func remove_selected_cards() -> Array[Card]:
-	$PlayCard.set_disabled(true)
-	$DiscardCard.set_disabled(true)
 	var selected_cards = get_selected_cards()
 	for card in selected_cards:
 		cards.erase(card)
 		remove_child(card)
 
+	set_play_card_button()
+	set_discard_card_button()
 	position_all_cards()
 	emit_signal("cards_selected", false)
 	return selected_cards
@@ -79,14 +86,23 @@ func get_selected_cards_stamina_cost() -> int:
 
 
 func set_play_card_button() -> void:
-	if current_stamina == 0:
+	if remaining_stamina == 0:
 		$PlayCard.set_disabled(true)
 	elif len(get_selected_cards()) == 0:
 		$PlayCard.set_disabled(true)
-	elif get_selected_cards_stamina_cost() > current_stamina:
+	elif get_selected_cards_stamina_cost() > remaining_stamina:
 		$PlayCard.set_disabled(true)
 	else:
 		$PlayCard.set_disabled(false)
+
+
+func set_discard_card_button() -> void:
+	if remaining_discards == 0:
+		$DiscardCard.set_disabled(true)
+	elif len(get_selected_cards()) == 0:
+		$DiscardCard.set_disabled(true)
+	else:
+		$DiscardCard.set_disabled(false)
 
 
 func _on_deck_dealt_card(new_card):
@@ -105,7 +121,7 @@ func _on_deck_dealt_card(new_card):
 func _on_card_clicked():
 	var selected_cards = get_selected_cards()
 	set_play_card_button()
-	$DiscardCard.set_disabled(selected_cards.is_empty())
+	set_discard_card_button()
 
 	position_all_cards()
 	emit_signal("cards_selected", len(selected_cards) == max_selected)
@@ -113,14 +129,16 @@ func _on_card_clicked():
 
 func _on_play_cards():
 	var stamina_cost = get_selected_cards_stamina_cost()
-	assert(stamina_cost <= current_stamina, "Cards cost more stamina than current stamina")
-	current_stamina -= stamina_cost
+	assert(stamina_cost <= remaining_stamina, "Cards cost more stamina than current stamina")
+	remaining_stamina -= stamina_cost
 
 	var selected_cards = remove_selected_cards()
 	emit_signal("cards_played", selected_cards)
 
 
 func _on_discard_cards():
+	assert(remaining_discards != 0, "Out of available discards")
 	var selected_cards = remove_selected_cards()
+	remaining_discards -= len(selected_cards)
 	emit_signal("cards_discarded", selected_cards)
 
