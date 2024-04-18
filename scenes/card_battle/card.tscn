@@ -1,50 +1,50 @@
 [gd_scene load_steps=15 format=3 uid="uid://c87eb4clrv66s"]
 
-[ext_resource type="Script" path="res://scenes/cards/card.gd" id="1_gjuhc"]
-[ext_resource type="Resource" uid="uid://b3nwx43xccah1" path="res://resources/cards/CastMagic.tres" id="2_l3co0"]
-[ext_resource type="Texture2D" uid="uid://b8yvew12myo05" path="res://art/PixelCardArt/FantasyCardPack/pixelCardAssest_V01.png" id="3_gxn1y"]
-[ext_resource type="Texture2D" uid="uid://oupeb7ksmnv8" path="res://art/PixelCardArt/CardRPGPack/Card RPG items/armor_cloth5.png" id="4_ryf00"]
-[ext_resource type="Texture2D" uid="uid://iph45183s2ur" path="res://art/PixelCardArt/FantasyCardPack/squareCircle_vector.png" id="4_v33r7"]
+[ext_resource type="Script" path="res://scenes/card_battle/card.gd" id="1_wb7gf"]
+[ext_resource type="Resource" uid="uid://b3nwx43xccah1" path="res://resources/cards/CastMagic.tres" id="2_oqi6r"]
+[ext_resource type="Texture2D" uid="uid://b8yvew12myo05" path="res://art/PixelCardArt/FantasyCardPack/pixelCardAssest_V01.png" id="3_ikhnl"]
+[ext_resource type="Texture2D" uid="uid://iph45183s2ur" path="res://art/PixelCardArt/FantasyCardPack/squareCircle_vector.png" id="4_7ba08"]
+[ext_resource type="Texture2D" uid="uid://oupeb7ksmnv8" path="res://art/PixelCardArt/CardRPGPack/Card RPG items/armor_cloth5.png" id="5_818mc"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_iqydd"]
 size = Vector2(188, 264)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_p2cm6"]
-atlas = ExtResource("3_gxn1y")
+atlas = ExtResource("3_ikhnl")
 region = Rect2(366, 4, 100, 128)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_3cpgh"]
-atlas = ExtResource("3_gxn1y")
+atlas = ExtResource("3_ikhnl")
 region = Rect2(226, 337, 100, 128)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_f6p2r"]
-atlas = ExtResource("4_v33r7")
+atlas = ExtResource("4_7ba08")
 region = Rect2(1058, 1064, 500, 500)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_1p83o"]
-atlas = ExtResource("4_v33r7")
+atlas = ExtResource("4_7ba08")
 region = Rect2(1577, 1608, 500, 500)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_1hron"]
-atlas = ExtResource("4_v33r7")
+atlas = ExtResource("4_7ba08")
 region = Rect2(2115, 1608, 500, 500)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_kx144"]
-atlas = ExtResource("4_ryf00")
+atlas = ExtResource("5_818mc")
 region = Rect2(0, 0, 60, 55)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_kg6lr"]
-atlas = ExtResource("3_gxn1y")
+atlas = ExtResource("3_ikhnl")
 region = Rect2(135, 224, 96, 29)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_pthgu"]
-atlas = ExtResource("3_gxn1y")
+atlas = ExtResource("3_ikhnl")
 region = Rect2(135, 273, 96, 18)
 
 [node name="Card" type="Area2D"]
 position = Vector2(911, 509)
-script = ExtResource("1_gjuhc")
-attributes = ExtResource("2_l3co0")
+script = ExtResource("1_wb7gf")
+attributes = ExtResource("2_oqi6r")
 
 [node name="CardCollisionShape" type="CollisionShape2D" parent="."]
 z_index = 2

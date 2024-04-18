@@ -28,7 +28,7 @@ region = Rect2(16, 273, 96, 18)
 [resource]
 script = ExtResource("1_wgfc6")
 name = "Card"
-type = "This is a card, yo"
+DamageTypes = Array[int]([])
 attack = 0
 defense = 0
 stamina_cost = 0
