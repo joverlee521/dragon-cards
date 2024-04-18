@@ -1,12 +1,13 @@
-class_name Vocations extends Resource
+class_name Vocation extends Resource
 
-enum ARMOR_TYPES {LIGHT, MEDIUM, HEAVY, MAGIC, WARRIOR, MAGE, CHANGELING, THIEF, SUMMONER, NONE}
-enum WEAPON_TYPES {LIGHT, MEDIUM, HEAVY, MAGIC, DEFENSE, WARRIOR, MAGE, CHANGELING, THIEF, SUMMONER, NONE}
+enum ARMOR_TYPES {LIGHT, MEDIUM, HEAVY, MAGIC, NONE}
+enum WEAPON_TYPES {LIGHT, MEDIUM, HEAVY, MAGIC, DEFENSE, NONE}
+enum VOCATION_TYPES {WARRIOR, MAGE, CHANGELING, THIEF, SUMMONER}
 
 @export_group("VocationInfo")
 @export var vocation_name : String
 @export var vocation_sprite: AtlasTexture
-
+@export var vocation_type : VOCATION_TYPES
 
 @export_group("VocationStats")
 @export var max_health : int
