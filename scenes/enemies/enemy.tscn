@@ -4,15 +4,18 @@
 [ext_resource type="Texture2D" uid="uid://cp1s7swi0ovc3" path="res://art/PixelCardArt/CardRPGPack/Card RPG Monsters/goblin_5.png" id="2_ox7bp"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8xdh1"]
+resource_local_to_scene = true
 size = Vector2(192, 216)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_qxrro"]
+resource_local_to_scene = true
 atlas = ExtResource("2_ox7bp")
 region = Rect2(0, 0, 48.1013, 54.5189)
 
 [node name="Enemy" type="Area2D"]
 position = Vector2(432, 224)
 script = ExtResource("1_0813v")
+health = 10
 metadata/_edit_group_ = true
 
 [node name="CollisionShape" type="CollisionShape2D" parent="."]
