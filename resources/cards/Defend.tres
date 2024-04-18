@@ -27,7 +27,7 @@ region = Rect2(135, 273, 96, 18)
 [resource]
 script = ExtResource("3_2liod")
 name = "Defend"
-type = "Defense"
+DamageTypes = Array[int]([])
 attack = 0
 defense = 3
 stamina_cost = 1
