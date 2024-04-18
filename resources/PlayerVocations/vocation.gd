@@ -15,10 +15,6 @@ enum WEAPON_TYPES {LIGHT, MEDIUM, HEAVY, MAGIC, DEFENSE, WARRIOR, MAGE, CHANGELI
 @export var max_discards : int
 
 @export_group("VocationEquipmentTYPES")
-@export var head : Array[ARMOR_TYPES]
-@export var chest : Array[ARMOR_TYPES]
-@export var legs : Array[ARMOR_TYPES]
-@export var arms : Array[ARMOR_TYPES]
-@export var back : Array[ARMOR_TYPES]
+@export var armor_type : Array[ARMOR_TYPES]
 @export var right_hand : Array[WEAPON_TYPES]
 @export var left_hand : Array[WEAPON_TYPES]
