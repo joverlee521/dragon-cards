@@ -1,0 +1,23 @@
+[gd_scene load_steps=5 format=3 uid="uid://c52qpu1l4q86q"]
+
+[ext_resource type="PackedScene" uid="uid://dvxykdt47uuju" path="res://scenes/enemies/enemy.tscn" id="1_c3ab7"]
+[ext_resource type="Texture2D" uid="uid://xshuo0inos4q" path="res://art/PixelCardArt/CardRPGPack/Card RPG Monsters/goblin_7.png" id="2_8bjhg"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_6jxla"]
+resource_local_to_scene = true
+size = Vector2(268, 207)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_42oh2"]
+resource_local_to_scene = true
+atlas = ExtResource("2_8bjhg")
+region = Rect2(0, 0, 67, 52)
+
+[node name="Enemy" instance=ExtResource("1_c3ab7")]
+health = 9
+
+[node name="CollisionShape" parent="." index="0"]
+position = Vector2(-1, 3.5)
+shape = SubResource("RectangleShape2D_6jxla")
+
+[node name="Sprite" parent="." index="1"]
+texture = SubResource("AtlasTexture_42oh2")

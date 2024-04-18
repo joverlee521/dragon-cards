@@ -1,0 +1,32 @@
+[gd_scene load_steps=7 format=3 uid="uid://dtkjbo52s682w"]
+
+[ext_resource type="PackedScene" uid="uid://dvxykdt47uuju" path="res://scenes/enemies/enemy.tscn" id="1_y55jn"]
+[ext_resource type="Texture2D" uid="uid://cya3qkp1hytlb" path="res://art/PixelCardArt/CardRPGPack/Card RPG Monsters/goblin_6.png" id="2_lcdju"]
+[ext_resource type="Resource" uid="uid://b3nwx43xccah1" path="res://resources/cards/CastMagic.tres" id="2_vn3h8"]
+[ext_resource type="Resource" uid="uid://dfwxap4ae2gtt" path="res://resources/cards/Defend.tres" id="3_yffjo"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_y63hn"]
+resource_local_to_scene = true
+size = Vector2(256, 154)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5hvew"]
+resource_local_to_scene = true
+atlas = ExtResource("2_lcdju")
+region = Rect2(0, 0, 64, 39)
+
+[node name="Enemy" instance=ExtResource("1_y55jn")]
+health = 8
+cards = Array[Resource("res://resources/cards/card.gd")]([ExtResource("2_vn3h8"), ExtResource("3_yffjo")])
+
+[node name="CollisionShape" parent="." index="0"]
+position = Vector2(0, 3)
+shape = SubResource("RectangleShape2D_y63hn")
+
+[node name="Sprite" parent="." index="1"]
+texture = SubResource("AtlasTexture_5hvew")
+
+[node name="HealthLabel" parent="." index="2"]
+offset_left = -61.0
+offset_top = -107.0
+offset_right = -21.0
+offset_bottom = -79.0

@@ -3,17 +3,20 @@ class_name Enemies extends ColorRect
 
 signal all_enemies_defeated
 
-var enemies: Array[Enemy] = []
+@export var enemies: Array[PackedScene] = []
 
 
 func _ready():
 	# Ignore mouse events here so the individual enemies can be clicked
 	mouse_filter = Control.MOUSE_FILTER_IGNORE
 	# TODO: dynamically set enemies
-	var goblin = preload("res://scenes/enemies/enemy.tscn").instantiate()
-	goblin.selected = true
-	goblin.position = $Enemy1.position
-	add_child(goblin)
+	#var goblin = preload("res://scenes/enemies/GoblinEnemy.tscn").instantiate()
+	#goblin.selected = true
+	#goblin.position = $Enemy1.position
+	#add_child(goblin)
+	for enemy in enemies:
+		var goblin = enemy.instantiate()
+		add_child(goblin)
 
 
 func get_all_enemies() -> Array[Node]:

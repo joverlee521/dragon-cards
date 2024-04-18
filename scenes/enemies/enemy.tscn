@@ -13,7 +13,6 @@ atlas = ExtResource("2_ox7bp")
 region = Rect2(0, 0, 48.1013, 54.5189)
 
 [node name="Enemy" type="Area2D"]
-position = Vector2(432, 224)
 script = ExtResource("1_0813v")
 health = 10
 metadata/_edit_group_ = true
