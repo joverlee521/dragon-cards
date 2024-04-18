@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://dgy6vpaplva53"]
+[gd_scene load_steps=6 format=3 uid="uid://dgy6vpaplva53"]
 
 [ext_resource type="PackedScene" uid="uid://doyrkrxsr5qy3" path="res://scenes/card_battle/player_hand.tscn" id="1_0v8t6"]
 [ext_resource type="Script" path="res://scenes/card_battle/card_battle.gd" id="1_qgs4d"]
 [ext_resource type="PackedScene" uid="uid://dpv1vfcpjsw7v" path="res://scenes/card_battle/play_deck.tscn" id="2_2b5yi"]
 [ext_resource type="PackedScene" uid="uid://b4ahtmuys6o0y" path="res://scenes/card_battle/discard_deck.tscn" id="3_wmd2a"]
+[ext_resource type="PackedScene" uid="uid://ck13egoma2sei" path="res://scenes/card_battle/enemies_arena.tscn" id="5_x2p5q"]
 
 [node name="CardBattle" type="Node"]
 script = ExtResource("1_qgs4d")
@@ -20,6 +21,8 @@ position = Vector2(133, 880)
 
 [node name="PlayedCard" type="Marker2D" parent="."]
 position = Vector2(840, 288)
+
+[node name="EnemiesArena" parent="." instance=ExtResource("5_x2p5q")]
 
 [connection signal="cards_discarded" from="PlayerHand" to="." method="_on_cards_discarded"]
 [connection signal="cards_played" from="PlayerHand" to="." method="_on_cards_played"]

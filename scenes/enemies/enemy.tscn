@@ -1,0 +1,34 @@
+[gd_scene load_steps=5 format=3 uid="uid://dvxykdt47uuju"]
+
+[ext_resource type="Script" path="res://scenes/enemies/enemy.gd" id="1_0813v"]
+[ext_resource type="Texture2D" uid="uid://cp1s7swi0ovc3" path="res://art/PixelCardArt/CardRPGPack/Card RPG Monsters/goblin_5.png" id="2_ox7bp"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_8xdh1"]
+size = Vector2(192, 216)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qxrro"]
+atlas = ExtResource("2_ox7bp")
+region = Rect2(0, 0, 48.1013, 54.5189)
+
+[node name="Enemy" type="Area2D"]
+position = Vector2(432, 224)
+script = ExtResource("1_0813v")
+metadata/_edit_group_ = true
+
+[node name="CollisionShape" type="CollisionShape2D" parent="."]
+unique_name_in_owner = true
+position = Vector2(0, 4)
+shape = SubResource("RectangleShape2D_8xdh1")
+
+[node name="Sprite" type="Sprite2D" parent="."]
+position = Vector2(-1, 3)
+scale = Vector2(4, 4)
+texture = SubResource("AtlasTexture_qxrro")
+
+[node name="HealthLabel" type="Label" parent="."]
+offset_left = -32.0
+offset_top = -136.0
+offset_right = 8.0
+offset_bottom = -113.0
+theme_override_font_sizes/font_size = 20
+text = "0"

@@ -25,6 +25,9 @@ func _on_cards_played(cards: Array[Card]) -> void:
 	var played_card = cards[0]
 	add_child(played_card)
 	played_card.position = $PlayedCard.position
+	var attack = played_card.attributes.get('attack')
+	if attack:
+		$EnemiesArena.attack_enemies(attack)
 
 	await get_tree().create_timer(1.0).timeout
 

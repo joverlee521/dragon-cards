@@ -1,0 +1,14 @@
+[gd_scene load_steps=2 format=3 uid="uid://ck13egoma2sei"]
+
+[ext_resource type="Script" path="res://scenes/card_battle/enemies_arena.gd" id="1_krl0e"]
+
+[node name="EnemiesArena" type="ColorRect"]
+offset_left = 1096.0
+offset_top = 32.0
+offset_right = 1896.0
+offset_bottom = 456.0
+color = Color(0.960784, 0.341176, 0.313726, 1)
+script = ExtResource("1_krl0e")
+
+[node name="Enemy1" type="Marker2D" parent="."]
+position = Vector2(120, 224)

@@ -47,6 +47,7 @@ theme_override_font_sizes/font_size = 30
 text = "0"
 
 [node name="DiscardLabel" type="Label" parent="."]
+layout_mode = 0
 offset_left = 552.0
 offset_top = -288.0
 offset_right = 736.0
@@ -55,6 +56,7 @@ theme_override_font_sizes/font_size = 30
 text = "Discards"
 
 [node name="Discard" type="Label" parent="."]
+layout_mode = 0
 offset_left = 704.0
 offset_top = -288.0
 offset_right = 888.0
