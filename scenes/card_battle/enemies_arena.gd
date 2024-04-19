@@ -26,6 +26,7 @@ func instantiate_enemies() -> void:
 			enemy.selected = true
 
 		add_child(enemy)
+		enemy.pick_next_move()
 
 
 func get_all_enemies() -> Array[Node]:

@@ -12,10 +12,27 @@ class_name Enemy extends Area2D
 @export var cards: Array[CardAttributes] = []
 
 var selected: bool = false
+var next_move: CardAttributes:
+	set(value):
+		next_move = value
+		if is_node_ready() and next_move != null:
+			$NextMove.text = ""
+			if next_move.attack > 0:
+				$NextMove.text += "<A>"
+			if next_move.defense > 0:
+				$NextMove.text += "<D>"
 
 
 func _ready():
 	$HealthLabel.text = str(health)
+
+
+func pick_next_move() -> void:
+	next_move = cards.pick_random()
+
+
+func clear_next_move() -> void:
+	next_move = null
 
 
 func remove_health(num: int) -> void:
