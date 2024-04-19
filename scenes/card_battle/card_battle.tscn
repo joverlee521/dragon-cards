@@ -1,13 +1,15 @@
-[gd_scene load_steps=6 format=3 uid="uid://dgy6vpaplva53"]
+[gd_scene load_steps=7 format=3 uid="uid://dgy6vpaplva53"]
 
 [ext_resource type="PackedScene" uid="uid://doyrkrxsr5qy3" path="res://scenes/card_battle/player_hand.tscn" id="1_0v8t6"]
 [ext_resource type="Script" path="res://scenes/card_battle/card_battle.gd" id="1_qgs4d"]
 [ext_resource type="PackedScene" uid="uid://dpv1vfcpjsw7v" path="res://scenes/card_battle/play_deck.tscn" id="2_2b5yi"]
 [ext_resource type="PackedScene" uid="uid://b4ahtmuys6o0y" path="res://scenes/card_battle/discard_deck.tscn" id="3_wmd2a"]
 [ext_resource type="PackedScene" uid="uid://ck13egoma2sei" path="res://scenes/card_battle/enemies_arena.tscn" id="5_x2p5q"]
+[ext_resource type="PackedScene" uid="uid://ev5dne8iq6p4" path="res://scenes/enemies/Goblin.tscn" id="6_q0nyr"]
 
 [node name="CardBattle" type="Node"]
 script = ExtResource("1_qgs4d")
+enemies = Array[PackedScene]([ExtResource("6_q0nyr")])
 
 [node name="PlayerHand" parent="." instance=ExtResource("1_0v8t6")]
 offset_left = 320.0

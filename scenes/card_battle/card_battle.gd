@@ -1,11 +1,13 @@
 class_name CardBattle extends Node
 
-
-var battle_hand_size = 7
+@export_group("CardBattleStats")
+@export var enemies: Array[PackedScene] = []
+@export var battle_hand_size: int = 7
 
 
 func _ready():
 	$PlayerHand.max_hand_size = battle_hand_size
+	$EnemiesArena.enemies = enemies
 	await get_tree().create_timer(2.0).timeout
 	deal_hand()
 

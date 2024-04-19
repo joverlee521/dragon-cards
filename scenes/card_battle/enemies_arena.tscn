@@ -1,7 +1,6 @@
-[gd_scene load_steps=3 format=3 uid="uid://ck13egoma2sei"]
+[gd_scene load_steps=2 format=3 uid="uid://ck13egoma2sei"]
 
 [ext_resource type="Script" path="res://scenes/card_battle/enemies_arena.gd" id="1_krl0e"]
-[ext_resource type="PackedScene" uid="uid://ev5dne8iq6p4" path="res://scenes/enemies/Goblin.tscn" id="2_iuse6"]
 
 [node name="EnemiesArena" type="ColorRect"]
 offset_left = 1096.0
@@ -10,7 +9,12 @@ offset_right = 1896.0
 offset_bottom = 456.0
 color = Color(0.960784, 0.341176, 0.313726, 1)
 script = ExtResource("1_krl0e")
-enemies = Array[PackedScene]([ExtResource("2_iuse6")])
+
+[node name="Enemy0" type="Marker2D" parent="."]
+position = Vector2(176, 240)
 
 [node name="Enemy1" type="Marker2D" parent="."]
-position = Vector2(189, 214)
+position = Vector2(416, 128)
+
+[node name="Enemy2" type="Marker2D" parent="."]
+position = Vector2(632, 328)
