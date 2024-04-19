@@ -12,6 +12,11 @@ class_name Enemy extends Area2D
 
 @export var cards: Array[CardAttributes] = []
 
+var defense: int = 0:
+	set(value):
+		defense = value
+		if is_node_ready():
+			$DefenseLabel.text = str(defense) if defense > 0 else ""
 var selected: bool = false
 var next_move: CardAttributes:
 	set(value):
@@ -34,11 +39,19 @@ func pick_next_move() -> void:
 
 func play_next_move() -> CardAttributes:
 	var played_move = next_move
+	defense += played_move.defense
 	next_move = null
 	return played_move
 
 
 func remove_health(num: int) -> void:
+	if num >= defense:
+		num -= defense
+		defense = 0
+	else:
+		defense -= num
+		num = 0
+
 	health -= num
 	if health <= 0:
 		self.queue_free()

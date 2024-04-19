@@ -168,8 +168,6 @@ func _on_end_turn():
 
 
 func _on_enemies_acted(enemy_moves):
-	print("ENEMY ACTED")
 	for move in enemy_moves:
 		remaining_health -= move.attack
-		print(move)
 	is_player_turn = true
