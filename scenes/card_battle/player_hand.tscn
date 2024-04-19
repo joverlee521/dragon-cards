@@ -28,6 +28,24 @@ offset_bottom = -80.0
 theme_override_font_sizes/font_size = 50
 text = "Discard"
 
+[node name="HealthLabel" type="Label" parent="."]
+layout_mode = 0
+offset_left = -280.0
+offset_top = -288.0
+offset_right = -96.0
+offset_bottom = -208.0
+theme_override_font_sizes/font_size = 30
+text = "Health"
+
+[node name="Health" type="Label" parent="."]
+layout_mode = 0
+offset_left = -144.0
+offset_top = -288.0
+offset_right = 40.0
+offset_bottom = -208.0
+theme_override_font_sizes/font_size = 30
+text = "0"
+
 [node name="StaminaLabel" type="Label" parent="."]
 layout_mode = 0
 offset_left = 208.0
@@ -64,5 +82,15 @@ offset_bottom = -208.0
 theme_override_font_sizes/font_size = 30
 text = "0"
 
+[node name="EndTurn" type="Button" parent="."]
+layout_mode = 0
+offset_left = 1312.0
+offset_top = -160.0
+offset_right = 1538.0
+offset_bottom = -83.0
+theme_override_font_sizes/font_size = 50
+text = "End Turn"
+
 [connection signal="pressed" from="PlayCard" to="." method="_on_play_cards"]
 [connection signal="pressed" from="DiscardCard" to="." method="_on_discard_cards"]
+[connection signal="pressed" from="EndTurn" to="." method="_on_end_turn"]

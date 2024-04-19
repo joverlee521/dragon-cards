@@ -1,7 +1,7 @@
 class_name PlayerHand extends ColorRect
 
 
-signal hand_full
+signal player_turn_ended
 signal cards_selected(max_cards_selected: bool)
 signal cards_played(cards: Array[Card])
 signal cards_discarded(cards: Array[Card])
@@ -17,6 +17,18 @@ var max_hand_size: int:
 var cards: Array[Card] = []
 
 # Player stats
+var is_player_turn: bool = true:
+	set(value):
+		is_player_turn = value
+		set_play_card_button()
+		set_discard_card_button()
+		$EndTurn.set_disabled(!is_player_turn)
+
+var max_health: int = 10
+var remaining_health: int = max_health:
+	set(value):
+		remaining_health = value
+		$Health.text = "%s / %s" % [str(remaining_health), str(max_health)]
 var max_stamina: int = 5
 var remaining_stamina: int = max_stamina:
 	set(value):
@@ -38,6 +50,7 @@ func _ready():
 	set_card_x_spacing()
 	set_play_card_button()
 	set_discard_card_button()
+	$Health.text = "%s / %s" % [str(remaining_health), str(max_health)]
 	$Stamina.text = "%s / %s" % [str(remaining_stamina), str(max_stamina)]
 	$Discard.text = "%s / %s" % [str(remaining_discards), str(max_discards)]
 
@@ -92,6 +105,8 @@ func set_play_card_button() -> void:
 		$PlayCard.set_disabled(true)
 	elif get_selected_cards_stamina_cost() > remaining_stamina:
 		$PlayCard.set_disabled(true)
+	elif !is_player_turn:
+		$PlayCard.set_disabled(true)
 	else:
 		$PlayCard.set_disabled(false)
 
@@ -101,6 +116,8 @@ func set_discard_card_button() -> void:
 		$DiscardCard.set_disabled(true)
 	elif len(get_selected_cards()) == 0:
 		$DiscardCard.set_disabled(true)
+	elif !is_player_turn:
+		$PlayCard.set_disabled(true)
 	else:
 		$DiscardCard.set_disabled(false)
 
@@ -142,3 +159,17 @@ func _on_discard_cards():
 	remaining_discards -= len(selected_cards)
 	emit_signal("cards_discarded", selected_cards)
 
+
+func _on_end_turn():
+	remaining_discards = max_discards
+	remaining_stamina = max_stamina
+	is_player_turn = false
+	player_turn_ended.emit()
+
+
+func _on_enemies_acted(enemy_moves):
+	print("ENEMY ACTED")
+	for move in enemy_moves:
+		remaining_health -= move.attack
+		print(move)
+	is_player_turn = true

@@ -28,4 +28,6 @@ position = Vector2(840, 288)
 
 [connection signal="cards_discarded" from="PlayerHand" to="." method="_on_cards_discarded"]
 [connection signal="cards_played" from="PlayerHand" to="." method="_on_cards_played"]
+[connection signal="player_turn_ended" from="PlayerHand" to="EnemiesArena" method="_on_player_turn_ended"]
 [connection signal="card_dealt" from="PlayDeck" to="PlayerHand" method="_on_deck_dealt_card"]
+[connection signal="enemies_acted" from="EnemiesArena" to="PlayerHand" method="_on_enemies_acted"]

@@ -2,6 +2,7 @@
 # Only inherited by enemy scene scripts
 class_name Enemy extends Area2D
 
+
 @export_group("EnemyStats")
 @export var health: int = 0:
 	set(value):
@@ -31,8 +32,10 @@ func pick_next_move() -> void:
 	next_move = cards.pick_random()
 
 
-func clear_next_move() -> void:
+func play_next_move() -> CardAttributes:
+	var played_move = next_move
 	next_move = null
+	return played_move
 
 
 func remove_health(num: int) -> void:
