@@ -53,5 +53,3 @@ func remove_health(num: int) -> void:
 		num = 0
 
 	health -= num
-	if health <= 0:
-		self.queue_free()

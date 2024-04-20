@@ -1,6 +1,6 @@
 class_name PlayerHand extends ColorRect
 
-
+signal player_defeated
 signal player_turn_ended
 signal cards_selected(max_cards_selected: bool)
 signal cards_played(cards: Array[Card])
@@ -34,6 +34,9 @@ var remaining_health: int = max_health:
 	set(value):
 		remaining_health = value
 		$Health.text = "%s / %s" % [str(remaining_health), str(max_health)]
+		if remaining_health <= 0:
+			player_defeated.emit()
+
 var max_stamina: int = 5
 var remaining_stamina: int = max_stamina:
 	set(value):

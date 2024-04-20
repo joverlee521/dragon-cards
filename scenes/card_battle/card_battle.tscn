@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://dgy6vpaplva53"]
+[gd_scene load_steps=14 format=3 uid="uid://dgy6vpaplva53"]
 
 [ext_resource type="Script" path="res://scenes/card_battle/card_battle.gd" id="1_qgs4d"]
 [ext_resource type="Script" path="res://scenes/card_battle/player_hand.gd" id="3_6tv8r"]
@@ -12,6 +12,7 @@
 [ext_resource type="Resource" uid="uid://dfwxap4ae2gtt" path="res://resources/cards/Defend.tres" id="10_icx5q"]
 [ext_resource type="Script" path="res://scenes/card_battle/discard_deck.gd" id="11_v2avs"]
 [ext_resource type="Script" path="res://scenes/card_battle/enemies_arena.gd" id="12_nrroq"]
+[ext_resource type="Script" path="res://scenes/card_battle/end_battle_screen.gd" id="13_b77cx"]
 
 [node name="CardBattle" type="Node"]
 script = ExtResource("1_qgs4d")
@@ -185,11 +186,33 @@ position = Vector2(416, 128)
 [node name="Enemy2" type="Marker2D" parent="EnemiesArena"]
 position = Vector2(632, 328)
 
+[node name="EndBattleScreen" type="ColorRect" parent="."]
+z_index = 100
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0.541176, 0.541176, 1)
+script = ExtResource("13_b77cx")
+
+[node name="EndState" type="Label" parent="EndBattleScreen"]
+offset_left = 728.0
+offset_top = 184.0
+offset_right = 1184.0
+offset_bottom = 321.0
+theme_override_font_sizes/font_size = 100
+text = "End State"
+horizontal_alignment = 1
+vertical_alignment = 1
+
 [connection signal="cards_discarded" from="PlayerHand" to="." method="_on_cards_discarded"]
 [connection signal="cards_played" from="PlayerHand" to="." method="_on_cards_played"]
+[connection signal="player_defeated" from="PlayerHand" to="EndBattleScreen" method="_on_player_defeated"]
 [connection signal="player_turn_ended" from="PlayerHand" to="EnemiesArena" method="_on_player_turn_ended"]
 [connection signal="pressed" from="PlayerHand/PlayCard" to="PlayerHand" method="_on_play_cards"]
 [connection signal="pressed" from="PlayerHand/DiscardCard" to="PlayerHand" method="_on_discard_cards"]
 [connection signal="pressed" from="PlayerHand/EndTurn" to="PlayerHand" method="_on_end_turn"]
 [connection signal="card_dealt" from="PlayDeck" to="PlayerHand" method="_on_deck_dealt_card"]
+[connection signal="all_enemies_defeated" from="EnemiesArena" to="EndBattleScreen" method="_on_all_enemies_defeated"]
 [connection signal="enemies_acted" from="EnemiesArena" to="PlayerHand" method="_on_enemies_acted"]

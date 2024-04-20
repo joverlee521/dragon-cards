@@ -42,6 +42,11 @@ func attack_enemies(attack: int) -> void:
 	var selected_enemies = get_selected_enemies()
 	selected_enemies.map(func(enemy): enemy.remove_health(attack))
 
+	for enemy in get_all_enemies():
+		if enemy.health <= 0:
+			remove_child(enemy)
+			enemy.queue_free()
+
 	if len(get_all_enemies()) == 0:
 		all_enemies_defeated.emit()
 
