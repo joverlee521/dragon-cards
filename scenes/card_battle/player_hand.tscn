@@ -46,6 +46,24 @@ offset_bottom = -208.0
 theme_override_font_sizes/font_size = 30
 text = "0"
 
+[node name="DefenseLabel" type="Label" parent="."]
+layout_mode = 0
+offset_left = -288.0
+offset_top = -368.0
+offset_right = -104.0
+offset_bottom = -288.0
+theme_override_font_sizes/font_size = 30
+text = "Defense"
+
+[node name="Defense" type="Label" parent="."]
+layout_mode = 0
+offset_left = -144.0
+offset_top = -368.0
+offset_right = 40.0
+offset_bottom = -288.0
+theme_override_font_sizes/font_size = 30
+text = "0"
+
 [node name="StaminaLabel" type="Label" parent="."]
 layout_mode = 0
 offset_left = 208.0

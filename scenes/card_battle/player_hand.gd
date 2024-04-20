@@ -24,6 +24,11 @@ var is_player_turn: bool = true:
 		set_discard_card_button()
 		$EndTurn.set_disabled(!is_player_turn)
 
+var defense: int = 0:
+	set(value):
+		defense = value
+		if is_node_ready():
+			$Defense.text = str(defense)
 var max_health: int = 10
 var remaining_health: int = max_health:
 	set(value):
@@ -50,6 +55,7 @@ func _ready():
 	set_card_x_spacing()
 	set_play_card_button()
 	set_discard_card_button()
+	$Defense.text = str(defense)
 	$Health.text = "%s / %s" % [str(remaining_health), str(max_health)]
 	$Stamina.text = "%s / %s" % [str(remaining_stamina), str(max_stamina)]
 	$Discard.text = "%s / %s" % [str(remaining_discards), str(max_discards)]
@@ -150,6 +156,7 @@ func _on_play_cards():
 	remaining_stamina -= stamina_cost
 
 	var selected_cards = remove_selected_cards()
+	defense += selected_cards.reduce(func(accum, card): return accum + card.attributes.defense, 0)
 	emit_signal("cards_played", selected_cards)
 
 
@@ -167,7 +174,15 @@ func _on_end_turn():
 	player_turn_ended.emit()
 
 
-func _on_enemies_acted(enemy_moves):
-	for move in enemy_moves:
-		remaining_health -= move.attack
+func _on_enemies_acted(enemy_moves): # enemy_moves: Array[CardAttributes]
+	var total_attack = enemy_moves.reduce(func(accum, move): return accum + move.attack, 0)
+
+	if total_attack >= defense:
+		total_attack -= defense
+		defense = 0
+	else:
+		defense -= total_attack
+		total_attack = 0
+
+	remaining_health -= total_attack
 	is_player_turn = true
