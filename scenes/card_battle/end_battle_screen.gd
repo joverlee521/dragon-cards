@@ -1,8 +1,8 @@
-class_name EndBattleScreen extends ColorRect
+class_name EndBattleScreen extends CanvasLayer
 
 
 func _ready():
-	mouse_filter = Control.MOUSE_FILTER_IGNORE
+	$EndBattleBackground.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	$EndState.text = ""
 	self.hide()
 

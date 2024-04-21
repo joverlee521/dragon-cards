@@ -186,15 +186,16 @@ position = Vector2(416, 128)
 [node name="Enemy2" type="Marker2D" parent="EnemiesArena"]
 position = Vector2(632, 328)
 
-[node name="EndBattleScreen" type="ColorRect" parent="."]
-z_index = 100
+[node name="EndBattleScreen" type="CanvasLayer" parent="."]
+script = ExtResource("13_b77cx")
+
+[node name="EndBattleBackground" type="ColorRect" parent="EndBattleScreen"]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 color = Color(0, 0.541176, 0.541176, 1)
-script = ExtResource("13_b77cx")
 
 [node name="EndState" type="Label" parent="EndBattleScreen"]
 offset_left = 728.0
