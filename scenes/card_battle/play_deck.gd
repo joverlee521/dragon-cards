@@ -8,6 +8,11 @@ func _ready():
 	super()
 
 
+func set_deck(cards) -> void:
+	cards.map(add_card)
+	shuffle()
+
+
 func deal_card() -> void:
 	if len(cards) == 0:
 		return
@@ -19,5 +24,4 @@ func deal_card() -> void:
 
 
 func _on_cards_refreshed(cards) -> void: # cards: : Array[CardAttributes]
-	cards.map(add_card)
-	shuffle()
+	set_deck(cards)

@@ -10,41 +10,43 @@ signal cards_discarded(cards: Array[Card])
 const max_selected: int = 1
 var card_y: int
 var card_x_spacing: int
-var max_hand_size: int:
-	set(value):
-		max_hand_size = value
-		set_card_x_spacing()
 var cards: Array[Card] = []
 
 # Player stats
+var player_vocation: Vocation:
+	set(value):
+		player_vocation = value
+		set_player_hand()
 var is_player_turn: bool = true:
 	set(value):
 		is_player_turn = value
 		set_play_card_button()
 		set_discard_card_button()
 		$EndTurn.set_disabled(!is_player_turn)
-
 var defense: int = 0:
 	set(value):
 		defense = value
 		if is_node_ready():
 			$Defense.text = str(defense)
-var max_health: int = 10
-var remaining_health: int = max_health:
+var max_hand_size: int:
+	set(value):
+		max_hand_size = value
+		set_card_x_spacing()
+var max_health: int
+var remaining_health: int:
 	set(value):
 		remaining_health = value
 		$Health.text = "%s / %s" % [str(remaining_health), str(max_health)]
 		if remaining_health <= 0:
 			player_defeated.emit()
-
-var max_stamina: int = 5
-var remaining_stamina: int = max_stamina:
+var max_stamina: int
+var remaining_stamina: int:
 	set(value):
 		remaining_stamina = value
 		set_play_card_button()
 		$Stamina.text = "%s / %s" % [str(remaining_stamina), str(max_stamina)]
-var max_discards: int = 3
-var remaining_discards: int = max_discards:
+var max_discards: int
+var remaining_discards: int:
 	set(value):
 		remaining_discards = value
 		set_discard_card_button()
@@ -54,6 +56,28 @@ var remaining_discards: int = max_discards:
 func _ready():
 	# Ignore mouse events here so the individual cards can be clicked
 	mouse_filter = Control.MOUSE_FILTER_IGNORE
+
+
+func set_player_hand():
+	set_player_stats()
+	set_hand_displays()
+
+
+func set_player_stats():
+	defense = 0
+	max_hand_size = player_vocation.max_hand_size
+	max_health = player_vocation.max_health
+	max_stamina = player_vocation.max_stamina
+	max_discards = player_vocation.max_discards
+
+	# TODO: Track actual player health
+	remaining_health = max_health
+	remaining_stamina = max_stamina
+	remaining_discards = max_discards
+
+
+func set_hand_displays():
+	remove_all_cards()
 	card_y = get_rect().size.y/2
 	set_card_x_spacing()
 	set_play_card_button()
@@ -85,11 +109,25 @@ func position_all_cards() -> void:
 		position_card(card, i+1)
 
 
+func add_card(card: Card) -> void:
+	cards.append(card)
+	add_child(card)
+
+
+func remove_card(card: Card) -> void:
+	cards.erase(card)
+	remove_child(card)
+
+
+func remove_all_cards() -> void:
+	cards.map(remove_child)
+	cards.clear()
+
+
 func remove_selected_cards() -> Array[Card]:
 	var selected_cards = get_selected_cards()
 	for card in selected_cards:
-		cards.erase(card)
-		remove_child(card)
+		remove_card(card)
 
 	set_play_card_button()
 	set_discard_card_button()
@@ -132,9 +170,8 @@ func set_discard_card_button() -> void:
 
 
 func _on_deck_dealt_card(new_card):
-	cards.append(new_card)
+	add_card(new_card)
 	new_card.hide()
-	add_child(new_card)
 
 	# 2-way signal connection to prevent selecting more cards than the max_selected
 	new_card.card_clicked.connect(_on_card_clicked)

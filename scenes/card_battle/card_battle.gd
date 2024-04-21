@@ -1,20 +1,30 @@
 class_name CardBattle extends Node
 
+@export_group("PlayerStats")
+@export var player_vocation: Vocation
+@export var player_cards: Array[CardAttributes] = []
+
 @export_group("CardBattleStats")
 @export var enemies: Array[PackedScene] = []
-@export var battle_hand_size: int = 7
 
 
 func _ready():
-	$PlayerHand.max_hand_size = battle_hand_size
+	start_battle()
+
+
+func start_battle():
+	$PlayDeck.set_deck(player_cards)
+	$DiscardDeck.remove_all_cards()
+	$PlayerHand.player_vocation = player_vocation
 	$EnemiesArena.enemies = enemies
+	$EndBattleScreen.hide()
 	$SkipPlayerTurnLabel.hide()
 	await get_tree().create_timer(2.0).timeout
 	deal_hand()
 
 
 func deal_hand() -> void:
-	deal_cards(battle_hand_size)
+	deal_cards($PlayerHand.max_hand_size)
 
 
 func deal_cards(num: int) -> void:
@@ -70,3 +80,6 @@ func _on_player_turn_ended() -> void:
 
 	$PlayerHand.is_player_turn = true
 
+
+func _on_new_battle() -> void:
+	start_battle()

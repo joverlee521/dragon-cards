@@ -1,14 +1,13 @@
-[gd_scene load_steps=14 format=3 uid="uid://dgy6vpaplva53"]
+[gd_scene load_steps=13 format=3 uid="uid://dgy6vpaplva53"]
 
 [ext_resource type="Script" path="res://scenes/card_battle/card_battle.gd" id="1_qgs4d"]
+[ext_resource type="Resource" uid="uid://8cgqkqrq6216" path="res://resources/PlayerVocations/Warrior.tres" id="2_ktppj"]
 [ext_resource type="Script" path="res://scenes/card_battle/player_hand.gd" id="3_6tv8r"]
 [ext_resource type="Script" path="res://scenes/card_battle/play_deck.gd" id="4_wmml7"]
 [ext_resource type="Texture2D" uid="uid://dh1bjajpx0ecb" path="res://art/cards/back01.png" id="5_eaoof"]
 [ext_resource type="PackedScene" uid="uid://c87eb4clrv66s" path="res://scenes/card_battle/card.tscn" id="6_jqovr"]
 [ext_resource type="PackedScene" uid="uid://ev5dne8iq6p4" path="res://scenes/enemies/Goblin.tscn" id="6_q0nyr"]
-[ext_resource type="Resource" uid="uid://b3nwx43xccah1" path="res://resources/cards/CastMagic.tres" id="7_h762b"]
 [ext_resource type="Resource" uid="uid://cmad7q4pejruw" path="res://resources/cards/Slash.tres" id="8_2f6cg"]
-[ext_resource type="Resource" uid="uid://xxyq4bwqpcwh" path="res://resources/cards/Smash.tres" id="9_aee2g"]
 [ext_resource type="Resource" uid="uid://dfwxap4ae2gtt" path="res://resources/cards/Defend.tres" id="10_icx5q"]
 [ext_resource type="Script" path="res://scenes/card_battle/discard_deck.gd" id="11_v2avs"]
 [ext_resource type="Script" path="res://scenes/card_battle/enemies_arena.gd" id="12_nrroq"]
@@ -16,6 +15,8 @@
 
 [node name="CardBattle" type="Node"]
 script = ExtResource("1_qgs4d")
+player_vocation = ExtResource("2_ktppj")
+player_cards = Array[Resource("res://resources/cards/card.gd")]([ExtResource("10_icx5q"), ExtResource("10_icx5q"), ExtResource("8_2f6cg"), ExtResource("8_2f6cg"), ExtResource("8_2f6cg")])
 enemies = Array[PackedScene]([ExtResource("6_q0nyr")])
 
 [node name="PlayerHand" type="ColorRect" parent="."]
@@ -130,7 +131,6 @@ position = Vector2(1765, 880)
 script = ExtResource("4_wmml7")
 image = ExtResource("5_eaoof")
 card_scene = ExtResource("6_jqovr")
-cards = Array[Resource("res://resources/cards/card.gd")]([ExtResource("7_h762b"), ExtResource("8_2f6cg"), ExtResource("9_aee2g"), ExtResource("7_h762b"), ExtResource("8_2f6cg"), ExtResource("9_aee2g"), ExtResource("8_2f6cg"), ExtResource("10_icx5q"), ExtResource("10_icx5q")])
 metadata/_edit_group_ = true
 
 [node name="DeckImage" type="Sprite2D" parent="PlayDeck"]
@@ -196,7 +196,6 @@ position = Vector2(416, 128)
 position = Vector2(632, 328)
 
 [node name="EndBattleScreen" type="CanvasLayer" parent="."]
-visible = false
 script = ExtResource("13_b77cx")
 
 [node name="EndBattleBackground" type="ColorRect" parent="EndBattleScreen"]
@@ -217,6 +216,14 @@ text = "End State"
 horizontal_alignment = 1
 vertical_alignment = 1
 
+[node name="NewBattle" type="Button" parent="EndBattleScreen"]
+offset_left = 800.0
+offset_top = 576.0
+offset_right = 1142.0
+offset_bottom = 653.0
+theme_override_font_sizes/font_size = 50
+text = "Restart Battle"
+
 [connection signal="cards_discarded" from="PlayerHand" to="." method="_on_cards_discarded"]
 [connection signal="cards_played" from="PlayerHand" to="." method="_on_cards_played"]
 [connection signal="player_defeated" from="PlayerHand" to="EndBattleScreen" method="_on_player_defeated"]
@@ -228,3 +235,4 @@ vertical_alignment = 1
 [connection signal="cards_refreshed" from="DiscardDeck" to="PlayDeck" method="_on_cards_refreshed"]
 [connection signal="all_enemies_defeated" from="EnemiesArena" to="EndBattleScreen" method="_on_all_enemies_defeated"]
 [connection signal="enemies_acted" from="EnemiesArena" to="PlayerHand" method="_on_enemies_acted"]
+[connection signal="pressed" from="EndBattleScreen/NewBattle" to="." method="_on_new_battle"]
