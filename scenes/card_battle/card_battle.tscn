@@ -15,9 +15,41 @@
 
 [node name="CardBattle" type="Node"]
 script = ExtResource("1_qgs4d")
+enemies = Array[PackedScene]([ExtResource("6_q0nyr")])
 player_vocation = ExtResource("2_ktppj")
 player_cards = Array[Resource("res://resources/cards/card.gd")]([ExtResource("10_icx5q"), ExtResource("10_icx5q"), ExtResource("8_2f6cg"), ExtResource("8_2f6cg"), ExtResource("8_2f6cg")])
-enemies = Array[PackedScene]([ExtResource("6_q0nyr")])
+
+[node name="HealthLabel" type="Label" parent="."]
+offset_left = 72.0
+offset_top = 656.0
+offset_right = 256.0
+offset_bottom = 736.0
+theme_override_font_sizes/font_size = 30
+text = "Health"
+
+[node name="Health" type="Label" parent="."]
+offset_left = 208.0
+offset_top = 656.0
+offset_right = 392.0
+offset_bottom = 736.0
+theme_override_font_sizes/font_size = 30
+text = "0"
+
+[node name="DefenseLabel" type="Label" parent="."]
+offset_left = 64.0
+offset_top = 576.0
+offset_right = 248.0
+offset_bottom = 656.0
+theme_override_font_sizes/font_size = 30
+text = "Defense"
+
+[node name="Defense" type="Label" parent="."]
+offset_left = 208.0
+offset_top = 576.0
+offset_right = 392.0
+offset_bottom = 656.0
+theme_override_font_sizes/font_size = 30
+text = "0"
 
 [node name="PlayerHand" type="ColorRect" parent="."]
 offset_left = 320.0
@@ -44,42 +76,6 @@ offset_right = 816.0
 offset_bottom = -80.0
 theme_override_font_sizes/font_size = 50
 text = "Discard"
-
-[node name="HealthLabel" type="Label" parent="PlayerHand"]
-layout_mode = 0
-offset_left = -248.0
-offset_top = -128.0
-offset_right = -64.0
-offset_bottom = -48.0
-theme_override_font_sizes/font_size = 30
-text = "Health"
-
-[node name="Health" type="Label" parent="PlayerHand"]
-layout_mode = 0
-offset_left = -112.0
-offset_top = -128.0
-offset_right = 72.0
-offset_bottom = -48.0
-theme_override_font_sizes/font_size = 30
-text = "0"
-
-[node name="DefenseLabel" type="Label" parent="PlayerHand"]
-layout_mode = 0
-offset_left = -256.0
-offset_top = -208.0
-offset_right = -72.0
-offset_bottom = -128.0
-theme_override_font_sizes/font_size = 30
-text = "Defense"
-
-[node name="Defense" type="Label" parent="PlayerHand"]
-layout_mode = 0
-offset_left = -112.0
-offset_top = -208.0
-offset_right = 72.0
-offset_bottom = -128.0
-theme_override_font_sizes/font_size = 30
-text = "0"
 
 [node name="StaminaLabel" type="Label" parent="PlayerHand"]
 layout_mode = 0
@@ -226,7 +222,6 @@ text = "Restart Battle"
 
 [connection signal="cards_discarded" from="PlayerHand" to="." method="_on_cards_discarded"]
 [connection signal="cards_played" from="PlayerHand" to="." method="_on_cards_played"]
-[connection signal="player_defeated" from="PlayerHand" to="EndBattleScreen" method="_on_player_defeated"]
 [connection signal="player_turn_ended" from="PlayerHand" to="." method="_on_player_turn_ended"]
 [connection signal="pressed" from="PlayerHand/PlayCard" to="PlayerHand" method="_on_play_cards"]
 [connection signal="pressed" from="PlayerHand/DiscardCard" to="PlayerHand" method="_on_discard_cards"]
@@ -234,5 +229,5 @@ text = "Restart Battle"
 [connection signal="card_dealt" from="PlayDeck" to="PlayerHand" method="_on_deck_dealt_card"]
 [connection signal="cards_refreshed" from="DiscardDeck" to="PlayDeck" method="_on_cards_refreshed"]
 [connection signal="all_enemies_defeated" from="EnemiesArena" to="EndBattleScreen" method="_on_all_enemies_defeated"]
-[connection signal="enemies_acted" from="EnemiesArena" to="PlayerHand" method="_on_enemies_acted"]
+[connection signal="enemies_acted" from="EnemiesArena" to="." method="_on_enemies_acted"]
 [connection signal="pressed" from="EndBattleScreen/NewBattle" to="." method="_on_new_battle"]

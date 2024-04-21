@@ -6,6 +6,7 @@ signal enemies_acted(enemy_moves) # enemy_moves: Array[CardAttributes]
 
 var enemies: Array[PackedScene] = []:
 	set(value):
+		remove_all_enemies()
 		enemies = value
 		if is_node_ready():
 			instantiate_enemies()
@@ -28,6 +29,10 @@ func instantiate_enemies() -> void:
 
 		add_child(enemy)
 		enemy.pick_next_move()
+
+
+func remove_all_enemies() -> void:
+	get_all_enemies().map(remove_child)
 
 
 func get_all_enemies() -> Array[Node]:

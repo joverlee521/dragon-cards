@@ -1,11 +1,21 @@
 class_name CardBattle extends Node
 
+@export_group("CardBattleStats")
+@export var enemies: Array[PackedScene] = []
+
 @export_group("PlayerStats")
 @export var player_vocation: Vocation
 @export var player_cards: Array[CardAttributes] = []
-
-@export_group("CardBattleStats")
-@export var enemies: Array[PackedScene] = []
+var player_health: int:
+	set(value):
+		player_health = value
+		$Health.text = "%s / %s" % [str(player_health), str(player_vocation.max_health)]
+		if player_health <= 0:
+			$EndBattleScreen.player_defeated()
+var player_defense: int = 0:
+	set(value):
+		player_defense = value
+		$Defense.text = str(player_defense)
 
 
 func _ready():
@@ -13,9 +23,12 @@ func _ready():
 
 
 func start_battle():
+	# TODO: track player's actual health
+	player_health = player_vocation.max_health
+	player_defense = 0
 	$PlayDeck.set_deck(player_cards)
 	$DiscardDeck.remove_all_cards()
-	$PlayerHand.player_vocation = player_vocation
+	$PlayerHand.set_player_hand(player_vocation)
 	$EnemiesArena.enemies = enemies
 	$EndBattleScreen.hide()
 	$SkipPlayerTurnLabel.hide()
@@ -49,9 +62,9 @@ func _on_cards_played(cards: Array[Card]) -> void:
 	var played_card = cards[0]
 	add_child(played_card)
 	played_card.position = $PlayedCard.position
-	var attack = played_card.attributes.get('attack')
-	if attack:
-		$EnemiesArena.attack_enemies(attack)
+
+	player_defense += played_card.attributes.defense
+	$EnemiesArena.attack_enemies(played_card.attributes.attack)
 
 	await get_tree().create_timer(1.0).timeout
 
@@ -79,6 +92,19 @@ func _on_player_turn_ended() -> void:
 		$EnemiesArena.enemies_move()
 
 	$PlayerHand.is_player_turn = true
+
+
+func _on_enemies_acted(enemy_moves): # enemy_moves: Array[CardAttributes]
+	var total_attack = enemy_moves.reduce(func(accum, move): return accum + move.attack, 0)
+
+	if total_attack >= player_defense:
+		total_attack -= player_defense
+		player_defense = 0
+	else:
+		player_defense -= total_attack
+		total_attack = 0
+
+	player_health -= total_attack
 
 
 func _on_new_battle() -> void:

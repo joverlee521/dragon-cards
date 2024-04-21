@@ -1,6 +1,5 @@
 class_name PlayerHand extends ColorRect
 
-signal player_defeated
 signal player_turn_ended
 signal cards_selected(max_cards_selected: bool)
 signal cards_played(cards: Array[Card])
@@ -13,32 +12,17 @@ var card_x_spacing: int
 var cards: Array[Card] = []
 
 # Player stats
-var player_vocation: Vocation:
-	set(value):
-		player_vocation = value
-		set_player_hand()
 var is_player_turn: bool = true:
 	set(value):
 		is_player_turn = value
 		set_play_card_button()
 		set_discard_card_button()
 		$EndTurn.set_disabled(!is_player_turn)
-var defense: int = 0:
-	set(value):
-		defense = value
-		if is_node_ready():
-			$Defense.text = str(defense)
 var max_hand_size: int:
 	set(value):
 		max_hand_size = value
 		set_card_x_spacing()
-var max_health: int
-var remaining_health: int:
-	set(value):
-		remaining_health = value
-		$Health.text = "%s / %s" % [str(remaining_health), str(max_health)]
-		if remaining_health <= 0:
-			player_defeated.emit()
+
 var max_stamina: int
 var remaining_stamina: int:
 	set(value):
@@ -58,20 +42,15 @@ func _ready():
 	mouse_filter = Control.MOUSE_FILTER_IGNORE
 
 
-func set_player_hand():
-	set_player_stats()
+func set_player_hand(player_vocation):
+	set_player_stats(player_vocation)
 	set_hand_displays()
 
 
-func set_player_stats():
-	defense = 0
+func set_player_stats(player_vocation):
 	max_hand_size = player_vocation.max_hand_size
-	max_health = player_vocation.max_health
 	max_stamina = player_vocation.max_stamina
 	max_discards = player_vocation.max_discards
-
-	# TODO: Track actual player health
-	remaining_health = max_health
 	remaining_stamina = max_stamina
 	remaining_discards = max_discards
 
@@ -82,8 +61,7 @@ func set_hand_displays():
 	set_card_x_spacing()
 	set_play_card_button()
 	set_discard_card_button()
-	$Defense.text = str(defense)
-	$Health.text = "%s / %s" % [str(remaining_health), str(max_health)]
+
 	$Stamina.text = "%s / %s" % [str(remaining_stamina), str(max_stamina)]
 	$Discard.text = "%s / %s" % [str(remaining_discards), str(max_discards)]
 
@@ -196,7 +174,6 @@ func _on_play_cards():
 	remaining_stamina -= stamina_cost
 
 	var selected_cards = remove_selected_cards()
-	defense += selected_cards.reduce(func(accum, card): return accum + card.attributes.defense, 0)
 	emit_signal("cards_played", selected_cards)
 
 
@@ -212,16 +189,3 @@ func _on_end_turn():
 	remaining_stamina = max_stamina
 	is_player_turn = false
 	player_turn_ended.emit()
-
-
-func _on_enemies_acted(enemy_moves): # enemy_moves: Array[CardAttributes]
-	var total_attack = enemy_moves.reduce(func(accum, move): return accum + move.attack, 0)
-
-	if total_attack >= defense:
-		total_attack -= defense
-		defense = 0
-	else:
-		defense -= total_attack
-		total_attack = 0
-
-	remaining_health -= total_attack

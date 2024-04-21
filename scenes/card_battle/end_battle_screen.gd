@@ -7,7 +7,7 @@ func _ready():
 	self.hide()
 
 
-func _on_player_defeated():
+func player_defeated():
 	self.show()
 	$EndState.text = "YOU LOSE"
 
