@@ -1,7 +1,7 @@
 class_name DiscardDeck extends Deck
 
 
-signal cards_refreshed(cards: Array[CardAttributes])
+signal cards_refreshed(cards) # cards: : Array[CardAttributes]
 
 
 func _ready():

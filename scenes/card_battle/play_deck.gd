@@ -18,5 +18,6 @@ func deal_card() -> void:
 	emit_signal("card_dealt", new_card)
 
 
-func _on_cards_refreshed(cards: Array[CardAttributes]) -> void:
+func _on_cards_refreshed(cards) -> void: # cards: : Array[CardAttributes]
 	cards.map(add_card)
+	shuffle()

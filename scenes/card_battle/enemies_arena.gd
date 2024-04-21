@@ -51,10 +51,9 @@ func attack_enemies(attack: int) -> void:
 		all_enemies_defeated.emit()
 
 
-func _on_player_turn_ended() -> void:
+func enemies_move() -> void:
 	var enemy_moves = []
 	var all_enemies = get_all_enemies()
 	all_enemies.map(func(enemy): enemy_moves.append(enemy.play_next_move()))
 	emit_signal("enemies_acted", enemy_moves)
 	all_enemies.map(func(enemy): enemy.pick_next_move())
-

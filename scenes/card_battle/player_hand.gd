@@ -188,4 +188,3 @@ func _on_enemies_acted(enemy_moves): # enemy_moves: Array[CardAttributes]
 		total_attack = 0
 
 	remaining_health -= total_attack
-	is_player_turn = true

@@ -31,6 +31,7 @@ func remove_card(index: int) -> CardAttributes:
 
 func remove_all_cards() -> Array[CardAttributes]:
 	var removed_cards = cards.duplicate(true)
+	cards.clear()
 	check_cards_empty()
 	update_card_count()
 	return removed_cards
