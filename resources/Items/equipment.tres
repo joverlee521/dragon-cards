@@ -1,0 +1,7 @@
+[gd_resource type="Resource" script_class="Equipment" load_steps=2 format=3 uid="uid://cujod7blaq0nr"]
+
+[ext_resource type="Script" path="res://resources/Items/equipment.gd" id="1_ipp3y"]
+
+[resource]
+script = ExtResource("1_ipp3y")
+Cards = Array[Resource("res://scenes/card_battle/card.gd")]([null])
