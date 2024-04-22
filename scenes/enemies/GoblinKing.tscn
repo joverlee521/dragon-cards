@@ -18,7 +18,7 @@ region = Rect2(0, 0, 79, 72)
 
 [node name="Enemy" instance=ExtResource("1_tgqxb")]
 position = Vector2(432, 232)
-health = 12
+health = 24
 cards = Array[Resource("res://resources/cards/card.gd")]([ExtResource("2_whe8v"), ExtResource("3_u16na"), ExtResource("4_hoied"), ExtResource("5_48wdk")])
 
 [node name="CollisionShape" parent="." index="0"]
