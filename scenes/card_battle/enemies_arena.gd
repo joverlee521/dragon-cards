@@ -23,11 +23,10 @@ func instantiate_enemies() -> void:
 		var enemy = enemies[i].instantiate()
 		enemy.position = get_node("Enemy%s" % i).position
 
-		# TODO: Dyanmic selection of enemies
+		add_child(enemy)
 		if i == 0:
 			enemy.selected = true
-
-		add_child(enemy)
+		enemy.enemy_selected.connect(_on_enemy_selected)
 		enemy.pick_next_move()
 
 
@@ -54,6 +53,9 @@ func attack_enemies(attack: int) -> void:
 
 	if len(get_all_enemies()) == 0:
 		all_enemies_defeated.emit()
+	# If no enemies are selected, always automatically select the first one
+	elif len(get_selected_enemies()) == 0:
+		get_all_enemies()[0].selected = true
 
 
 func enemies_move() -> void:
@@ -62,3 +64,7 @@ func enemies_move() -> void:
 	all_enemies.map(func(enemy): enemy_moves.append(enemy.play_next_move()))
 	emit_signal("enemies_acted", enemy_moves)
 	all_enemies.map(func(enemy): enemy.pick_next_move())
+
+
+func _on_enemy_selected(selected_enemy) -> void:
+	get_selected_enemies().map(func(enemy): if enemy != selected_enemy: enemy.selected = false)

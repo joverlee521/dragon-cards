@@ -1,8 +1,9 @@
-[gd_scene load_steps=13 format=3 uid="uid://dgy6vpaplva53"]
+[gd_scene load_steps=14 format=3 uid="uid://dgy6vpaplva53"]
 
 [ext_resource type="Script" path="res://scenes/card_battle/card_battle.gd" id="1_qgs4d"]
 [ext_resource type="Resource" uid="uid://8cgqkqrq6216" path="res://resources/PlayerVocations/Warrior.tres" id="2_ktppj"]
 [ext_resource type="Script" path="res://scenes/card_battle/player_hand.gd" id="3_6tv8r"]
+[ext_resource type="PackedScene" uid="uid://3fu10efu25ke" path="res://scenes/enemies/GoblinKing.tscn" id="3_jkcnx"]
 [ext_resource type="Script" path="res://scenes/card_battle/play_deck.gd" id="4_wmml7"]
 [ext_resource type="Texture2D" uid="uid://dh1bjajpx0ecb" path="res://art/cards/back01.png" id="5_eaoof"]
 [ext_resource type="PackedScene" uid="uid://c87eb4clrv66s" path="res://scenes/card_battle/card.tscn" id="6_jqovr"]
@@ -15,7 +16,7 @@
 
 [node name="CardBattle" type="Node"]
 script = ExtResource("1_qgs4d")
-enemies = Array[PackedScene]([ExtResource("6_q0nyr")])
+enemies = Array[PackedScene]([ExtResource("6_q0nyr"), ExtResource("3_jkcnx")])
 player_vocation = ExtResource("2_ktppj")
 player_cards = Array[Resource("res://resources/cards/card.gd")]([ExtResource("10_icx5q"), ExtResource("10_icx5q"), ExtResource("8_2f6cg"), ExtResource("8_2f6cg"), ExtResource("8_2f6cg")])
 
@@ -179,7 +180,7 @@ offset_left = 1096.0
 offset_top = 32.0
 offset_right = 1896.0
 offset_bottom = 456.0
-color = Color(0.960784, 0.341176, 0.313726, 1)
+color = Color(0.592157, 0.882353, 1, 1)
 script = ExtResource("12_nrroq")
 
 [node name="Enemy0" type="Marker2D" parent="EnemiesArena"]

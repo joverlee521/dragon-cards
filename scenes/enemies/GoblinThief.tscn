@@ -13,6 +13,7 @@ atlas = ExtResource("2_8bjhg")
 region = Rect2(0, 0, 67, 52)
 
 [node name="Enemy" instance=ExtResource("1_c3ab7")]
+position = Vector2(448, 288)
 health = 9
 
 [node name="CollisionShape" parent="." index="0"]
@@ -21,3 +22,10 @@ shape = SubResource("RectangleShape2D_6jxla")
 
 [node name="Sprite" parent="." index="1"]
 texture = SubResource("AtlasTexture_42oh2")
+
+[node name="SelectionBorder" parent="Sprite" index="0"]
+visible = true
+offset_left = -33.5
+offset_top = -26.0
+offset_right = -33.5
+offset_bottom = -26.0

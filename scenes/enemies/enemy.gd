@@ -2,6 +2,7 @@
 # Only inherited by enemy scene scripts
 class_name Enemy extends Area2D
 
+signal enemy_selected(enemy) # enemy: Enemy
 
 @export_group("EnemyStats")
 @export var health: int = 0:
@@ -17,7 +18,6 @@ var defense: int = 0:
 		defense = value
 		if is_node_ready():
 			$DefenseLabel.text = str(defense) if defense > 0 else ""
-var selected: bool = false
 var next_move: CardAttributes:
 	set(value):
 		next_move = value
@@ -28,9 +28,17 @@ var next_move: CardAttributes:
 			if next_move.defense > 0:
 				$NextMove.text += "<D>"
 
+# Click selection variables
+var mouse_entered_enemy = false
+var selected: bool = false:
+	set(value):
+		selected = value
+		$Sprite/SelectionBorder.visible = selected
+
 
 func _ready():
 	$HealthLabel.text = str(health)
+	$Sprite/SelectionBorder.hide()
 
 
 func pick_next_move() -> void:
@@ -53,3 +61,24 @@ func remove_health(num: int) -> void:
 		num = 0
 
 	health -= num
+
+
+# Custom handler for input to work around overlapping Area2D objects both getting input
+# See https://github.com/godotengine/godot/issues/29825
+# Resolved in https://github.com/godotengine/godot/pull/75688
+# which was released in Godot v4.3
+func _unhandled_input(event):
+	if (event.is_action_pressed("mouse_left_click")
+	and mouse_entered_enemy):
+		selected = true
+		emit_signal("enemy_selected", self)
+
+		self.get_viewport().set_input_as_handled()
+
+
+func _on_mouse_entered():
+	mouse_entered_enemy = true
+
+func _on_mouse_exited():
+	mouse_entered_enemy = false
+

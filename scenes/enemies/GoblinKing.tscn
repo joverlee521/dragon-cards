@@ -17,6 +17,7 @@ atlas = ExtResource("2_5iiv3")
 region = Rect2(0, 0, 79, 72)
 
 [node name="Enemy" instance=ExtResource("1_tgqxb")]
+position = Vector2(432, 232)
 health = 12
 cards = Array[Resource("res://resources/cards/card.gd")]([ExtResource("2_whe8v"), ExtResource("3_u16na"), ExtResource("4_hoied"), ExtResource("5_48wdk")])
 
@@ -26,3 +27,10 @@ shape = SubResource("RectangleShape2D_d8xq4")
 
 [node name="Sprite" parent="." index="1"]
 texture = SubResource("AtlasTexture_gcv8u")
+
+[node name="SelectionBorder" parent="Sprite" index="0"]
+visible = true
+offset_left = -39.5
+offset_top = -36.0
+offset_right = -39.5
+offset_bottom = -36.0
