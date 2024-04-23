@@ -65,6 +65,9 @@ func _on_cards_played(cards: Array[Card]) -> void:
 
 	player_defense += played_card.attributes.defense
 	$EnemiesArena.attack_enemies(played_card.attributes.attack)
+	
+	#Suggestion for handling more complex card effects
+	#played_card.do_effects(self)
 
 	await get_tree().create_timer(1.0).timeout
 
