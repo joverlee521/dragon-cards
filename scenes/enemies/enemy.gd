@@ -46,9 +46,9 @@ func pick_next_move() -> void:
 	next_move = cards.pick_random()
 
 
-func play_next_move() -> CardAttributes:
+func get_next_move() -> CardAttributes:
 	var played_move = next_move
-	character.add_defense(played_move.defense)
+	played_move.set_card_player(character)
 	next_move = null
 	return played_move
 

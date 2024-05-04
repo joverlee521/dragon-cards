@@ -40,6 +40,7 @@ func set_attributes():
 		else:
 			$CardBackground/CardDefenseContainer.visible = false
 
+
 # Custom handler for input to work around overlapping Area2D objects both getting input
 # See https://github.com/godotengine/godot/issues/29825
 # Resolved in https://github.com/godotengine/godot/pull/75688

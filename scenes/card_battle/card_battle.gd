@@ -59,9 +59,12 @@ func _on_cards_played(cards: Array[Card]) -> void:
 	var played_card = cards[0]
 	add_child(played_card)
 	played_card.position = $PlayedCard.position
+	played_card.attributes.set_card_player(player)
 
-	player.add_defense(played_card.attributes.defense)
-	$EnemiesArena.attack_enemies(played_card.attributes.attack)
+	var enemy_characters = $EnemiesArena.get_selected_enemies().map(func(enemy): return enemy.character)
+	played_card.attributes.set_card_targets(enemy_characters)
+	played_card.attributes.play_card()
+	$EnemiesArena.check_enemies_health()
 
 	#Suggestion for handling more complex card effects
 	#played_card.do_effects(self)
@@ -94,9 +97,11 @@ func _on_player_turn_ended() -> void:
 	$PlayerHand.is_player_turn = true
 
 
-func _on_enemies_acted(enemy_moves): # enemy_moves: Array[CardAttributes]
-	var total_attack = enemy_moves.reduce(func(accum, move): return accum + move.attack, 0)
-	player.remove_health(total_attack)
+func _on_enemies_acted(enemy_cards): # enemy_moves: Array[CardAttributes]
+	for enemy_card in enemy_cards:
+		enemy_card.set_card_targets([player])
+		enemy_card.play_card()
+
 	if player.health <= 0:
 		$EndBattleScreen.player_defeated()
 

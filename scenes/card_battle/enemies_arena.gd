@@ -42,10 +42,7 @@ func get_selected_enemies() -> Array[Node]:
 	return get_all_enemies().filter(func(enemy): return enemy.selected)
 
 
-func attack_enemies(attack: int) -> void:
-	var selected_enemies = get_selected_enemies()
-	selected_enemies.map(func(enemy): enemy.remove_health(attack))
-
+func check_enemies_health() -> void:
 	for enemy in get_all_enemies():
 		if enemy.character.health <= 0:
 			remove_child(enemy)
@@ -61,7 +58,7 @@ func attack_enemies(attack: int) -> void:
 func enemies_move() -> void:
 	var enemy_moves = []
 	var all_enemies = get_all_enemies()
-	all_enemies.map(func(enemy): enemy_moves.append(enemy.play_next_move()))
+	all_enemies.map(func(enemy): enemy_moves.append(enemy.get_next_move()))
 	emit_signal("enemies_acted", enemy_moves)
 	all_enemies.map(func(enemy): enemy.pick_next_move())
 
