@@ -29,7 +29,7 @@ var selected: bool = false:
 
 
 func _ready():
-	character = Character.new(health, defense)
+	character = Character.new(health, defense, set_stat_labels)
 	set_stat_labels()
 	$Sprite/SelectionBorder.hide()
 
@@ -55,7 +55,6 @@ func play_next_move() -> CardAttributes:
 
 func remove_health(num: int) -> void:
 	character.remove_health(num)
-	set_stat_labels()
 
 
 # Custom handler for input to work around overlapping Area2D objects both getting input

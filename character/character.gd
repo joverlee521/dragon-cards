@@ -3,21 +3,26 @@ class_name Character extends RefCounted
 var defense: int
 var max_health: int
 var health: int
+var set_stat_display: Callable
 
 
 
-func _init(i_max_health: int, i_defense: int) -> void:
+func _init(i_max_health: int, i_defense: int, i_set_stat_display: Callable) -> void:
 	max_health = i_max_health
 	health = max_health
 	defense = i_defense
+	set_stat_display = i_set_stat_display
 
 
 func add_defense(num: int) -> void:
 	defense += num
+	set_stat_display.call()
 
 
 func add_health(num: int) -> void:
 	health += num
+	set_stat_display.call()
+
 
 
 func remove_health(num: int) -> void:
@@ -29,3 +34,4 @@ func remove_health(num: int) -> void:
 		num = 0
 
 	health -= num
+	set_stat_display.call()
