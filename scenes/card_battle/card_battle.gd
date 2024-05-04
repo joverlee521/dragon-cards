@@ -6,16 +6,8 @@ class_name CardBattle extends Node
 @export_group("PlayerStats")
 @export var player_vocation: Vocation
 @export var player_cards: Array[CardAttributes] = []
-var player_health: int:
-	set(value):
-		player_health = value
-		$Health.text = "%s / %s" % [str(player_health), str(player_vocation.max_health)]
-		if player_health <= 0:
-			$EndBattleScreen.player_defeated()
-var player_defense: int = 0:
-	set(value):
-		player_defense = value
-		$Defense.text = str(player_defense)
+
+var player: Character
 
 
 func _ready():
@@ -24,8 +16,8 @@ func _ready():
 
 func start_battle():
 	# TODO: track player's actual health
-	player_health = player_vocation.max_health
-	player_defense = 0
+	player = Character.new(player_vocation.max_health, 0, set_player_stat_labels)
+	set_player_stat_labels()
 	$PlayDeck.set_deck(player_cards)
 	$DiscardDeck.remove_all_cards()
 	$PlayerHand.set_player_hand(player_vocation)
@@ -34,6 +26,11 @@ func start_battle():
 	$SkipPlayerTurnLabel.hide()
 	await get_tree().create_timer(2.0).timeout
 	deal_hand()
+
+
+func set_player_stat_labels():
+	$Health.text = "%s / %s" % [str(player.health), str(player.max_health)]
+	$Defense.text = str(player.defense)
 
 
 func deal_hand() -> void:
@@ -63,7 +60,7 @@ func _on_cards_played(cards: Array[Card]) -> void:
 	add_child(played_card)
 	played_card.position = $PlayedCard.position
 
-	player_defense += played_card.attributes.defense
+	player.add_defense(played_card.attributes.defense)
 	$EnemiesArena.attack_enemies(played_card.attributes.attack)
 
 	#Suggestion for handling more complex card effects
@@ -99,15 +96,9 @@ func _on_player_turn_ended() -> void:
 
 func _on_enemies_acted(enemy_moves): # enemy_moves: Array[CardAttributes]
 	var total_attack = enemy_moves.reduce(func(accum, move): return accum + move.attack, 0)
-
-	if total_attack >= player_defense:
-		total_attack -= player_defense
-		player_defense = 0
-	else:
-		player_defense -= total_attack
-		total_attack = 0
-
-	player_health -= total_attack
+	player.remove_health(total_attack)
+	if player.health <= 0:
+		$EndBattleScreen.player_defeated()
 
 
 func _on_new_battle() -> void:
