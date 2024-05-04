@@ -5,19 +5,11 @@ class_name Enemy extends Area2D
 signal enemy_selected(enemy) # enemy: Enemy
 
 @export_group("EnemyStats")
-@export var health: int = 0:
-	set(value):
-		health = value
-		if is_node_ready():
-			$HealthLabel.text = str(health)
-
+@export var health: int = 0
+@export var defense: int = 0
 @export var cards: Array[CardAttributes] = []
 
-var defense: int = 0:
-	set(value):
-		defense = value
-		if is_node_ready():
-			$DefenseLabel.text = str(defense) if defense > 0 else ""
+var character: Character
 var next_move: CardAttributes:
 	set(value):
 		next_move = value
@@ -37,8 +29,17 @@ var selected: bool = false:
 
 
 func _ready():
-	$HealthLabel.text = str(health)
+	character = Character.new(health, defense)
+	set_stat_labels()
 	$Sprite/SelectionBorder.hide()
+
+
+func set_stat_labels() -> void:
+	$HealthLabel.text = str(character.health)
+	if character.defense > 0:
+		$DefenseLabel.text = str(character.defense)
+	else:
+		$DefenseLabel.text = ''
 
 
 func pick_next_move() -> void:
@@ -47,20 +48,14 @@ func pick_next_move() -> void:
 
 func play_next_move() -> CardAttributes:
 	var played_move = next_move
-	defense += played_move.defense
+	character.add_defense(played_move.defense)
 	next_move = null
 	return played_move
 
 
 func remove_health(num: int) -> void:
-	if num >= defense:
-		num -= defense
-		defense = 0
-	else:
-		defense -= num
-		num = 0
-
-	health -= num
+	character.remove_health(num)
+	set_stat_labels()
 
 
 # Custom handler for input to work around overlapping Area2D objects both getting input

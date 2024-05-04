@@ -47,7 +47,7 @@ func attack_enemies(attack: int) -> void:
 	selected_enemies.map(func(enemy): enemy.remove_health(attack))
 
 	for enemy in get_all_enemies():
-		if enemy.health <= 0:
+		if enemy.character.health <= 0:
 			remove_child(enemy)
 			enemy.queue_free()
 
