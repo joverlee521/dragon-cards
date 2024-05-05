@@ -10,4 +10,11 @@ func _ready():
 
 func start_battle():
 	hide()
-	add_child(card_battle.instantiate())
+	var new_card_battle = card_battle.instantiate()
+	new_card_battle.return_to_start_screen.connect(end_battle)
+	add_child(new_card_battle)
+
+
+func end_battle():
+	remove_child($CardBattle)
+	show()

@@ -223,6 +223,14 @@ offset_bottom = 653.0
 theme_override_font_sizes/font_size = 50
 text = "Restart Battle"
 
+[node name="ReturnToStartScreen" type="Button" parent="EndBattleScreen"]
+offset_left = 712.0
+offset_top = 736.0
+offset_right = 1259.0
+offset_bottom = 813.0
+theme_override_font_sizes/font_size = 50
+text = "Return to Start Screen"
+
 [connection signal="cards_discarded" from="PlayerHand" to="." method="_on_cards_discarded"]
 [connection signal="cards_played" from="PlayerHand" to="." method="_on_cards_played"]
 [connection signal="player_turn_ended" from="PlayerHand" to="." method="_on_player_turn_ended"]
@@ -234,3 +242,4 @@ text = "Restart Battle"
 [connection signal="all_enemies_defeated" from="EnemiesArena" to="EndBattleScreen" method="_on_all_enemies_defeated"]
 [connection signal="enemies_acted" from="EnemiesArena" to="." method="_on_enemies_acted"]
 [connection signal="pressed" from="EndBattleScreen/NewBattle" to="." method="_on_new_battle"]
+[connection signal="pressed" from="EndBattleScreen/ReturnToStartScreen" to="." method="_on_return_to_start_screen"]

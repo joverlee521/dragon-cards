@@ -1,5 +1,7 @@
 class_name CardBattle extends Node
 
+signal return_to_start_screen
+
 @export_group("CardBattleStats")
 @export var enemies: Array[PackedScene] = []
 
@@ -108,3 +110,7 @@ func _on_enemies_acted(enemy_cards): # enemy_moves: Array[CardAttributes]
 
 func _on_new_battle() -> void:
 	start_battle()
+
+
+func _on_return_to_start_screen() -> void:
+	return_to_start_screen.emit()
