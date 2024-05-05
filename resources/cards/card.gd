@@ -48,8 +48,8 @@ func set_card_targets(i_card_targets: Array):
 
 
 func play_card():
-	if card_player:
-		apply_effects_to_card_player()
+	assert(card_player != null, "Must set card_player before calling play_card")
+	apply_effects_to_card_player()
 	if card_targets:
 		apply_effects_to_card_targets()
 
