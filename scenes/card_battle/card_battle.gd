@@ -2,14 +2,8 @@ class_name CardBattle extends Node
 
 signal return_to_start_screen
 
-@export_group("CardBattleStats")
-@export var enemies: Array[PackedScene] = []
-
-@export_group("PlayerStats")
-@export var player_vocation: Vocation
-@export var player_cards: Array[CardAttributes] = []
-
-var player: Character
+var enemies: = [] # Array[Enemies]
+var player: Player
 
 
 func _ready():
@@ -17,12 +11,11 @@ func _ready():
 
 
 func start_battle():
-	# TODO: track player's actual health
-	player = Character.new(player_vocation.max_health, 0, set_player_stat_labels)
+	player.set_player_stats_label_function(set_player_stat_labels)
 	set_player_stat_labels()
-	$PlayDeck.set_deck(player_cards)
+	$PlayDeck.set_deck(player.cards)
 	$DiscardDeck.remove_all_cards()
-	$PlayerHand.set_player_hand(player_vocation)
+	$PlayerHand.set_player_hand(player.vocation)
 	$EnemiesArena.enemies = enemies
 	$EndBattleScreen.hide()
 	$SkipPlayerTurnLabel.hide()
@@ -31,8 +24,8 @@ func start_battle():
 
 
 func set_player_stat_labels():
-	$Health.text = "%s / %s" % [str(player.health), str(player.max_health)]
-	$Defense.text = str(player.defense)
+	$Health.text = "%s / %s" % [str(player.character.health), str(player.character.max_health)]
+	$Defense.text = str(player.character.defense)
 
 
 func deal_hand() -> void:
@@ -61,7 +54,7 @@ func _on_cards_played(cards: Array[Card]) -> void:
 	var played_card = cards[0]
 	add_child(played_card)
 	played_card.position = $PlayedCard.position
-	played_card.attributes.set_card_player(player)
+	played_card.attributes.set_card_player(player.character)
 
 	var enemy_characters = $EnemiesArena.get_selected_enemies().map(func(enemy): return enemy.character)
 	played_card.attributes.set_card_targets(enemy_characters)
@@ -101,10 +94,10 @@ func _on_player_turn_ended() -> void:
 
 func _on_enemies_acted(enemy_cards): # enemy_moves: Array[CardAttributes]
 	for enemy_card in enemy_cards:
-		enemy_card.set_card_targets([player])
+		enemy_card.set_card_targets([player.character])
 		enemy_card.play_card()
 
-	if player.health <= 0:
+	if player.character.health <= 0:
 		$EndBattleScreen.player_defeated()
 
 

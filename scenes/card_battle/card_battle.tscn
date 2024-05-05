@@ -1,26 +1,16 @@
-[gd_scene load_steps=16 format=3 uid="uid://dgy6vpaplva53"]
+[gd_scene load_steps=9 format=3 uid="uid://dgy6vpaplva53"]
 
 [ext_resource type="Script" path="res://scenes/card_battle/card_battle.gd" id="1_qgs4d"]
-[ext_resource type="Resource" uid="uid://8cgqkqrq6216" path="res://resources/PlayerVocations/Warrior.tres" id="2_ktppj"]
 [ext_resource type="Script" path="res://scenes/card_battle/player_hand.gd" id="3_6tv8r"]
-[ext_resource type="PackedScene" uid="uid://3fu10efu25ke" path="res://scenes/enemies/GoblinKing.tscn" id="3_jkcnx"]
 [ext_resource type="Script" path="res://scenes/card_battle/play_deck.gd" id="4_wmml7"]
 [ext_resource type="Texture2D" uid="uid://dh1bjajpx0ecb" path="res://art/cards/back01.png" id="5_eaoof"]
 [ext_resource type="PackedScene" uid="uid://c87eb4clrv66s" path="res://scenes/card_battle/card.tscn" id="6_jqovr"]
-[ext_resource type="PackedScene" uid="uid://ev5dne8iq6p4" path="res://scenes/enemies/Goblin.tscn" id="6_q0nyr"]
-[ext_resource type="Resource" uid="uid://dt0ihd1yryf1e" path="res://resources/cards/ShieldBash.tres" id="7_ga3c3"]
-[ext_resource type="Resource" uid="uid://cmad7q4pejruw" path="res://resources/cards/Slash.tres" id="8_2f6cg"]
-[ext_resource type="Resource" uid="uid://cr54ql38qvxl6" path="res://resources/cards/BigHit.tres" id="8_bss5w"]
-[ext_resource type="Resource" uid="uid://dfwxap4ae2gtt" path="res://resources/cards/Defend.tres" id="10_icx5q"]
 [ext_resource type="Script" path="res://scenes/card_battle/discard_deck.gd" id="11_v2avs"]
 [ext_resource type="Script" path="res://scenes/card_battle/enemies_arena.gd" id="12_nrroq"]
 [ext_resource type="Script" path="res://scenes/card_battle/end_battle_screen.gd" id="13_b77cx"]
 
 [node name="CardBattle" type="Node"]
 script = ExtResource("1_qgs4d")
-enemies = Array[PackedScene]([ExtResource("6_q0nyr"), ExtResource("3_jkcnx")])
-player_vocation = ExtResource("2_ktppj")
-player_cards = Array[Resource("res://resources/cards/card.gd")]([ExtResource("10_icx5q"), ExtResource("10_icx5q"), ExtResource("8_2f6cg"), ExtResource("8_2f6cg"), ExtResource("8_2f6cg"), ExtResource("7_ga3c3"), ExtResource("8_bss5w")])
 
 [node name="HealthLabel" type="Label" parent="."]
 offset_left = 72.0
