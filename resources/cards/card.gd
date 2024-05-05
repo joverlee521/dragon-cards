@@ -44,6 +44,11 @@ func set_card_player(i_card_player: Character):
 
 
 func set_card_targets(i_card_targets: Array):
+	if Target == TARGET_TYPES.SINGLE:
+		assert(i_card_targets.size() == 1, "Can only set only one target")
+	else:
+		assert(i_card_targets.size() >= 1, "Must set one or more targets")
+
 	card_targets = i_card_targets
 
 
