@@ -42,3 +42,7 @@ func remove_health(num: int) -> void:
 
 	health -= num
 	set_stat_display.call()
+	
+func remove_health_directly(num: int) -> void:
+	health -= num
+	set_stat_display.call()	
