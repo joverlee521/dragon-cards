@@ -14,11 +14,94 @@ grow_vertical = 2
 color = Color(0.258824, 0, 0.568627, 1)
 
 [node name="StartBattle" type="Button" parent="."]
-offset_left = 808.0
-offset_top = 512.0
-offset_right = 1092.0
-offset_bottom = 589.0
+offset_left = 832.0
+offset_top = 896.0
+offset_right = 1116.0
+offset_bottom = 973.0
 theme_override_font_sizes/font_size = 50
 text = "Start Battle"
+
+[node name="PlayerVocationLabel" type="Label" parent="."]
+offset_left = 80.0
+offset_top = 80.0
+offset_right = 389.0
+offset_bottom = 135.0
+theme_override_font_sizes/font_size = 40
+text = "Player Vocation:"
+
+[node name="PlayerVocation" type="OptionButton" parent="."]
+offset_left = 424.0
+offset_top = 80.0
+offset_right = 616.0
+offset_bottom = 143.0
+theme_override_font_sizes/font_size = 40
+selected = 0
+
+[node name="CardsLabel" type="Label" parent="."]
+offset_left = 80.0
+offset_top = 168.0
+offset_right = 389.0
+offset_bottom = 223.0
+theme_override_font_sizes/font_size = 40
+text = "Player Cards:"
+
+[node name="CardsContainer" type="ScrollContainer" parent="."]
+clip_contents = false
+custom_minimum_size = Vector2(500, 500)
+offset_left = 144.0
+offset_top = 256.0
+offset_right = 644.0
+offset_bottom = 756.0
+
+[node name="Cards" type="GridContainer" parent="CardsContainer"]
+custom_minimum_size = Vector2(500, 500)
+layout_mode = 2
+theme_override_constants/h_separation = 20
+columns = 2
+
+[node name="Enemy1Label" type="Label" parent="."]
+offset_left = 1192.0
+offset_top = 80.0
+offset_right = 1501.0
+offset_bottom = 135.0
+theme_override_font_sizes/font_size = 40
+text = "Enemy 1:"
+
+[node name="Enemy1" type="OptionButton" parent="."]
+offset_left = 1536.0
+offset_top = 80.0
+offset_right = 1728.0
+offset_bottom = 143.0
+theme_override_font_sizes/font_size = 40
+
+[node name="Enemy2Label" type="Label" parent="."]
+offset_left = 1192.0
+offset_top = 208.0
+offset_right = 1501.0
+offset_bottom = 263.0
+theme_override_font_sizes/font_size = 40
+text = "Enemy 2:"
+
+[node name="Enemy2" type="OptionButton" parent="."]
+offset_left = 1536.0
+offset_top = 208.0
+offset_right = 1728.0
+offset_bottom = 271.0
+theme_override_font_sizes/font_size = 40
+
+[node name="Enemy3Label" type="Label" parent="."]
+offset_left = 1192.0
+offset_top = 336.0
+offset_right = 1501.0
+offset_bottom = 391.0
+theme_override_font_sizes/font_size = 40
+text = "Enemy 3:"
+
+[node name="Enemy3" type="OptionButton" parent="."]
+offset_left = 1536.0
+offset_top = 336.0
+offset_right = 1728.0
+offset_bottom = 399.0
+theme_override_font_sizes/font_size = 40
 
 [connection signal="pressed" from="StartBattle" to="." method="start_battle"]

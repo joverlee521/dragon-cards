@@ -4,7 +4,7 @@ class_name Enemies extends ColorRect
 signal all_enemies_defeated
 signal enemies_acted(enemy_moves) # enemy_moves: Array[CardAttributes]
 
-var enemies: Array[PackedScene] = []:
+var enemies = []: #Array[PackedScene]
 	set(value):
 		remove_all_enemies()
 		enemies = value
