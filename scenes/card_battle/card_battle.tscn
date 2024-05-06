@@ -196,14 +196,15 @@ grow_vertical = 2
 color = Color(0, 0.541176, 0.541176, 1)
 
 [node name="EndState" type="Label" parent="EndBattleScreen"]
-offset_left = 728.0
-offset_top = 184.0
-offset_right = 1184.0
-offset_bottom = 321.0
+offset_left = 128.0
+offset_top = 192.0
+offset_right = 1800.0
+offset_bottom = 329.0
 theme_override_font_sizes/font_size = 100
 text = "End State"
 horizontal_alignment = 1
 vertical_alignment = 1
+autowrap_mode = 3
 
 [node name="NewBattle" type="Button" parent="EndBattleScreen"]
 offset_left = 800.0
@@ -229,7 +230,7 @@ text = "Return to Start Screen"
 [connection signal="pressed" from="PlayerHand/EndTurn" to="PlayerHand" method="_on_end_turn"]
 [connection signal="card_dealt" from="PlayDeck" to="PlayerHand" method="_on_deck_dealt_card"]
 [connection signal="cards_refreshed" from="DiscardDeck" to="PlayDeck" method="_on_cards_refreshed"]
-[connection signal="all_enemies_defeated" from="EnemiesArena" to="EndBattleScreen" method="_on_all_enemies_defeated"]
+[connection signal="all_enemies_defeated" from="EnemiesArena" to="." method="_on_enemies_defeated"]
 [connection signal="enemies_acted" from="EnemiesArena" to="." method="_on_enemies_acted"]
 [connection signal="pressed" from="EndBattleScreen/NewBattle" to="." method="_on_new_battle"]
 [connection signal="pressed" from="EndBattleScreen/ReturnToStartScreen" to="." method="_on_return_to_start_screen"]

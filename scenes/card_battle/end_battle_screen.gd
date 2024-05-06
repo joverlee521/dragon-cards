@@ -8,10 +8,21 @@ func _ready():
 
 
 func player_defeated():
+	$NewBattle.show()
+	$ReturnToStartScreen.show()
 	self.show()
 	$EndState.text = "YOU LOSE"
 
 
-func _on_all_enemies_defeated():
+func player_won():
+	$NewBattle.show()
+	$ReturnToStartScreen.show()
 	self.show()
 	$EndState.text = "YOU WIN"
+
+
+func load_new_enemies():
+	$NewBattle.hide()
+	$ReturnToStartScreen.hide()
+	self.show()
+	$EndState.text = "YOU WIN \n LOADING NEW ENEMIES"

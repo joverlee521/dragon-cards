@@ -1,7 +1,9 @@
 class_name CardBattle extends Node
 
 signal return_to_start_screen
+signal defeated_battle_enemies
 
+var endless_mode: bool = false
 var enemies: = [] # Array[Enemies]
 var player: Player
 
@@ -99,6 +101,16 @@ func _on_enemies_acted(enemy_cards): # enemy_moves: Array[CardAttributes]
 
 	if player.character.health <= 0:
 		$EndBattleScreen.player_defeated()
+
+
+func _on_enemies_defeated():
+	if not endless_mode:
+		$EndBattleScreen.player_won()
+	else:
+		$EndBattleScreen.load_new_enemies()
+		player.character.add_health(5)
+		player.character.remove_all_defense()
+		defeated_battle_enemies.emit()
 
 
 func _on_new_battle() -> void:

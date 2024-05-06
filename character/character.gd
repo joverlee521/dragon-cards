@@ -19,8 +19,15 @@ func add_defense(num: int) -> void:
 	set_stat_display.call()
 
 
+func remove_all_defense() -> void:
+	defense = 0
+	set_stat_display.call()
+
+
 func add_health(num: int) -> void:
 	health += num
+	if health > max_health:
+		health = max_health
 	set_stat_display.call()
 
 

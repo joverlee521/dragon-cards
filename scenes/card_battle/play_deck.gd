@@ -9,6 +9,7 @@ func _ready():
 
 
 func set_deck(cards) -> void:
+	remove_all_cards()
 	cards.map(add_card)
 	shuffle()
 
