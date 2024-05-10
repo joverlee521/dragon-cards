@@ -6,3 +6,5 @@
 [art/PixelCardArt/CardRPGPack](./art/PixelCardArt/CardRPGPack) assets from https://sagak-art-pururu.itch.io/cardrpg-ui
 
 [art/PixelCardArt/FantasyCardPack](./art/PixelCardArt/FantasyCardPack) assets from https://cafedraw.itch.io/fantasy-card-assets
+
+[art/HitEffects/Retro Impact Effect Pack ALL](art/HitEffects/Retro Impact Effect Pack ALL) assets from https://bdragon1727.itch.io/retro-impact-effect-pack-all
