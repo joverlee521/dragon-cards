@@ -1,11 +1,9 @@
-[gd_resource type="Resource" script_class="CardAttributes" load_steps=12 format=3 uid="uid://dnktjebw8h1tn"]
+[gd_resource type="Resource" script_class="CardAttributes" load_steps=10 format=3 uid="uid://dnktjebw8h1tn"]
 
 [ext_resource type="Script" path="res://resources/cards/card_attributes.gd" id="1_wgfc6"]
 [ext_resource type="Texture2D" uid="uid://b8yvew12myo05" path="res://art/PixelCardArt/FantasyCardPack/pixelCardAssest_V01.png" id="1_xdbqu"]
 [ext_resource type="Texture2D" uid="uid://w205ld2akb5j" path="res://art/PixelCardArt/FantasyCardPack/pixelCardAssest.png" id="2_1mkod"]
-[ext_resource type="SpriteFrames" uid="uid://y3tqxdqnbsyw" path="res://art/SpriteFrames/CardEffectFrames.tres" id="2_dtfvd"]
 [ext_resource type="Texture2D" uid="uid://dprdwm5gkcvg2" path="res://art/PixelCardArt/CardRPGPack/Card RPG items/weapon_sword4.png" id="2_grcoh"]
-[ext_resource type="SpriteFrames" path="res://art/SpriteFrames/ArmorFrames.tres" id="5_lpt61"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_hjf3d"]
 resource_local_to_scene = true
@@ -47,5 +45,5 @@ card_description_plate = SubResource("AtlasTexture_g1fp1")
 card_name_plate = SubResource("AtlasTexture_cbeei")
 card_description = "This is a card, yo"
 card_name = "Card"
-card_attack_frames = ExtResource("2_dtfvd")
-card_defense_frames = ExtResource("5_lpt61")
+card_attack_animation = 0
+card_defense_animation = 0
