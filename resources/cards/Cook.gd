@@ -7,6 +7,8 @@ func apply_effects_to_card_player():
 	pass
 
 
-# Add defense to card player if the enemy dies from the attack
+# Ignores defense and attacks target health directly
 func apply_effects_to_card_targets():
-	card_targets.map(func(target): target.remove_health_directly(attack))
+	for target in card_targets:
+		target.remove_health_directly(attack)
+		play_animation.call(get_attack_animation_string(), target.card_battle_position)
