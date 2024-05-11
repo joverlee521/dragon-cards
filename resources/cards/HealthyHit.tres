@@ -1,6 +1,7 @@
-[gd_resource type="Resource" load_steps=9 format=3 uid="uid://fp8tn2kqjvcq"]
+[gd_resource type="Resource" load_steps=10 format=3 uid="uid://fp8tn2kqjvcq"]
 
 [ext_resource type="Texture2D" uid="uid://tromqipaql6u" path="res://art/PixelCardArt/CardRPGPack/Card RPG items/weapon_axe1.png" id="1_dbj52"]
+[ext_resource type="SpriteFrames" uid="uid://y3tqxdqnbsyw" path="res://art/SpriteFrames/CardEffectFrames.tres" id="2_mhe2k"]
 [ext_resource type="Script" path="res://resources/cards/HealthyHit.gd" id="2_pstuw"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_561bi"]
@@ -42,3 +43,4 @@ card_description_plate = SubResource("AtlasTexture_jef4r")
 card_name_plate = SubResource("AtlasTexture_ocdu3")
 card_description = "Deals double damage if at full health"
 card_name = "Healthy Hit"
+card_attack_frames = ExtResource("2_mhe2k")

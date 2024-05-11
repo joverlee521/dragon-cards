@@ -2,6 +2,10 @@ class_name CardAttributes extends Resource
 
 enum DAMAGE_TYPES {CUTTING, BLUNT, FIRE, ICE, LIGHTNING, WATER, LIGHT, DARK, DEFAULT}
 
+enum ATTACK_ANIMATIONS {PHYSICAL, MAGIC}
+
+enum DEFENSE_ANIMATIONS {DEFEND}
+
 enum TARGET_TYPES {SINGLE, GROUP}
 
 @export_group("CardInfo")
@@ -27,10 +31,15 @@ enum TARGET_TYPES {SINGLE, GROUP}
 @export var card_name_plate : AtlasTexture
 @export var card_description : String
 @export var card_name : String
+@export var card_attack_animation : ATTACK_ANIMATIONS
+@export var card_defense_animation : DEFENSE_ANIMATIONS
 
 
 var card_player: Character
 var card_targets: Array # Array[Characters]
+
+#callables
+var play_animation : Callable
 
 
 func _init(i_attack = 0, i_defense = 0, i_stamina_cost = 0):
@@ -38,6 +47,8 @@ func _init(i_attack = 0, i_defense = 0, i_stamina_cost = 0):
 	defense = i_defense
 	stamina_cost = i_stamina_cost
 
+func set_animation(i_play_animation: Callable):
+	play_animation = i_play_animation
 
 func set_card_player(i_card_player: Character):
 	card_player = i_card_player
@@ -60,8 +71,30 @@ func play_card():
 
 
 func apply_effects_to_card_player():
-	card_player.add_defense(defense)
+	if defense > 0:
+		card_player.add_defense(defense)
+		play_animation.call(get_defense_animation_string(), card_player.card_battle_position)
 
 
 func apply_effects_to_card_targets():
-	card_targets.map(func(target): target.remove_health(attack))
+	if attack > 0:
+		for target in card_targets:
+			target.remove_health(attack)
+			play_animation.call(get_attack_animation_string(), target.card_battle_position)
+
+
+	
+func get_attack_animation_string() -> String:
+	match card_attack_animation:
+		ATTACK_ANIMATIONS.PHYSICAL:
+			return "PhysicalAttack"
+		ATTACK_ANIMATIONS.MAGIC:
+			return "Magic"
+	return ""
+	
+	
+func get_defense_animation_string() -> String:
+	match card_defense_animation:
+		DEFENSE_ANIMATIONS.DEFEND:
+			return "AddArmor"
+	return ""

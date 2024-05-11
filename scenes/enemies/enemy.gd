@@ -7,7 +7,7 @@ signal enemy_selected(enemy) # enemy: Enemy
 @export_group("EnemyStats")
 @export var health: int = 0
 @export var defense: int = 0
-@export var cards: Array[CardAttributes] = []
+@export var cards: Array = []
 
 var character: Character
 var next_move: CardAttributes:
@@ -48,6 +48,7 @@ func pick_next_move() -> void:
 
 func get_next_move() -> CardAttributes:
 	var played_move = next_move
+	print(played_move)
 	played_move.set_card_player(character)
 	next_move = null
 	return played_move

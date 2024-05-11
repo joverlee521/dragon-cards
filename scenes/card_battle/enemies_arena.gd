@@ -22,8 +22,9 @@ func instantiate_enemies() -> void:
 	for i in len(enemies):
 		var enemy = enemies[i].instantiate()
 		enemy.position = get_node("Enemy%s" % i).position
-
 		add_child(enemy)
+		#TODO: USE GLOBAL POSITION
+		enemy.character.set_card_battle_position(enemy.to_global(enemy.position))
 		if i == 0:
 			enemy.selected = true
 		enemy.enemy_selected.connect(_on_enemy_selected)

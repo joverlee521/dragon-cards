@@ -13,6 +13,7 @@ func _ready():
 
 
 func start_battle():
+	$CardAnimation.hide()
 	player.set_player_stats_label_function(set_player_stat_labels)
 	set_player_stat_labels()
 	$PlayDeck.set_deck(player.cards)
@@ -56,10 +57,13 @@ func _on_cards_played(cards: Array[Card]) -> void:
 	var played_card = cards[0]
 	add_child(played_card)
 	played_card.position = $PlayedCard.position
+	#TODO: change this to the player position when there is a representation of the player
+	player.character.card_battle_position = played_card.position
 	played_card.attributes.set_card_player(player.character)
 
 	var enemy_characters = $EnemiesArena.get_selected_enemies().map(func(enemy): return enemy.character)
 	played_card.attributes.set_card_targets(enemy_characters)
+	played_card.attributes.set_animation(play_card_animation)
 	played_card.attributes.play_card()
 	$EnemiesArena.check_enemies_health()
 
@@ -97,11 +101,12 @@ func _on_player_turn_ended() -> void:
 func _on_enemies_acted(enemy_cards): # enemy_moves: Array[CardAttributes]
 	for enemy_card in enemy_cards:
 		enemy_card.set_card_targets([player.character])
+		enemy_card.set_animation(play_card_animation)
 		enemy_card.play_card()
 
 	if player.character.health <= 0:
 		$EndBattleScreen.player_defeated()
-
+	
 
 func _on_enemies_defeated():
 	if not endless_mode:
@@ -119,3 +124,14 @@ func _on_new_battle() -> void:
 
 func _on_return_to_start_screen() -> void:
 	return_to_start_screen.emit()
+	
+func play_card_animation(animation_name : String, animation_location : Vector2):
+	#var local_animation_location = to_local(animation_location)
+	$CardAnimation.position = animation_location
+	$CardAnimation.show()
+	print(animation_name)
+	$CardAnimation.play(animation_name)
+
+
+func _on_card_animation_finished():
+	$CardAnimation.hide()

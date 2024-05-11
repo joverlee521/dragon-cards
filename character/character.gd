@@ -4,7 +4,7 @@ var defense: int
 var max_health: int
 var health: int
 var set_stat_display: Callable
-
+var card_battle_position: Vector2
 
 
 func _init(i_max_health: int, i_defense: int, i_set_stat_display: Callable) -> void:
@@ -46,3 +46,6 @@ func remove_health(num: int) -> void:
 func remove_health_directly(num: int) -> void:
 	health -= num
 	set_stat_display.call()	
+	
+func set_card_battle_position(i_position: Vector2) -> void:
+	card_battle_position = i_position

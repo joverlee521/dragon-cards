@@ -42,3 +42,5 @@ card_description_plate = SubResource("AtlasTexture_0avs0")
 card_name_plate = SubResource("AtlasTexture_m0are")
 card_description = "Cook them in their armor"
 card_name = "Cook"
+card_attack_animation = 1
+card_defense_animation = 0

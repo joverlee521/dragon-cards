@@ -2,7 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://be0ud8tv4vgd" path="res://art/PixelCardArt/CardRPGPack/Card RPG items/weapon_wand5.png" id="1_5501i"]
 [ext_resource type="Texture2D" uid="uid://b8yvew12myo05" path="res://art/PixelCardArt/FantasyCardPack/pixelCardAssest_V01.png" id="2_hiosu"]
-[ext_resource type="Script" path="res://resources/cards/card.gd" id="3_j5ge1"]
+[ext_resource type="Script" path="res://resources/cards/card_attributes.gd" id="3_j5ge1"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_nc6d7"]
 atlas = ExtResource("1_5501i")
@@ -40,3 +40,5 @@ card_description_plate = SubResource("AtlasTexture_iamp5")
 card_name_plate = SubResource("AtlasTexture_dyv3y")
 card_description = "Cast Magic"
 card_name = "Cast Magic"
+card_attack_animation = 1
+card_defense_animation = 0

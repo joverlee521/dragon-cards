@@ -1,8 +1,9 @@
-[gd_resource type="Resource" script_class="CardAttributes" load_steps=9 format=3 uid="uid://cr54ql38qvxl6"]
+[gd_resource type="Resource" script_class="CardAttributes" load_steps=10 format=3 uid="uid://cr54ql38qvxl6"]
 
 [ext_resource type="Texture2D" uid="uid://d0rewjmbt02m" path="res://art/PixelCardArt/CardRPGPack/Card RPG items/weapon_club4.png" id="1_fdmen"]
 [ext_resource type="Texture2D" uid="uid://b8yvew12myo05" path="res://art/PixelCardArt/FantasyCardPack/pixelCardAssest_V01.png" id="2_1fi2y"]
-[ext_resource type="Script" path="res://resources/cards/card.gd" id="3_abcwu"]
+[ext_resource type="SpriteFrames" uid="uid://y3tqxdqnbsyw" path="res://art/SpriteFrames/CardEffectFrames.tres" id="2_2dfky"]
+[ext_resource type="Script" path="res://resources/cards/card_attributes.gd" id="3_abcwu"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_nc6d7"]
 atlas = ExtResource("1_fdmen")
@@ -40,3 +41,4 @@ card_description_plate = SubResource("AtlasTexture_iamp5")
 card_name_plate = SubResource("AtlasTexture_dyv3y")
 card_description = "CRUNCH, POP, SNAP"
 card_name = "Big Hit"
+card_attack_frames = ExtResource("2_2dfky")

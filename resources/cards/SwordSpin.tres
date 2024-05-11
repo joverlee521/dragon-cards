@@ -1,8 +1,9 @@
-[gd_resource type="Resource" script_class="CardAttributes" load_steps=9 format=3 uid="uid://ch84akhfg5jtr"]
+[gd_resource type="Resource" script_class="CardAttributes" load_steps=10 format=3 uid="uid://ch84akhfg5jtr"]
 
 [ext_resource type="Texture2D" uid="uid://ccvw468f8oawq" path="res://art/PixelCardArt/CardRPGPack/Card RPG items/weapon_sword2.png" id="1_06bvi"]
+[ext_resource type="SpriteFrames" uid="uid://y3tqxdqnbsyw" path="res://art/SpriteFrames/CardEffectFrames.tres" id="2_dg0t4"]
 [ext_resource type="Texture2D" uid="uid://b8yvew12myo05" path="res://art/PixelCardArt/FantasyCardPack/pixelCardAssest_V01.png" id="2_stju1"]
-[ext_resource type="Script" path="res://resources/cards/card.gd" id="3_wxso8"]
+[ext_resource type="Script" path="res://resources/cards/card_attributes.gd" id="3_wxso8"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_nc6d7"]
 atlas = ExtResource("1_06bvi")
@@ -40,3 +41,4 @@ card_description_plate = SubResource("AtlasTexture_iamp5")
 card_name_plate = SubResource("AtlasTexture_dyv3y")
 card_description = "Smash The Enemy"
 card_name = "Smash"
+card_attack_frames = ExtResource("2_dg0t4")
