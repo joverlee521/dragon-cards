@@ -7,4 +7,4 @@
 
 [art/PixelCardArt/FantasyCardPack](./art/PixelCardArt/FantasyCardPack) assets from https://cafedraw.itch.io/fantasy-card-assets
 
-[art/HitEffects/Retro Impact Effect Pack ALL](art/HitEffects/Retro Impact Effect Pack ALL) assets from https://bdragon1727.itch.io/retro-impact-effect-pack-all
+[art/HitEffects/Retro Impact Effect Pack ALL](./art/HitEffects/Retro%20Impact%20Effect%20Pack%20ALL) assets from https://bdragon1727.itch.io/retro-impact-effect-pack-all
