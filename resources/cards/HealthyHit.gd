@@ -7,9 +7,11 @@ func apply_effects_to_card_player():
 	pass
 
 
-# Add defense to card player if the enemy dies from the attack
+# If the card_player is at max health, do double damage
 func apply_effects_to_card_targets():
 	if card_player.health == card_player.max_health:
-		card_targets.map(func(target): target.remove_health(attack * 2))
+		attack = attack * 2
+		super()
+		attack = attack / 2
 	else:
 		super()
