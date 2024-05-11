@@ -48,7 +48,6 @@ func pick_next_move() -> void:
 
 func get_next_move() -> CardAttributes:
 	var played_move = next_move
-	print(played_move)
 	played_move.set_card_player(character)
 	next_move = null
 	return played_move

@@ -83,7 +83,7 @@ func apply_effects_to_card_targets():
 			play_animation.call(get_attack_animation_string(), target.card_battle_position)
 
 
-	
+
 func get_attack_animation_string() -> String:
 	match card_attack_animation:
 		ATTACK_ANIMATIONS.PHYSICAL:
@@ -91,8 +91,8 @@ func get_attack_animation_string() -> String:
 		ATTACK_ANIMATIONS.MAGIC:
 			return "Magic"
 	return ""
-	
-	
+
+
 func get_defense_animation_string() -> String:
 	match card_defense_animation:
 		DEFENSE_ANIMATIONS.DEFEND:

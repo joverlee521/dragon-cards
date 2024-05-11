@@ -224,6 +224,7 @@ theme_override_font_sizes/font_size = 50
 text = "Return to Start Screen"
 
 [node name="CardAnimation" type="AnimatedSprite2D" parent="."]
+z_index = 10
 sprite_frames = ExtResource("9_7jtnc")
 animation = &"AddArmor"
 
