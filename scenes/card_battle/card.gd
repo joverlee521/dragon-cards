@@ -14,31 +14,23 @@ func _ready():
 	set_attributes()
 
 func set_attributes():
-	if attributes:
-		if attributes.card_background:
-			$CardBackground.texture = attributes.card_background
-		if attributes.card_border:
-			$CardBackground/CardBorder.texture = attributes.card_border
-		if attributes.card_art:
-			$CardBackground/CardArt.texture = attributes.card_art
-		if attributes.card_description_plate:
-			$CardBackground/CardDescriptionPlate.texture = attributes.card_description_plate
-		if attributes.card_name_plate:
-			$CardBackground/CardNamePlate.texture = attributes.card_name_plate
-		if attributes.card_description:
-			$CardBackground/CardDescriptionPlate/CardDescription.text = attributes.card_description
-		if attributes.card_name:
-			$CardBackground/CardNamePlate/CardName.text = attributes.card_name
-		if attributes.stamina_cost:
-			$CardBackground/CardStaminaContainer/StaminaCost.text = str(attributes.stamina_cost)
-		if attributes.attack and attributes.attack > 0:
-			$CardBackground/CardAttackContainer/CardAttack.text = str(attributes.attack)
-		else:
-			$CardBackground/CardAttackContainer.visible = false
-		if attributes.defense and attributes.defense > 0:
-			$CardBackground/CardDefenseContainer/CardDefense.text = str(attributes.defense)
-		else:
-			$CardBackground/CardDefenseContainer.visible = false
+	$CardBackground.texture = attributes.card_background
+	$CardBackground/CardBorder.texture = attributes.card_border
+	$CardBackground/CardArt.texture = attributes.card_art
+	$CardBackground/CardDescriptionPlate.texture = attributes.card_description_plate
+	$CardBackground/CardNamePlate.texture = attributes.card_name_plate
+	$CardBackground/CardDescriptionPlate/CardDescription.text = attributes.card_description
+	$CardBackground/CardNamePlate/CardName.text = attributes.card_name
+	$CardBackground/CardStaminaContainer/StaminaCost.text = str(attributes.stamina_cost)
+
+	if attributes.attack > 0:
+		$CardBackground/CardAttackContainer/CardAttack.text = str(attributes.attack)
+	else:
+		$CardBackground/CardAttackContainer.hide()
+	if attributes.defense > 0:
+		$CardBackground/CardDefenseContainer/CardDefense.text = str(attributes.defense)
+	else:
+		$CardBackground/CardDefenseContainer.hide()
 
 
 # Custom handler for input to work around overlapping Area2D objects both getting input
