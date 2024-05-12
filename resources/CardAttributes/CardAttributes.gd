@@ -1,6 +1,8 @@
-class_name CardAttributes extends Resource
+## Base resource for storing and calculating card effects
+extends Resource
+class_name CardAttributes
 
-enum DAMAGE_TYPES {CUTTING, BLUNT, FIRE, ICE, LIGHTNING, WATER, LIGHT, DARK, DEFAULT}
+
 
 enum ATTACK_ANIMATIONS {PHYSICAL, MAGIC}
 
@@ -11,7 +13,7 @@ enum TARGET_TYPES {SINGLE, GROUP}
 @export_group("CardInfo")
 @export var name : String
 #Consider making type into an enum for categorization. Spell, Physical, Armor e.g.
-@export var DamageTypes : Array[DAMAGE_TYPES]
+@export var damage_types : Array[Weapon.DAMAGE_TYPE]
 
 @export var Target : TARGET_TYPES
 
@@ -78,8 +80,9 @@ func apply_effects_to_card_player():
 
 func apply_effects_to_card_targets():
 	if attack > 0:
-		for target in card_targets:
-			target.remove_defense_then_health(attack)
+		for target: Character in card_targets:
+			var damage_num: int = target.calculate_damage_num_by_damage_type(attack, damage_types)
+			target.remove_defense_then_health(damage_num)
 			play_animation.call(get_attack_animation_string(), target.card_battle_position)
 
 

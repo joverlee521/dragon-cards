@@ -19,3 +19,5 @@ right_hand_weapon_types = Array[int]([])
 left_hand_weapon_types = Array[int]([])
 max_health = 25
 defense = 0
+resistances = Array[int]([])
+weaknesses = Array[int]([])

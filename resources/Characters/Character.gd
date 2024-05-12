@@ -7,6 +7,10 @@ class_name Character
 @export var max_health: int = 0
 ## Default defense
 @export var defense: int = 0
+## Resistances that reduce incoming attack damage of [member Weapon.DAMAGE_TYPE]
+@export var resistances: Array[Weapon.DAMAGE_TYPE]
+## Weaknesses that increases incoming attack damage of [member Weapon.DAMAGE_TYPE]
+@export var weaknesses: Array[Weapon.DAMAGE_TYPE]
 
 ## Current health
 var health: int = 0
@@ -44,6 +48,18 @@ func remove_defense_then_health(num: int) -> void:
 ## Ignores [member Character.defense] and subtracts [param num] from [member Character.health]
 func remove_health_directly(num: int) -> void:
 	health -= num
+
+## Calculates the actual damage number based the base [param num] and the [param damage_types].
+##
+## [br]Doubles damage if any of [param damage_types] is in [member Character.weaknesses].
+## [br]Halves damage if any of [param damage_types] is in [member Character.resistances].
+func calculate_damage_num_by_damage_type(num: int, damage_types: Array[Weapon.DAMAGE_TYPE] = [Weapon.DAMAGE_TYPE.DEFAULT]) -> int:
+	var damage_num: int = num
+	if Helper.arrays_intersect(weaknesses, damage_types):
+		damage_num = num * 2
+	elif Helper.arrays_intersect(resistances, damage_types):
+		damage_num = num / 2
+	return damage_num
 
 ## Sets [member Character.card_battle_position] to [param position]
 func set_card_battle_position(position: Vector2) -> void:
