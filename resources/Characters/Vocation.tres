@@ -1,16 +1,15 @@
 [gd_resource type="Resource" script_class="Vocation" load_steps=2 format=3 uid="uid://dw268y1chg1l2"]
 
-[ext_resource type="Script" path="res://resources/Characters/PlayerVocations/Vocation.gd" id="1_f37ew"]
+[ext_resource type="Script" path="res://resources/Characters/Vocation.gd" id="1_f37ew"]
 
 [resource]
 script = ExtResource("1_f37ew")
 vocation_name = ""
-vocation_type = 0
 max_stamina = 0
 max_hand_size = 0
 max_discards = 0
-armor_type = Array[int]([])
-right_hand = Array[int]([])
-left_hand = Array[int]([])
+armor_types = Array[int]([])
+right_hand_weapon_types = Array[int]([])
+left_hand_weapon_types = Array[int]([])
 max_health = 0
 defense = 0

@@ -37,7 +37,7 @@ func add_health(num: int) -> void:
 func remove_defense_then_health(num: int) -> void:
 	defense -= num
 	if defense < 0:
-		var health_damage = abs(defense)
+		var health_damage: int = abs(defense)
 		health -= health_damage
 		defense = 0
 
