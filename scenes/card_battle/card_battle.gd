@@ -104,6 +104,7 @@ func _on_enemies_acted(enemy_cards): # enemy_moves: Array[CardAttributes]
 		enemy_card.set_card_targets([player.character])
 		enemy_card.set_animation(play_card_animation)
 		enemy_card.play_card()
+		$EnemiesArena.set_enemy_stat_labels()
 		set_player_stat_labels()
 
 	if player.character.health <= 0:
