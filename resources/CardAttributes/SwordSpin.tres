@@ -1,7 +1,6 @@
-[gd_resource type="Resource" script_class="CardAttributes" load_steps=10 format=3 uid="uid://ch84akhfg5jtr"]
+[gd_resource type="Resource" script_class="CardAttributes" load_steps=9 format=3 uid="uid://ch84akhfg5jtr"]
 
 [ext_resource type="Texture2D" uid="uid://ccvw468f8oawq" path="res://art/PixelCardArt/CardRPGPack/Card RPG items/weapon_sword2.png" id="1_06bvi"]
-[ext_resource type="SpriteFrames" uid="uid://y3tqxdqnbsyw" path="res://art/SpriteFrames/CardEffectFrames.tres" id="2_dg0t4"]
 [ext_resource type="Texture2D" uid="uid://b8yvew12myo05" path="res://art/PixelCardArt/FantasyCardPack/pixelCardAssest_V01.png" id="2_stju1"]
 [ext_resource type="Script" path="res://resources/CardAttributes/CardAttributes.gd" id="3_wxso8"]
 
@@ -27,7 +26,7 @@ region = Rect2(135, 273, 96, 18)
 
 [resource]
 script = ExtResource("3_wxso8")
-name = "Smash"
+name = "Sword Spin"
 DamageTypes = Array[int]([0])
 Target = 1
 attack = 4
@@ -39,6 +38,7 @@ card_border = SubResource("AtlasTexture_m1j7k")
 card_art = SubResource("AtlasTexture_nc6d7")
 card_description_plate = SubResource("AtlasTexture_iamp5")
 card_name_plate = SubResource("AtlasTexture_dyv3y")
-card_description = "Smash The Enemy"
-card_name = "Smash"
-card_attack_frames = ExtResource("2_dg0t4")
+card_description = "Slash entire group of enemies"
+card_name = "Sword Spin"
+card_attack_animation = 0
+card_defense_animation = 0
