@@ -96,7 +96,7 @@ func get_selected_cards():
 			var card_filename = child_node.get_meta("filename")
 			selected_cards[card_filename] = child_node.value
 
-	var cards = []
+	var cards: Array[CardAttributes] = []
 	for filename in selected_cards:
 		var card = load(cards_dir + filename)
 		for x in range(selected_cards[filename]):
