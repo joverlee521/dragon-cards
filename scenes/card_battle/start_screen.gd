@@ -86,9 +86,6 @@ func load_player():
 	var cards = get_selected_cards()
 	var player_vocation = player_vocations_dir + $PlayerVocation.get_selected_metadata()
 	var loaded_player_vocation = load(player_vocation)
-	print("LOAD PLAYER")
-	print(loaded_player_vocation.max_health)
-	print(loaded_player_vocation.health)
 	return Player.new(loaded_player_vocation, cards)
 
 
