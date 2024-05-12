@@ -27,6 +27,7 @@ var selected: bool = false:
 
 
 func _ready():
+	character.resource_local_to_scene = true
 	character.init_health()
 	set_stat_labels()
 	$Sprite/SelectionBorder.hide()
