@@ -1,9 +1,15 @@
-[gd_scene load_steps=7 format=3 uid="uid://bmo05rmdeo8ap"]
+[gd_scene load_steps=9 format=3 uid="uid://bmo05rmdeo8ap"]
 
-[ext_resource type="PackedScene" uid="uid://dvxykdt47uuju" path="res://scenes/enemies/enemy.tscn" id="1_14j4x"]
-[ext_resource type="Resource" uid="uid://cmad7q4pejruw" path="res://resources/cards/Slash.tres" id="2_d280v"]
+[ext_resource type="PackedScene" uid="uid://dvxykdt47uuju" path="res://scenes/enemies/Enemy.tscn" id="1_14j4x"]
+[ext_resource type="Resource" uid="uid://cmad7q4pejruw" path="res://resources/CardAttributes/Slash.tres" id="2_d280v"]
+[ext_resource type="Script" path="res://resources/Characters/Character.gd" id="2_v8fmc"]
 [ext_resource type="Texture2D" uid="uid://ctb62w2rvbwvr" path="res://art/PixelCardArt/CardRPGPack/Card RPG Monsters/skeleton_1.png" id="3_0dyim"]
-[ext_resource type="Resource" uid="uid://xxyq4bwqpcwh" path="res://resources/cards/Smash.tres" id="3_crqvy"]
+[ext_resource type="Resource" uid="uid://xxyq4bwqpcwh" path="res://resources/CardAttributes/Smash.tres" id="3_crqvy"]
+
+[sub_resource type="Resource" id="Resource_ha3c0"]
+script = ExtResource("2_v8fmc")
+max_health = 8
+defense = 0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_qqsxe"]
 resource_local_to_scene = true
@@ -16,7 +22,7 @@ region = Rect2(0, 0, 38, 51)
 
 [node name="Enemy" instance=ExtResource("1_14j4x")]
 position = Vector2(368, 240)
-health = 8
+character = SubResource("Resource_ha3c0")
 cards = [ExtResource("2_d280v"), ExtResource("3_crqvy")]
 
 [node name="CollisionShape" parent="." index="0"]

@@ -43,6 +43,10 @@ func get_selected_enemies() -> Array[Node]:
 	return get_all_enemies().filter(func(enemy): return enemy.selected)
 
 
+func set_enemy_stat_labels():
+	get_all_enemies().map(func(enemy): enemy.set_stat_labels())
+
+
 func check_enemies_health() -> void:
 	for enemy in get_all_enemies():
 		if enemy.character.health <= 0:

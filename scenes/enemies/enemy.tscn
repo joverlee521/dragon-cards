@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://dvxykdt47uuju"]
 
-[ext_resource type="Script" path="res://scenes/enemies/enemy.gd" id="1_0813v"]
+[ext_resource type="Script" path="res://scenes/enemies/Enemy.gd" id="1_0813v"]
 [ext_resource type="Texture2D" uid="uid://cp1s7swi0ovc3" path="res://art/PixelCardArt/CardRPGPack/Card RPG Monsters/goblin_5.png" id="2_ox7bp"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8xdh1"]

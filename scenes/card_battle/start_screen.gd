@@ -1,13 +1,13 @@
 class_name CardBattleStartScreen extends CanvasLayer
 
 
-const player_vocations_dir = "res://resources/PlayerVocations/"
-const cards_dir = "res://resources/cards/"
+const player_vocations_dir = "res://resources/Characters/PlayerVocations/"
+const cards_dir = "res://resources/CardAttributes/"
 const enemies_dir = "res://scenes/enemies/"
 
-var player_vocations = get_resources(player_vocations_dir, "tres", ["vocation.tres"])
-var cards = get_resources(cards_dir, "tres", ["card.tres"])
-var all_enemies = get_resources(enemies_dir, "tscn", ["enemy.tscn"])
+var player_vocations = get_resources(player_vocations_dir, "tres", ["Vocation.tres"])
+var cards = get_resources(cards_dir, "tres", ["CardAttributes.tres"])
+var all_enemies = get_resources(enemies_dir, "tscn", ["Enemy.tscn"])
 
 var card_battle = load("res://scenes/card_battle/card_battle.tscn")
 var enemies = [] # Array[Array[PackedScene]]
@@ -85,7 +85,11 @@ func start_battle():
 func load_player():
 	var cards = get_selected_cards()
 	var player_vocation = player_vocations_dir + $PlayerVocation.get_selected_metadata()
-	return Player.new(load(player_vocation), cards)
+	var loaded_player_vocation = load(player_vocation)
+	print("LOAD PLAYER")
+	print(loaded_player_vocation.max_health)
+	print(loaded_player_vocation.health)
+	return Player.new(loaded_player_vocation, cards)
 
 
 func get_selected_cards():

@@ -4,7 +4,7 @@ signal return_to_start_screen
 signal defeated_battle_enemies
 
 var endless_mode: bool = false
-var enemies: = [] # Array[Enemies]
+var enemies: Array = [] # Array[Enemies]
 var player: Player
 
 
@@ -14,11 +14,10 @@ func _ready():
 
 func start_battle():
 	$CardAnimation.hide()
-	player.set_player_stats_label_function(set_player_stat_labels)
 	set_player_stat_labels()
 	$PlayDeck.set_deck(player.cards)
 	$DiscardDeck.remove_all_cards()
-	$PlayerHand.set_player_hand(player.vocation)
+	$PlayerHand.set_player_hand(player.character)
 	$EnemiesArena.enemies = enemies
 	$EndBattleScreen.hide()
 	$SkipPlayerTurnLabel.hide()
@@ -65,6 +64,8 @@ func _on_cards_played(cards: Array[Card]) -> void:
 	played_card.attributes.set_card_targets(enemy_characters)
 	played_card.attributes.set_animation(play_card_animation)
 	played_card.attributes.play_card()
+	set_player_stat_labels()
+	$EnemiesArena.set_enemy_stat_labels()
 	$EnemiesArena.check_enemies_health()
 
 	#Suggestion for handling more complex card effects
@@ -103,6 +104,7 @@ func _on_enemies_acted(enemy_cards): # enemy_moves: Array[CardAttributes]
 		enemy_card.set_card_targets([player.character])
 		enemy_card.set_animation(play_card_animation)
 		enemy_card.play_card()
+		set_player_stat_labels()
 
 	if player.character.health <= 0:
 		$EndBattleScreen.player_defeated()
@@ -124,6 +126,7 @@ func _on_new_battle() -> void:
 
 func _on_return_to_start_screen() -> void:
 	return_to_start_screen.emit()
+
 
 func play_card_animation(animation_name : String, animation_location : Vector2):
 	#var local_animation_location = to_local(animation_location)

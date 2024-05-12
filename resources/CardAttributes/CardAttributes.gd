@@ -79,7 +79,7 @@ func apply_effects_to_card_player():
 func apply_effects_to_card_targets():
 	if attack > 0:
 		for target in card_targets:
-			target.remove_health(attack)
+			target.remove_defense_then_health(attack)
 			play_animation.call(get_attack_animation_string(), target.card_battle_position)
 
 

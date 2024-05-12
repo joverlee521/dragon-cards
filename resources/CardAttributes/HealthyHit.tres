@@ -2,7 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://tromqipaql6u" path="res://art/PixelCardArt/CardRPGPack/Card RPG items/weapon_axe1.png" id="1_dbj52"]
 [ext_resource type="SpriteFrames" uid="uid://y3tqxdqnbsyw" path="res://art/SpriteFrames/CardEffectFrames.tres" id="2_mhe2k"]
-[ext_resource type="Script" path="res://resources/cards/HealthyHit.gd" id="2_pstuw"]
+[ext_resource type="Script" path="res://resources/CardAttributes/HealthyHit.gd" id="2_pstuw"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_561bi"]
 atlas = ExtResource("1_dbj52")

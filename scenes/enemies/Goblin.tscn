@@ -1,10 +1,16 @@
-[gd_scene load_steps=8 format=3 uid="uid://ev5dne8iq6p4"]
+[gd_scene load_steps=10 format=3 uid="uid://ev5dne8iq6p4"]
 
-[ext_resource type="PackedScene" uid="uid://dvxykdt47uuju" path="res://scenes/enemies/enemy.tscn" id="1_lnrol"]
-[ext_resource type="Resource" uid="uid://xxyq4bwqpcwh" path="res://resources/cards/Smash.tres" id="2_qkoot"]
-[ext_resource type="Resource" uid="uid://cmad7q4pejruw" path="res://resources/cards/Slash.tres" id="3_5tnem"]
-[ext_resource type="Resource" uid="uid://dfwxap4ae2gtt" path="res://resources/cards/Defend.tres" id="4_biga3"]
+[ext_resource type="PackedScene" uid="uid://dvxykdt47uuju" path="res://scenes/enemies/Enemy.tscn" id="1_lnrol"]
+[ext_resource type="Script" path="res://resources/Characters/Character.gd" id="2_7r7u8"]
+[ext_resource type="Resource" uid="uid://xxyq4bwqpcwh" path="res://resources/CardAttributes/Smash.tres" id="2_qkoot"]
+[ext_resource type="Resource" uid="uid://cmad7q4pejruw" path="res://resources/CardAttributes/Slash.tres" id="3_5tnem"]
+[ext_resource type="Resource" uid="uid://dfwxap4ae2gtt" path="res://resources/CardAttributes/Defend.tres" id="4_biga3"]
 [ext_resource type="Texture2D" uid="uid://diwb42bdv4vno" path="res://art/PixelCardArt/CardRPGPack/Card RPG Monsters/goblin_1.png" id="5_ah35b"]
+
+[sub_resource type="Resource" id="Resource_m0rxq"]
+script = ExtResource("2_7r7u8")
+max_health = 10
+defense = 0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_jbx20"]
 resource_local_to_scene = true
@@ -17,7 +23,7 @@ region = Rect2(0, 0, 33, 39)
 
 [node name="Enemy" instance=ExtResource("1_lnrol")]
 position = Vector2(432, 208)
-health = 10
+character = SubResource("Resource_m0rxq")
 cards = [ExtResource("2_qkoot"), ExtResource("3_5tnem"), ExtResource("4_biga3")]
 
 [node name="CollisionShape" parent="." index="0"]

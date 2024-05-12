@@ -3,8 +3,8 @@
 [ext_resource type="Texture2D" uid="uid://2yfc8cad37e4" path="res://art/PixelCardArt/CardRPGPack/Card RPG items/Accessory_orb2.png" id="1_raufc"]
 [ext_resource type="Texture2D" uid="uid://b8yvew12myo05" path="res://art/PixelCardArt/FantasyCardPack/pixelCardAssest_V01.png" id="2_2slga"]
 [ext_resource type="SpriteFrames" uid="uid://y3tqxdqnbsyw" path="res://art/SpriteFrames/CardEffectFrames.tres" id="2_qjjvf"]
-[ext_resource type="Script" path="res://resources/cards/ShieldBash.gd" id="3_u8nhu"]
-[ext_resource type="SpriteFrames" uid="uid://c1i3yhlsf8r0h" path="res://art/SpriteFrames/ArmorFrames.tres" id="4_tld6x"]
+[ext_resource type="Script" path="res://resources/CardAttributes/ShieldBash.gd" id="3_u8nhu"]
+[ext_resource type="SpriteFrames" path="res://art/SpriteFrames/ArmorFrames.tres" id="4_tld6x"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_deh3j"]
 resource_local_to_scene = true

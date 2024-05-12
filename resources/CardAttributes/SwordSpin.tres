@@ -3,7 +3,7 @@
 [ext_resource type="Texture2D" uid="uid://ccvw468f8oawq" path="res://art/PixelCardArt/CardRPGPack/Card RPG items/weapon_sword2.png" id="1_06bvi"]
 [ext_resource type="SpriteFrames" uid="uid://y3tqxdqnbsyw" path="res://art/SpriteFrames/CardEffectFrames.tres" id="2_dg0t4"]
 [ext_resource type="Texture2D" uid="uid://b8yvew12myo05" path="res://art/PixelCardArt/FantasyCardPack/pixelCardAssest_V01.png" id="2_stju1"]
-[ext_resource type="Script" path="res://resources/cards/card_attributes.gd" id="3_wxso8"]
+[ext_resource type="Script" path="res://resources/CardAttributes/CardAttributes.gd" id="3_wxso8"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_nc6d7"]
 atlas = ExtResource("1_06bvi")

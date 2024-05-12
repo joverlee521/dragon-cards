@@ -1,8 +1,14 @@
-[gd_scene load_steps=6 format=3 uid="uid://c52qpu1l4q86q"]
+[gd_scene load_steps=8 format=3 uid="uid://c52qpu1l4q86q"]
 
-[ext_resource type="PackedScene" uid="uid://dvxykdt47uuju" path="res://scenes/enemies/enemy.tscn" id="1_c3ab7"]
+[ext_resource type="PackedScene" uid="uid://dvxykdt47uuju" path="res://scenes/enemies/Enemy.tscn" id="1_c3ab7"]
 [ext_resource type="Texture2D" uid="uid://xshuo0inos4q" path="res://art/PixelCardArt/CardRPGPack/Card RPG Monsters/goblin_7.png" id="2_8bjhg"]
-[ext_resource type="Resource" uid="uid://cmad7q4pejruw" path="res://resources/cards/Slash.tres" id="2_rh4bo"]
+[ext_resource type="Resource" uid="uid://cmad7q4pejruw" path="res://resources/CardAttributes/Slash.tres" id="2_rh4bo"]
+[ext_resource type="Script" path="res://resources/Characters/Character.gd" id="2_xjqba"]
+
+[sub_resource type="Resource" id="Resource_2gm68"]
+script = ExtResource("2_xjqba")
+max_health = 14
+defense = 0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_6jxla"]
 resource_local_to_scene = true
@@ -15,7 +21,7 @@ region = Rect2(0, 0, 67, 52)
 
 [node name="Enemy" instance=ExtResource("1_c3ab7")]
 position = Vector2(448, 288)
-health = 14
+character = SubResource("Resource_2gm68")
 cards = [ExtResource("2_rh4bo")]
 
 [node name="CollisionShape" parent="." index="0"]

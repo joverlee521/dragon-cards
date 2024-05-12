@@ -2,7 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://6k67dprqpo4m" path="res://art/PixelCardArt/CardRPGPack/Card RPG items/armor_plate3.png" id="1_kukv1"]
 [ext_resource type="Texture2D" uid="uid://b8yvew12myo05" path="res://art/PixelCardArt/FantasyCardPack/pixelCardAssest_V01.png" id="2_q8i20"]
-[ext_resource type="Script" path="res://resources/cards/card_attributes.gd" id="3_2liod"]
+[ext_resource type="Script" path="res://resources/CardAttributes/CardAttributes.gd" id="3_2liod"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_gav53"]
 atlas = ExtResource("1_kukv1")

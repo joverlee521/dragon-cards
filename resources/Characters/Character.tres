@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="Character" load_steps=2 format=3 uid="uid://jwfr08exn8yy"]
+
+[ext_resource type="Script" path="res://resources/Characters/Character.gd" id="1_bj7fj"]
+
+[resource]
+script = ExtResource("1_bj7fj")
+max_health = null
+defense = null
