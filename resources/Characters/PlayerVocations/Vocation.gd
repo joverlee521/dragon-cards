@@ -18,7 +18,3 @@ enum VOCATION_TYPES {WARRIOR, MAGE, CHANGELING, THIEF, SUMMONER}
 @export var armor_type : Array[ARMOR_TYPES] = []
 @export var right_hand : Array[WEAPON_TYPES] = []
 @export var left_hand : Array[WEAPON_TYPES] = []
-
-
-func _init():
-	super()

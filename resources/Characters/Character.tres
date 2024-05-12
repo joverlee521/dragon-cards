@@ -4,5 +4,5 @@
 
 [resource]
 script = ExtResource("1_bj7fj")
-max_health = null
-defense = null
+max_health = 0
+defense = 0
