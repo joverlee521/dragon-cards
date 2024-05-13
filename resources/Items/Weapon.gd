@@ -9,6 +9,10 @@ enum WEAPON_CLASS {LIGHT, MEDIUM, HEAVY, MAGIC, DEFENSE, NONE}
 
 ## Weapon damage type
 ##
-## [br]Determines [member CardAttributes.damage_types] for the [member Weapon.cards]
-## which will affect attack numbers based on
-enum DAMAGE_TYPE {CUTTING, BLUNT, FIRE, ICE, LIGHTNING, WATER, LIGHT, DARK, DEFAULT}
+## [br]Determines [member CardAttributes.damage_type] for the [member Weapon.cards]
+enum DAMAGE_TYPE {NONE, CUTTING, BLUNT, MAGIC}
+
+## Weapon damage element
+##
+## [br]Determines [member CardAttributes.damage_element] for the [member Weapon.cards]
+enum DAMAGE_ELEMENT {NONE, FIRE, ICE, LIGHTNING, WATER, LIGHT, DARK}

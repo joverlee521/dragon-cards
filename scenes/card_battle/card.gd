@@ -14,6 +14,7 @@ func _ready():
 	set_attributes()
 
 func set_attributes():
+	$CardAnimationLayer/CardAnimation.hide()
 	$CardBackground.texture = attributes.card_background
 	$CardBackground/CardBorder.texture = attributes.card_border
 	$CardBackground/CardArt.texture = attributes.card_art
@@ -32,6 +33,13 @@ func set_attributes():
 	else:
 		$CardBackground/CardDefenseContainer.hide()
 
+func play_card_animation(animation_name : String, animation_location : Vector2):
+	#var local_animation_location = to_local(animation_location)
+	$CardAnimationLayer/CardAnimation.position = animation_location
+	$CardAnimationLayer/CardAnimation.show()
+	$CardAnimationLayer/CardAnimation.play(animation_name)
+	await $CardAnimationLayer/CardAnimation.animation_finished
+	$CardAnimationLayer/CardAnimation.hide()
 
 # Custom handler for input to work around overlapping Area2D objects both getting input
 # See https://github.com/godotengine/godot/issues/29825

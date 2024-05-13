@@ -26,19 +26,17 @@ region = Rect2(135, 273, 96, 18)
 
 [resource]
 script = ExtResource("3_nqf8f")
-name = "Slash"
-DamageTypes = Array[int]([0])
-Target = 0
+target_type = 0
 attack = 2
 defense = 0
 stamina_cost = 1
-parry_value = 0
+damage_type = 1
+damage_element = 0
+parry = 0
+card_name = "Slash"
 card_background = SubResource("AtlasTexture_qft2n")
 card_border = SubResource("AtlasTexture_m1j7k")
 card_art = SubResource("AtlasTexture_nc6d7")
 card_description_plate = SubResource("AtlasTexture_iamp5")
 card_name_plate = SubResource("AtlasTexture_dyv3y")
 card_description = "Slash The Enemy"
-card_name = "Slash"
-card_attack_animation = 0
-card_defense_animation = 0

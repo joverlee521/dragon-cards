@@ -11,6 +11,10 @@
 script = ExtResource("2_7r7u8")
 max_health = 10
 defense = 0
+damage_type_resistance = 0
+damage_type_weakness = 0
+damage_element_resistance = 0
+damage_element_weakness = 0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_jbx20"]
 resource_local_to_scene = true

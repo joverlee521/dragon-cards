@@ -8,14 +8,14 @@ signal enemy_selected(enemy) # enemy: Enemy
 @export var character: Character
 @export var cards: Array = []
 
-var next_move: CardAttributes:
+var next_card_attribute: CardAttributes:
 	set(value):
-		next_move = value
-		if is_node_ready() and next_move != null:
+		next_card_attribute = value
+		if is_node_ready() and next_card_attribute != null:
 			$NextMove.text = ""
-			if next_move.attack > 0:
+			if next_card_attribute.attack > 0:
 				$NextMove.text += "<A>"
-			if next_move.defense > 0:
+			if next_card_attribute.defense > 0:
 				$NextMove.text += "<D>"
 
 # Click selection variables
@@ -41,15 +41,15 @@ func set_stat_labels() -> void:
 		$DefenseLabel.text = ''
 
 
-func pick_next_move() -> void:
-	next_move = cards.pick_random()
+func pick_next_card_attribute() -> void:
+	next_card_attribute = cards.pick_random()
 
 
-func get_next_move() -> CardAttributes:
-	var played_move = next_move
-	played_move.set_card_player(character)
-	next_move = null
-	return played_move
+func get_next_card_attribute() -> CardAttributes:
+	var played_card_attribute = next_card_attribute
+	played_card_attribute.set_card_player(character)
+	next_card_attribute = null
+	return played_card_attribute
 
 
 # Custom handler for input to work around overlapping Area2D objects both getting input

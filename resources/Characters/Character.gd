@@ -8,9 +8,13 @@ class_name Character
 ## Default defense
 @export var defense: int = 0
 ## Resistances that reduce incoming attack damage of [member Weapon.DAMAGE_TYPE]
-@export var resistances: Array[Weapon.DAMAGE_TYPE]
+@export var damage_type_resistance: Weapon.DAMAGE_TYPE
 ## Weaknesses that increases incoming attack damage of [member Weapon.DAMAGE_TYPE]
-@export var weaknesses: Array[Weapon.DAMAGE_TYPE]
+@export var damage_type_weakness: Weapon.DAMAGE_TYPE
+## Resistances that reduce incoming attack damage of [member Weapon.DAMAGE_ELEMENT]
+@export var damage_element_resistance: Weapon.DAMAGE_ELEMENT
+## Weaknesses that increases incoming attack damage of [member Weapon.DAMAGE_ELEMENT]
+@export var damage_element_weakness: Weapon.DAMAGE_ELEMENT
 
 ## Current health
 var health: int = 0
@@ -49,17 +53,33 @@ func remove_defense_then_health(num: int) -> void:
 func remove_health_directly(num: int) -> void:
 	health -= num
 
-## Calculates the actual damage number based the base [param num] and the [param damage_types].
+## Calculates the actual damage number based the base [param num], [param damage_type], and [param.damage_element].
 ##
 ## [br]Doubles damage if any of [param damage_types] is in [member Character.weaknesses].
 ## [br]Halves damage if any of [param damage_types] is in [member Character.resistances].
-func calculate_damage_num_by_damage_type(num: int, damage_types: Array[Weapon.DAMAGE_TYPE] = [Weapon.DAMAGE_TYPE.DEFAULT]) -> int:
-	var damage_num: int = num
-	if Helper.arrays_intersect(weaknesses, damage_types):
-		damage_num = num * 2
-	elif Helper.arrays_intersect(resistances, damage_types):
-		damage_num = num / 2
-	return damage_num
+func calculate_damage_num_by_damage_type(
+		num: int,
+		damage_type: Weapon.DAMAGE_TYPE = Weapon.DAMAGE_TYPE.CUTTING,
+		damage_element: Weapon.DAMAGE_ELEMENT = Weapon.DAMAGE_ELEMENT.NONE) -> int:
+
+	var damage_num: float = float(num)
+	var damage_delta: float = num / 2.0
+
+	if damage_type == Weapon.DAMAGE_TYPE.NONE:
+		pass
+	elif damage_type_weakness == damage_type:
+		damage_num += damage_delta
+	elif damage_type_resistance == damage_type:
+		damage_num -= damage_delta
+
+	if damage_element == Weapon.DAMAGE_ELEMENT.NONE:
+		pass
+	elif damage_element_weakness == damage_element:
+		damage_num += damage_delta
+	elif damage_element_resistance == damage_element:
+		damage_num -= damage_delta
+
+	return ceil(damage_num)
 
 ## Sets [member Character.card_battle_position] to [param position]
 func set_card_battle_position(position: Vector2) -> void:

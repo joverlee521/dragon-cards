@@ -28,7 +28,7 @@ func instantiate_enemies() -> void:
 		if i == 0:
 			enemy.selected = true
 		enemy.enemy_selected.connect(_on_enemy_selected)
-		enemy.pick_next_move()
+		enemy.pick_next_card_attribute()
 
 
 func remove_all_enemies() -> void:
@@ -61,11 +61,13 @@ func check_enemies_health() -> void:
 
 
 func enemies_move() -> void:
-	var enemy_moves = []
+	var enemy_card_attributes: Array[CardAttributes] = []
 	var all_enemies = get_all_enemies()
-	all_enemies.map(func(enemy): enemy_moves.append(enemy.get_next_move()))
-	emit_signal("enemies_acted", enemy_moves)
-	all_enemies.map(func(enemy): enemy.pick_next_move())
+	for enemy: Enemy in all_enemies:
+		var enemy_card_attribute = enemy.get_next_card_attribute()
+		enemy_card_attributes.append(enemy_card_attribute)
+	emit_signal("enemies_acted", enemy_card_attributes)
+	all_enemies.map(func(enemy): enemy.pick_next_card_attribute())
 
 
 func _on_enemy_selected(selected_enemy) -> void:

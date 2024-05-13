@@ -31,19 +31,17 @@ region = Rect2(135, 273, 96, 18)
 
 [resource]
 script = ExtResource("3_u8nhu")
-name = "ShieldBash"
-DamageTypes = Array[int]([1])
-Target = 0
+target_type = 0
 attack = 3
 defense = 5
 stamina_cost = 2
-parry_value = 0
+damage_type = 2
+damage_element = 0
+parry = 0
+card_name = "ShieldBash"
 card_background = SubResource("AtlasTexture_q4c0x")
 card_border = SubResource("AtlasTexture_6p3wx")
 card_art = SubResource("AtlasTexture_deh3j")
 card_description_plate = SubResource("AtlasTexture_hbvu6")
 card_name_plate = SubResource("AtlasTexture_torsk")
 card_description = "If this kills a monster gain 5 defense"
-card_name = "ShieldBash"
-card_attack_animation = 0
-card_defense_animation = 0

@@ -13,7 +13,6 @@ func _ready():
 
 
 func start_battle():
-	$CardAnimation.hide()
 	set_player_stat_labels()
 	$PlayDeck.set_deck(player.cards)
 	$DiscardDeck.remove_all_cards()
@@ -60,10 +59,12 @@ func _on_cards_played(cards: Array[Card]) -> void:
 	player.character.card_battle_position = played_card.global_position
 	played_card.attributes.set_card_player(player.character)
 
-	var enemy_characters = $EnemiesArena.get_selected_enemies().map(func(enemy): return enemy.character)
+	var enemy_characters: Array[Character] = []
+	for enemy: Enemy in $EnemiesArena.get_selected_enemies():
+		enemy_characters.append(enemy.character)
 	played_card.attributes.set_card_targets(enemy_characters)
-	played_card.attributes.set_animation(play_card_animation)
-	played_card.attributes.play_card()
+	played_card.attributes.set_animation(played_card.play_card_animation)
+	await played_card.attributes.play_card()
 	set_player_stat_labels()
 	$EnemiesArena.set_enemy_stat_labels()
 	$EnemiesArena.check_enemies_health()
@@ -99,11 +100,17 @@ func _on_player_turn_ended() -> void:
 	$PlayerHand.is_player_turn = true
 
 
-func _on_enemies_acted(enemy_cards): # enemy_moves: Array[CardAttributes]
-	for enemy_card in enemy_cards:
-		enemy_card.set_card_targets([player.character])
-		enemy_card.set_animation(play_card_animation)
-		enemy_card.play_card()
+func _on_enemies_acted(enemy_card_attributes: Array[CardAttributes]):
+	var targets: Array[Character] = [player.character]
+	for enemy_card_attribute in enemy_card_attributes:
+		var enemy_card: Card = $PlayDeck.card_scene.instantiate()
+		enemy_card.get_node("CardBackground").hide()
+		enemy_card.attributes = enemy_card_attribute
+		enemy_card.attributes.set_card_targets(targets)
+		enemy_card.attributes.set_animation(enemy_card.play_card_animation)
+		add_child(enemy_card)
+		await enemy_card.attributes.play_card()
+		enemy_card.queue_free()
 		$EnemiesArena.set_enemy_stat_labels()
 		set_player_stat_labels()
 
@@ -127,14 +134,3 @@ func _on_new_battle() -> void:
 
 func _on_return_to_start_screen() -> void:
 	return_to_start_screen.emit()
-
-
-func play_card_animation(animation_name : String, animation_location : Vector2):
-	#var local_animation_location = to_local(animation_location)
-	$CardAnimation.position = animation_location
-	$CardAnimation.show()
-	$CardAnimation.play(animation_name)
-
-
-func _on_card_animation_finished():
-	$CardAnimation.hide()
