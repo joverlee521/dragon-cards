@@ -39,4 +39,4 @@ card_border = SubResource("AtlasTexture_m1j7k")
 card_art = SubResource("AtlasTexture_nc6d7")
 card_description_plate = SubResource("AtlasTexture_iamp5")
 card_name_plate = SubResource("AtlasTexture_dyv3y")
-card_description = "Cast Magic"
+card_description = "Cast Pure Magic"

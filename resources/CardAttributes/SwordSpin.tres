@@ -26,7 +26,7 @@ region = Rect2(135, 273, 96, 18)
 
 [resource]
 script = ExtResource("3_wxso8")
-target_type = 0
+target_type = 1
 attack = 4
 defense = 0
 stamina_cost = 3
