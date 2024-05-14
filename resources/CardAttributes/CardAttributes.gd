@@ -42,6 +42,9 @@ var card_targets: Array[Character]
 ## [br]2. A Vector2D position of where the animation should be played
 var play_animation: Callable
 
+var discard_deck: Array[CardAttributes]
+var play_deck: Array[CardAttributes]
+
 ## Sets the [member CardAttributes.card_player]
 func set_card_player(i_card_player: Character) -> void:
 	card_player = i_card_player
@@ -63,6 +66,12 @@ func set_card_targets(i_card_targets: Array[Character]) -> void:
 ## Set the [method CardAttributes.play_animation]
 func set_animation(i_play_animation: Callable) -> void:
 	play_animation = i_play_animation
+	
+func set_discard_deck(i_discard_deck) -> void:
+	discard_deck = i_discard_deck
+	
+func set_play_deck(i_play_deck) -> void:
+	play_deck = i_play_deck
 
 ## Plays card by calling [method CardAttributes.apply_effects_to_card_player]
 ## then [member CardAttributes.apply_effects_to_card_targets] if [member CardAttributes.card_targets]

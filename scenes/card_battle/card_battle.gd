@@ -64,6 +64,8 @@ func _on_cards_played(cards: Array[Card]) -> void:
 		enemy_characters.append(enemy.character)
 	played_card.attributes.set_card_targets(enemy_characters)
 	played_card.attributes.set_animation(played_card.play_card_animation)
+	played_card.set_discard_deck($DiscardDeck.cards)
+	played_card.set_play_card_deck($PlayDeck.cards)
 	await played_card.attributes.play_card()
 	set_player_stat_labels()
 	$EnemiesArena.set_enemy_stat_labels()
