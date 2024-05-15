@@ -1,36 +1,12 @@
 {
   "hidden_columns": {
-    "res://resources/CardAttributes/": {
-      "resource_local_to_scene": true,
-      "resource_name": true
-    },
     "res://resources/CardAttributes/Cards/": {
-      "resource_local_to_scene": true,
-      "resource_name": true
-    },
-    "res://resources/Characters/Enemies/": {
-      "resource_local_to_scene": true,
-      "resource_name": true
-    },
-    "res://resources/Characters/PlayerVocations/": {
-      "resource_local_to_scene": true,
-      "resource_name": true
-    },
-    "res://resources/Enemies/": {
-      "resource_local_to_scene": true,
-      "resource_name": true
-    },
-    "res://scenes/enemies/Enemy.gd": {
       "resource_local_to_scene": true,
       "resource_name": true
     }
   },
   "recent_paths": [
-    "res://resources/CardAttributes/",
-    "res://resources/Characters/PlayerVocations/",
-    "res://resources/CardAttributes/Cards/",
-    "res://resources/Enemies/",
-    "res://resources/Characters/Enemies/"
+    "res://resources/CardAttributes/Cards/"
   ],
   "table_functions": {
 
