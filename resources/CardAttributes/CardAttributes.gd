@@ -97,8 +97,7 @@ func apply_effects_to_card_player():
 func apply_effects_to_card_targets():
 	if attack > 0:
 		for target: Character in card_targets:
-			var damage_num: int = target.calculate_damage_num_by_damage_type(attack, damage_type, damage_element)
-			target.remove_defense_then_health(damage_num)
+			target.remove_defense_then_health(attack, damage_type, damage_element)
 			await play_animation.call(get_attack_animation_string(), target.card_battle_position)
 
 ## Get the animation name for the attack animation

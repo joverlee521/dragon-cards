@@ -41,29 +41,36 @@ func add_health(num: int) -> void:
 	if health > max_health:
 		health = max_health
 
-## Subtracts [param num] from [member Character.defense] then from [member Character.health]
-func remove_defense_then_health(num: int) -> void:
-	defense -= num
+## Subtracts [param base_attack] from [member Character.defense] then from [member Character.health]
+func remove_defense_then_health(
+		base_attack: int,
+		damage_type: Weapon.DAMAGE_TYPE = Weapon.DAMAGE_TYPE.NONE,
+		damage_element: Weapon.DAMAGE_ELEMENT = Weapon.DAMAGE_ELEMENT.NONE) -> void:
+	var total_attack: int = calculate_damage_num_by_damage_type(base_attack, damage_type, damage_element)
+	defense -= total_attack
 	if defense < 0:
 		var health_damage: int = abs(defense)
 		health -= health_damage
 		defense = 0
 
 ## Ignores [member Character.defense] and subtracts [param num] from [member Character.health]
-func remove_health_directly(num: int) -> void:
-	health -= num
+func remove_health_directly(base_attack: int,
+		damage_type: Weapon.DAMAGE_TYPE = Weapon.DAMAGE_TYPE.NONE,
+		damage_element: Weapon.DAMAGE_ELEMENT = Weapon.DAMAGE_ELEMENT.NONE) -> void:
+	var total_attack: int = calculate_damage_num_by_damage_type(base_attack, damage_type, damage_element)
+	health -= total_attack
 
 ## Calculates the actual damage number based the base [param num], [param damage_type], and [param.damage_element].
 ##
 ## [br]Doubles damage if any of [param damage_types] is in [member Character.weaknesses].
 ## [br]Halves damage if any of [param damage_types] is in [member Character.resistances].
 func calculate_damage_num_by_damage_type(
-		num: int,
-		damage_type: Weapon.DAMAGE_TYPE = Weapon.DAMAGE_TYPE.CUTTING,
+		base_attack: int,
+		damage_type: Weapon.DAMAGE_TYPE = Weapon.DAMAGE_TYPE.NONE,
 		damage_element: Weapon.DAMAGE_ELEMENT = Weapon.DAMAGE_ELEMENT.NONE) -> int:
 
-	var damage_num: float = float(num)
-	var damage_delta: float = num / 2.0
+	var damage_num: float = float(base_attack)
+	var damage_delta: float = damage_num / 2.0
 
 	if damage_type == Weapon.DAMAGE_TYPE.NONE:
 		pass
