@@ -9,10 +9,10 @@
 script = ExtResource("2_xjqba")
 max_health = 14
 defense = 0
-damage_type_resistance = 2
-damage_type_weakness = 1
-damage_element_resistance = 3
-damage_element_weakness = 1
+damage_type_resistances = Array[int]([2])
+damage_type_weaknesses = Array[int]([1])
+damage_element_resistances = Array[int]([3])
+damage_element_weaknesses = Array[int]([1])
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_6jxla"]
 resource_local_to_scene = true

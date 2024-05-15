@@ -8,13 +8,13 @@ class_name Character
 ## Default defense
 @export var defense: int = 0
 ## Resistances that reduce incoming attack damage of [member Weapon.DAMAGE_TYPE]
-@export var damage_type_resistance: Weapon.DAMAGE_TYPE
+@export var damage_type_resistances: Array[Weapon.DAMAGE_TYPE]
 ## Weaknesses that increases incoming attack damage of [member Weapon.DAMAGE_TYPE]
-@export var damage_type_weakness: Weapon.DAMAGE_TYPE
+@export var damage_type_weaknesses: Array[Weapon.DAMAGE_TYPE]
 ## Resistances that reduce incoming attack damage of [member Weapon.DAMAGE_ELEMENT]
-@export var damage_element_resistance: Weapon.DAMAGE_ELEMENT
+@export var damage_element_resistances: Array[Weapon.DAMAGE_ELEMENT]
 ## Weaknesses that increases incoming attack damage of [member Weapon.DAMAGE_ELEMENT]
-@export var damage_element_weakness: Weapon.DAMAGE_ELEMENT
+@export var damage_element_weaknesses: Array[Weapon.DAMAGE_ELEMENT]
 
 ## Current health
 var health: int = 0
@@ -67,16 +67,16 @@ func calculate_damage_num_by_damage_type(
 
 	if damage_type == Weapon.DAMAGE_TYPE.NONE:
 		pass
-	elif damage_type_weakness == damage_type:
+	elif damage_type_weaknesses.has(damage_type):
 		damage_num += damage_delta
-	elif damage_type_resistance == damage_type:
+	elif damage_type_resistances.has(damage_type):
 		damage_num -= damage_delta
 
 	if damage_element == Weapon.DAMAGE_ELEMENT.NONE:
 		pass
-	elif damage_element_weakness == damage_element:
+	elif damage_element_weaknesses.has(damage_element):
 		damage_num += damage_delta
-	elif damage_element_resistance == damage_element:
+	elif damage_element_resistances.has(damage_element):
 		damage_num -= damage_delta
 
 	return ceil(damage_num)

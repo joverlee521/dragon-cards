@@ -10,10 +10,10 @@
 script = ExtResource("2_v8fmc")
 max_health = 8
 defense = 0
-damage_type_resistance = 3
-damage_type_weakness = 2
-damage_element_resistance = 6
-damage_element_weakness = 5
+damage_type_resistances = Array[int]([3])
+damage_type_weaknesses = Array[int]([2])
+damage_element_resistances = Array[int]([6])
+damage_element_weaknesses = Array[int]([5])
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_qqsxe"]
 resource_local_to_scene = true
