@@ -9,11 +9,14 @@ func apply_effects_to_card_player():
 
 # Ignores defense and attacks target health directly
 func apply_effects_to_card_targets():
-	var num_cards_in_discard_deck = discard_deck.cards.size()
+	var num_cards_in_discard_deck = discard_deck.size()
 	
-	for i in num_cards_in_discard_deck:
+	if num_cards_in_discard_deck == 0:
 		await super()
-		attack += 1
+	else:
+		for i in num_cards_in_discard_deck:
+			await super()
+			attack += 1
 		
 	attack = 1
-	discard_deck.remove_all_cards()
+	discard_deck.clear()
