@@ -17,6 +17,10 @@ enum TARGET_TYPE {SINGLE, GROUP}
 @export var damage_type: Weapon.DAMAGE_TYPE = Weapon.DAMAGE_TYPE.CUTTING
 ## Card's base damage element
 @export var damage_element: Weapon.DAMAGE_ELEMENT = Weapon.DAMAGE_ELEMENT.NONE
+## Card's status effects applied to the [member CardAttributes.card_player]
+@export var status_effects_on_card_player: Array[StatusEffect]
+## Card's status effects applied to the [member CardAttributes.card_targets]
+@export var status_effects_on_card_targets: Array[StatusEffect]
 
 @export_group ("Vocation Specific Stats")
 ## Parry value used by specific player vocations
@@ -66,10 +70,10 @@ func set_card_targets(i_card_targets: Array[Character]) -> void:
 ## Set the [method CardAttributes.play_animation]
 func set_animation(i_play_animation: Callable) -> void:
 	play_animation = i_play_animation
-	
+
 func set_discard_deck(i_discard_deck) -> void:
 	discard_deck = i_discard_deck
-	
+
 func set_play_deck(i_play_deck) -> void:
 	play_deck = i_play_deck
 

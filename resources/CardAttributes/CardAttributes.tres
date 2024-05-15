@@ -31,19 +31,19 @@ region = Rect2(16, 273, 96, 18)
 
 [resource]
 script = ExtResource("4_ep8iu")
-name = "Card"
-damage_types = null
-Target = null
+target_type = 0
 attack = null
 defense = null
 stamina_cost = null
-parry_value = null
+damage_type = 1
+damage_element = 0
+status_effects_on_card_player = Array[Resource("res://resources/CardAttributes/StatusEffect.gd")]([])
+status_effects_on_card_targets = Array[Resource("res://resources/CardAttributes/StatusEffect.gd")]([])
+parry = 0
+card_name = "Card"
 card_background = SubResource("AtlasTexture_xbu6t")
 card_border = SubResource("AtlasTexture_70g71")
 card_art = SubResource("AtlasTexture_hjf3d")
 card_description_plate = SubResource("AtlasTexture_g1fp1")
 card_name_plate = SubResource("AtlasTexture_cbeei")
 card_description = "This is a card, yo"
-card_name = "Card"
-card_attack_animation = null
-card_defense_animation = null

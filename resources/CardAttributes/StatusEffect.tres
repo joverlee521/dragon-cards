@@ -1,0 +1,8 @@
+[gd_resource type="Resource" load_steps=2 format=3 uid="uid://5sdvsqi3h3il"]
+
+[ext_resource type="Script" path="res://resources/CardAttributes/StatusEffect.gd" id="1_o08dp"]
+
+[resource]
+script = ExtResource("1_o08dp")
+name = 0
+applied_number = 0
