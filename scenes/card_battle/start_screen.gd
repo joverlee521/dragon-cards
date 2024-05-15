@@ -2,7 +2,7 @@ class_name CardBattleStartScreen extends CanvasLayer
 
 
 const player_vocations_dir = "res://resources/Characters/PlayerVocations/"
-const cards_dir = "res://resources/CardAttributes/"
+const cards_dir = "res://resources/CardAttributes/Cards/"
 const enemies_dir = "res://scenes/enemies/"
 
 var player_vocations = get_resources(player_vocations_dir, "tres", ["Vocation.tres"])

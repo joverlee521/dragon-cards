@@ -1,7 +1,7 @@
 [gd_scene load_steps=16 format=3 uid="uid://c87eb4clrv66s"]
 
 [ext_resource type="Script" path="res://scenes/card_battle/card.gd" id="1_wb7gf"]
-[ext_resource type="Resource" uid="uid://b3nwx43xccah1" path="res://resources/CardAttributes/CastMagic.tres" id="2_oqi6r"]
+[ext_resource type="Resource" uid="uid://b3nwx43xccah1" path="res://resources/CardAttributes/Cards/CastMagic.tres" id="2_oqi6r"]
 [ext_resource type="Texture2D" uid="uid://b8yvew12myo05" path="res://art/PixelCardArt/FantasyCardPack/pixelCardAssest_V01.png" id="3_ikhnl"]
 [ext_resource type="Texture2D" uid="uid://iph45183s2ur" path="res://art/PixelCardArt/FantasyCardPack/squareCircle_vector.png" id="4_7ba08"]
 [ext_resource type="Texture2D" uid="uid://oupeb7ksmnv8" path="res://art/PixelCardArt/CardRPGPack/Card RPG items/armor_cloth5.png" id="5_818mc"]

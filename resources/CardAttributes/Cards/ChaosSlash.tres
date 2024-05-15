@@ -1,7 +1,7 @@
 [gd_resource type="Resource" load_steps=9 format=3 uid="uid://cxf58rebj6g7y"]
 
 [ext_resource type="Texture2D" uid="uid://cjp8ldo0aecg3" path="res://art/PixelCardArt/CardRPGPack/Card RPG items/weapon_spear4.png" id="1_afij2"]
-[ext_resource type="Script" path="res://resources/CardAttributes/ChaosSlash.gd" id="2_qnyll"]
+[ext_resource type="Script" path="res://resources/CardAttributes/Cards/ChaosSlash.gd" id="2_qnyll"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_s8fqe"]
 atlas = ExtResource("1_afij2")

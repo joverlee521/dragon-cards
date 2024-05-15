@@ -1,7 +1,7 @@
 [gd_resource type="Resource" load_steps=9 format=3 uid="uid://dja6u3gunfj10"]
 
 [ext_resource type="Texture2D" uid="uid://cxm6qw1xvjd8q" path="res://art/PixelCardArt/CardRPGPack/card rpg icons&objects/kimchi.png" id="1_71h5r"]
-[ext_resource type="Script" path="res://resources/CardAttributes/Cook.gd" id="2_blyg8"]
+[ext_resource type="Script" path="res://resources/CardAttributes/Cards/Cook.gd" id="2_blyg8"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_q3wbp"]
 atlas = ExtResource("1_71h5r")
