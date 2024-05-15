@@ -1,0 +1,19 @@
+{
+  "hidden_columns": {
+    "res://resources/CardAttributes/": {
+      "resource_local_to_scene": true,
+      "resource_name": true
+    },
+    "res://resources/Characters/PlayerVocations/": {
+      "resource_local_to_scene": true,
+      "resource_name": true
+    }
+  },
+  "recent_paths": [
+    "res://resources/CardAttributes/",
+    "res://resources/Characters/PlayerVocations/"
+  ],
+  "table_functions": {
+
+  }
+}
