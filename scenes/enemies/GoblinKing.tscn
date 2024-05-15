@@ -1,20 +1,11 @@
-[gd_scene load_steps=10 format=3 uid="uid://3fu10efu25ke"]
+[gd_scene load_steps=9 format=3 uid="uid://3fu10efu25ke"]
 
 [ext_resource type="PackedScene" uid="uid://dvxykdt47uuju" path="res://scenes/enemies/Enemy.tscn" id="1_tgqxb"]
 [ext_resource type="Texture2D" uid="uid://pniy5mk3pfcv" path="res://art/PixelCardArt/CardRPGPack/Card RPG Monsters/goblin_8.png" id="2_5iiv3"]
-[ext_resource type="Script" path="res://resources/Characters/Character.gd" id="2_ebllq"]
-[ext_resource type="Resource" uid="uid://cmad7q4pejruw" path="res://resources/CardAttributes/Slash.tres" id="2_whe8v"]
-[ext_resource type="Resource" uid="uid://dfwxap4ae2gtt" path="res://resources/CardAttributes/Defend.tres" id="3_u16na"]
-[ext_resource type="Resource" uid="uid://xxyq4bwqpcwh" path="res://resources/CardAttributes/Smash.tres" id="4_hoied"]
-
-[sub_resource type="Resource" id="Resource_d1ua8"]
-script = ExtResource("2_ebllq")
-max_health = 24
-defense = 0
-damage_type_resistances = Array[int]([2])
-damage_type_weaknesses = Array[int]([3])
-damage_element_resistances = Array[int]([4])
-damage_element_weaknesses = Array[int]([1])
+[ext_resource type="Resource" uid="uid://b5ejigm27m4ti" path="res://resources/Characters/Enemies/GoblinKing.tres" id="2_pnkje"]
+[ext_resource type="Resource" uid="uid://cmad7q4pejruw" path="res://resources/CardAttributes/Cards/Slash.tres" id="2_whe8v"]
+[ext_resource type="Resource" uid="uid://dfwxap4ae2gtt" path="res://resources/CardAttributes/Cards/Defend.tres" id="3_u16na"]
+[ext_resource type="Resource" uid="uid://xxyq4bwqpcwh" path="res://resources/CardAttributes/Cards/Smash.tres" id="4_hoied"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_d8xq4"]
 resource_local_to_scene = true
@@ -27,7 +18,7 @@ region = Rect2(0, 0, 79, 72)
 
 [node name="Enemy" instance=ExtResource("1_tgqxb")]
 position = Vector2(432, 232)
-character = SubResource("Resource_d1ua8")
+character = ExtResource("2_pnkje")
 cards = [ExtResource("2_whe8v"), ExtResource("4_hoied"), ExtResource("3_u16na")]
 
 [node name="CollisionShape" parent="." index="0"]
