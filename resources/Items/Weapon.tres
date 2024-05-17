@@ -1,8 +1,0 @@
-[gd_resource type="Resource" load_steps=2 format=3 uid="uid://b5u5ig27ygkke"]
-
-[ext_resource type="Script" path="res://resources/Items/Weapon.gd" id="1_dp71p"]
-
-[resource]
-script = ExtResource("1_dp71p")
-name = null
-cards = null
