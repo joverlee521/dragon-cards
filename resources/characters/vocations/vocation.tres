@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="Vocation" load_steps=2 format=3 uid="uid://dq47xv34i2oms"]
+
+[ext_resource type="Script" path="res://resources/characters/vocations/vocation.gd" id="1_33lbh"]
+
+[resource]
+script = ExtResource("1_33lbh")
+max_health = 0
+starting_defense = 0
+vocation_name = ""
