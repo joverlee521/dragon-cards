@@ -7,3 +7,11 @@ extends Vocation
 @export var max_stamina: int = 0
 ## Max hand size per turn in card battles
 @export var max_hand_size: int = 0
+
+@export_group("Equipment Types")
+## [member Armor.ARMOUR_CLASS] allowed to be equipped
+@export var armor_types: Array[Armor.ARMOR_CLASS]
+## [member Weapon.WEAPON_CLASS] allowed to be equipped to the right hand
+@export var right_hand_weapon_types: Array[Weapon.WEAPON_CLASS]
+## [member Weapon.WEAPON_CLASS] allowed to be equipped to the left hand
+@export var left_hand_weapon_types: Array[Weapon.WEAPON_CLASS]
