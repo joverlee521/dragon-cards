@@ -1,0 +1,48 @@
+[gd_resource type="Resource" script_class="CardAttributes" load_steps=9 format=3 uid="uid://7fy7ogesapen"]
+
+[ext_resource type="Texture2D" uid="uid://2yfc8cad37e4" path="res://art/PixelCardArt/CardRPGPack/Card RPG items/Accessory_orb2.png" id="1_raufc"]
+[ext_resource type="Texture2D" uid="uid://b8yvew12myo05" path="res://art/PixelCardArt/FantasyCardPack/pixelCardAssest_V01.png" id="2_2slga"]
+[ext_resource type="Script" path="res://resources/card_attributes/card_attributes.gd" id="3_u8nhu"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_deh3j"]
+resource_local_to_scene = true
+atlas = ExtResource("1_raufc")
+region = Rect2(0, 0, 31, 33)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_q4c0x"]
+resource_local_to_scene = true
+atlas = ExtResource("2_2slga")
+region = Rect2(366, 4, 100, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6p3wx"]
+resource_local_to_scene = true
+atlas = ExtResource("2_2slga")
+region = Rect2(226, 337, 100, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hbvu6"]
+resource_local_to_scene = true
+atlas = ExtResource("2_2slga")
+region = Rect2(135, 224, 96, 29)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_torsk"]
+resource_local_to_scene = true
+atlas = ExtResource("2_2slga")
+region = Rect2(135, 273, 96, 18)
+
+[resource]
+script = ExtResource("3_u8nhu")
+card_name = "ShieldBash"
+card_background = SubResource("AtlasTexture_q4c0x")
+card_border = SubResource("AtlasTexture_6p3wx")
+card_art = SubResource("AtlasTexture_deh3j")
+card_description_plate = SubResource("AtlasTexture_hbvu6")
+card_name_plate = SubResource("AtlasTexture_torsk")
+card_description = "If this kills a monster gain 5 defense"
+target_type = 0
+attack = 3
+defense = 5
+stamina_cost = 2
+damage_type = 2
+damage_element = 0
+status_effects_on_card_player = Array[Resource("res://resources/card_attributes/status_effect.gd")]([])
+status_effects_on_card_target = Array[Resource("res://resources/card_attributes/status_effect.gd")]([])

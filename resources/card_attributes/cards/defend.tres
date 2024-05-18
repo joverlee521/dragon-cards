@@ -1,0 +1,43 @@
+[gd_resource type="Resource" script_class="CardAttributes" load_steps=9 format=3 uid="uid://di8t8yb5syu3a"]
+
+[ext_resource type="Texture2D" uid="uid://6k67dprqpo4m" path="res://art/PixelCardArt/CardRPGPack/Card RPG items/armor_plate3.png" id="1_kukv1"]
+[ext_resource type="Texture2D" uid="uid://b8yvew12myo05" path="res://art/PixelCardArt/FantasyCardPack/pixelCardAssest_V01.png" id="2_q8i20"]
+[ext_resource type="Script" path="res://resources/card_attributes/card_attributes.gd" id="3_2liod"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gav53"]
+atlas = ExtResource("1_kukv1")
+region = Rect2(0, 0, 59, 55)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qft2n"]
+atlas = ExtResource("2_q8i20")
+region = Rect2(366, 4, 100, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_m1j7k"]
+atlas = ExtResource("2_q8i20")
+region = Rect2(226, 337, 100, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_iamp5"]
+atlas = ExtResource("2_q8i20")
+region = Rect2(135, 224, 96, 29)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dyv3y"]
+atlas = ExtResource("2_q8i20")
+region = Rect2(135, 273, 96, 18)
+
+[resource]
+script = ExtResource("3_2liod")
+card_name = "Defend"
+card_background = SubResource("AtlasTexture_qft2n")
+card_border = SubResource("AtlasTexture_m1j7k")
+card_art = SubResource("AtlasTexture_gav53")
+card_description_plate = SubResource("AtlasTexture_iamp5")
+card_name_plate = SubResource("AtlasTexture_dyv3y")
+card_description = "Defend against incoming attacks"
+target_type = 0
+attack = 0
+defense = 3
+stamina_cost = 1
+damage_type = 0
+damage_element = 0
+status_effects_on_card_player = Array[Resource("res://resources/card_attributes/status_effect.gd")]([])
+status_effects_on_card_target = Array[Resource("res://resources/card_attributes/status_effect.gd")]([])

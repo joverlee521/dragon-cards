@@ -1,0 +1,45 @@
+[gd_resource type="Resource" script_class="CardAttributes" load_steps=9 format=3 uid="uid://dvu7ausdptdav"]
+
+[ext_resource type="Texture2D" uid="uid://cjp8ldo0aecg3" path="res://art/PixelCardArt/CardRPGPack/Card RPG items/weapon_spear4.png" id="1_afij2"]
+[ext_resource type="Script" path="res://resources/card_attributes/card_attributes.gd" id="2_qnyll"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_s8fqe"]
+atlas = ExtResource("1_afij2")
+region = Rect2(0, 0, 82, 83)
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_i1p18"]
+load_path = "res://.godot/imported/pixelCardAssest_V01.png-e42aa1ab89ec593aabb40b22de25cb9b.ctex"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_t76yv"]
+atlas = SubResource("CompressedTexture2D_i1p18")
+region = Rect2(366, 4, 100, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_g7wrn"]
+atlas = SubResource("CompressedTexture2D_i1p18")
+region = Rect2(226, 337, 100, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_x0sgs"]
+atlas = SubResource("CompressedTexture2D_i1p18")
+region = Rect2(135, 224, 96, 29)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kgott"]
+atlas = SubResource("CompressedTexture2D_i1p18")
+region = Rect2(135, 273, 96, 18)
+
+[resource]
+script = ExtResource("2_qnyll")
+card_name = "Chaos Slash"
+card_background = SubResource("AtlasTexture_t76yv")
+card_border = SubResource("AtlasTexture_g7wrn")
+card_art = SubResource("AtlasTexture_s8fqe")
+card_description_plate = SubResource("AtlasTexture_x0sgs")
+card_name_plate = SubResource("AtlasTexture_kgott")
+card_description = "Deals increased damage x times for every card in discard deck. Removes all cards from discard deck for this battle."
+target_type = 0
+attack = 1
+defense = 0
+stamina_cost = 5
+damage_type = 1
+damage_element = 0
+status_effects_on_card_player = Array[Resource("res://resources/card_attributes/status_effect.gd")]([])
+status_effects_on_card_target = Array[Resource("res://resources/card_attributes/status_effect.gd")]([])
