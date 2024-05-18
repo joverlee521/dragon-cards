@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="Vocation" load_steps=4 format=3 uid="uid://br0qh2muamujy"]
+
+[ext_resource type="Script" path="res://resources/characters/vocations/vocation.gd" id="1_snpsx"]
+[ext_resource type="Texture2D" uid="uid://pniy5mk3pfcv" path="res://art/PixelCardArt/CardRPGPack/Card RPG Monsters/goblin_8.png" id="2_irrah"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wiaey"]
+atlas = ExtResource("2_irrah")
+region = Rect2(0, 0, 79, 72)
+
+[resource]
+script = ExtResource("1_snpsx")
+vocation_name = "Goblin King"
+vocation_sprite = SubResource("AtlasTexture_wiaey")
+max_health = 24
+starting_defense = 0

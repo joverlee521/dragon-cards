@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="Vocation" load_steps=4 format=3 uid="uid://c2tl0vldksnc2"]
+
+[ext_resource type="Script" path="res://resources/characters/vocations/vocation.gd" id="1_hx17b"]
+[ext_resource type="Texture2D" uid="uid://cya3qkp1hytlb" path="res://art/PixelCardArt/CardRPGPack/Card RPG Monsters/goblin_6.png" id="2_o4q6y"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_47n5p"]
+atlas = ExtResource("2_o4q6y")
+region = Rect2(0, 0, 64, 39)
+
+[resource]
+script = ExtResource("1_hx17b")
+vocation_name = "Goblin Mage"
+vocation_sprite = SubResource("AtlasTexture_47n5p")
+max_health = 12
+starting_defense = 0

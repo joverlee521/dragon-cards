@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="Vocation" load_steps=4 format=3 uid="uid://d0tmwjqtbej2x"]
+
+[ext_resource type="Script" path="res://resources/characters/vocations/vocation.gd" id="1_umjpk"]
+[ext_resource type="Texture2D" uid="uid://ctb62w2rvbwvr" path="res://art/PixelCardArt/CardRPGPack/Card RPG Monsters/skeleton_1.png" id="2_3uio2"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_frdet"]
+atlas = ExtResource("2_3uio2")
+region = Rect2(0, 0, 38, 51)
+
+[resource]
+script = ExtResource("1_umjpk")
+vocation_name = "Skeleton"
+vocation_sprite = SubResource("AtlasTexture_frdet")
+max_health = 18
+starting_defense = 0
