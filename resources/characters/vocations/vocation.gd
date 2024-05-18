@@ -17,3 +17,8 @@ extends Resource
 @export var damage_element_resistances: Array[Weapon.DAMAGE_ELEMENT]
 ## Weaknesses that increases incoming attack damage of [member Weapon.DAMAGE_ELEMENT]
 @export var damage_element_weaknesses: Array[Weapon.DAMAGE_ELEMENT]
+
+@export_group("Default Items")
+## Default [CardAttributes] the [Vocation] has equipped.
+## TODO: Replace with items that contains their own cards
+@export var cards: Array[CardAttributes] = []

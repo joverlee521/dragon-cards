@@ -1,6 +1,7 @@
-[gd_resource type="Resource" script_class="Vocation" load_steps=4 format=3 uid="uid://di4koqexui1s0"]
+[gd_resource type="Resource" script_class="Vocation" load_steps=5 format=3 uid="uid://di4koqexui1s0"]
 
 [ext_resource type="Script" path="res://resources/characters/vocations/vocation.gd" id="1_qohx8"]
+[ext_resource type="Resource" uid="uid://chi4gyal36j7o" path="res://resources/card_attributes/cards/slash.tres" id="1_ul1bw"]
 [ext_resource type="Texture2D" uid="uid://xshuo0inos4q" path="res://art/PixelCardArt/CardRPGPack/Card RPG Monsters/goblin_7.png" id="2_kf3bn"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_7m1j0"]
@@ -15,3 +16,4 @@ max_health = 14
 starting_defense = 0
 damage_element_resistances = Array[int]([3])
 damage_element_weaknesses = Array[int]([1])
+cards = Array[Resource("res://resources/card_attributes/card_attributes.gd")]([ExtResource("1_ul1bw")])

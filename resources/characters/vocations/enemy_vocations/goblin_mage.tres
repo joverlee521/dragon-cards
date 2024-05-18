@@ -1,6 +1,8 @@
-[gd_resource type="Resource" script_class="Vocation" load_steps=4 format=3 uid="uid://c2tl0vldksnc2"]
+[gd_resource type="Resource" script_class="Vocation" load_steps=6 format=3 uid="uid://c2tl0vldksnc2"]
 
+[ext_resource type="Resource" uid="uid://di8t8yb5syu3a" path="res://resources/card_attributes/cards/defend.tres" id="1_hqrde"]
 [ext_resource type="Script" path="res://resources/characters/vocations/vocation.gd" id="1_hx17b"]
+[ext_resource type="Resource" uid="uid://bwoc6seq4ax2t" path="res://resources/card_attributes/cards/cast_magic.tres" id="2_codua"]
 [ext_resource type="Texture2D" uid="uid://cya3qkp1hytlb" path="res://art/PixelCardArt/CardRPGPack/Card RPG Monsters/goblin_6.png" id="2_o4q6y"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_47n5p"]
@@ -15,3 +17,4 @@ max_health = 12
 starting_defense = 0
 damage_element_resistances = Array[int]([6])
 damage_element_weaknesses = Array[int]([1])
+cards = Array[Resource("res://resources/card_attributes/card_attributes.gd")]([ExtResource("1_hqrde"), ExtResource("2_codua")])

@@ -1,7 +1,10 @@
-[gd_resource type="Resource" script_class="Vocation" load_steps=4 format=3 uid="uid://br0qh2muamujy"]
+[gd_resource type="Resource" script_class="Vocation" load_steps=7 format=3 uid="uid://br0qh2muamujy"]
 
+[ext_resource type="Resource" uid="uid://vikvvdlt7y4u" path="res://resources/card_attributes/cards/smash.tres" id="1_7bjnr"]
 [ext_resource type="Script" path="res://resources/characters/vocations/vocation.gd" id="1_snpsx"]
 [ext_resource type="Texture2D" uid="uid://pniy5mk3pfcv" path="res://art/PixelCardArt/CardRPGPack/Card RPG Monsters/goblin_8.png" id="2_irrah"]
+[ext_resource type="Resource" uid="uid://chi4gyal36j7o" path="res://resources/card_attributes/cards/slash.tres" id="2_mrcy6"]
+[ext_resource type="Resource" uid="uid://di8t8yb5syu3a" path="res://resources/card_attributes/cards/defend.tres" id="3_tkjna"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_wiaey"]
 atlas = ExtResource("2_irrah")
@@ -15,3 +18,4 @@ max_health = 24
 starting_defense = 0
 damage_element_resistances = Array[int]([4])
 damage_element_weaknesses = Array[int]([1])
+cards = Array[Resource("res://resources/card_attributes/card_attributes.gd")]([ExtResource("1_7bjnr"), ExtResource("2_mrcy6"), ExtResource("3_tkjna")])

@@ -9,6 +9,9 @@ signal defense_changed(new_value: int)
 
 ## Character's vocation with basic stats
 @export var vocation: Vocation
+## [CardAttributes] the [Character] has equipped.
+## TODO: Replace with items that contains their own cards
+@export var cards: Array[CardAttributes] = []
 
 ## Character's current defense
 var defense: int = 0:
@@ -22,11 +25,15 @@ var health: int = 0:
 		health_changed.emit(val)
 
 
-## Initialize [member Character.health] to [member Vocation.max_health]
-## and [member Character.defense] to [member Vocation.starting_defense]
+## Initialize the following stats: [br]
+## 1. [member Character.health] to [member Vocation.max_health]
+## 2. [member Character.defense] to [member Vocation.starting_defense]
+## 3. If [member Character.cards] is empty, then use [member Vocation.cards]
 func init_character_stats() -> void:
 	health = vocation.max_health
 	defense = vocation.starting_defense
+	if cards.is_empty():
+		cards = vocation.cards.duplicate(true)
 
 
 func remove_all_defense() -> void:
