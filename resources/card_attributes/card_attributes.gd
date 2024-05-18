@@ -39,3 +39,7 @@ enum TARGET_TYPE {
 @export var damage_type: Weapon.DAMAGE_TYPE = Weapon.DAMAGE_TYPE.NONE
 ## Card's base damage element
 @export var damage_element: Weapon.DAMAGE_ELEMENT = Weapon.DAMAGE_ELEMENT.NONE
+## Card's status effects applied to the card player
+@export var status_effects_on_card_player: Array[StatusEffect]
+## Card's status effects applied to the card target
+@export var status_effects_on_card_target: Array[StatusEffect]
