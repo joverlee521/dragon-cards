@@ -35,4 +35,7 @@ enum TARGET_TYPE {
 @export var defense: int = 0
 ## Card's base stamina cost to be played
 @export var stamina_cost: int = 0
-
+## Card's base damage type
+@export var damage_type: Weapon.DAMAGE_TYPE = Weapon.DAMAGE_TYPE.NONE
+## Card's base damage element
+@export var damage_element: Weapon.DAMAGE_ELEMENT = Weapon.DAMAGE_ELEMENT.NONE
