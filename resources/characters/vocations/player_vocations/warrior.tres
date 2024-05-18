@@ -18,3 +18,5 @@ vocation_name = "Warrior"
 vocation_sprite = SubResource("AtlasTexture_bj77e")
 max_health = 25
 starting_defense = 0
+damage_element_resistances = Array[int]([4])
+damage_element_weaknesses = Array[int]([1])

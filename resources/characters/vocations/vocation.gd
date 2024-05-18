@@ -13,3 +13,7 @@ extends Resource
 @export var max_health: int = 0
 ## Vocation's starting defense
 @export var starting_defense: int = 0
+## Resistances that reduce incoming attack damage of [member Weapon.DAMAGE_ELEMENT]
+@export var damage_element_resistances: Array[Weapon.DAMAGE_ELEMENT]
+## Weaknesses that increases incoming attack damage of [member Weapon.DAMAGE_ELEMENT]
+@export var damage_element_weaknesses: Array[Weapon.DAMAGE_ELEMENT]

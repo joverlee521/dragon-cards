@@ -13,3 +13,5 @@ vocation_name = "Goblin Thief"
 vocation_sprite = SubResource("AtlasTexture_7m1j0")
 max_health = 14
 starting_defense = 0
+damage_element_resistances = Array[int]([3])
+damage_element_weaknesses = Array[int]([1])
