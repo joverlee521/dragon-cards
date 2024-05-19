@@ -50,6 +50,16 @@ extends GdUnitTestSuite
 
 # TestSuite generated from
 const __source = \"${source_resource_path}\"
+
+# Shared variables withint TestSuite
+
+# Executed only once at the start of the TestSuite run
+func before():
+	pass
+
+# Executed before each test is started
+func before_test():
+	pass
 "
 report/verbose_orphans=false
 ui/inspector/node_collapse=false
