@@ -20,3 +20,4 @@ max_health = 25
 starting_defense = 0
 damage_element_resistances = Array[int]([4])
 damage_element_weaknesses = Array[int]([1])
+cards = Array[Resource("res://resources/card_attributes/card_attributes.gd")]([])
