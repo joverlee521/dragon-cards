@@ -51,6 +51,7 @@ extends GdUnitTestSuite
 # TestSuite generated from
 const __source = \"${source_resource_path}\"
 "
+report/verbose_orphans=false
 ui/inspector/node_collapse=false
 
 [input]

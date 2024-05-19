@@ -6,7 +6,7 @@ extends Area2D
 signal card_clicked
 
 ## [CardAttributes] to use for the instantiated [Card]
-@export var card_attributes: CardAttributes
+@export var card_attributes: CardAttributes = CardAttributes.new()
 
 ## Flag of whether the [Card] is selected
 var selected: bool = false
@@ -54,7 +54,7 @@ func _update_label_font_size(label_node: Label) -> void:
 	var height: int = label_node.size.y - 5
 
 	while (
-			font_size >= MIN_FONT_SIZE
+			font_size > MIN_FONT_SIZE
 			and (font.get_string_size(label_node.text, label_node.horizontal_alignment, -1, font_size).x > width
 				or font.get_string_size(label_node.text, label_node.horizontal_alignment, -1, font_size).y > height)
 		):
