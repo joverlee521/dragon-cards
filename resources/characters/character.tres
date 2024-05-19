@@ -5,3 +5,4 @@
 [resource]
 resource_local_to_scene = true
 script = ExtResource("1_2lp4w")
+cards = Array[Resource("res://resources/card_attributes/card_attributes.gd")]([])

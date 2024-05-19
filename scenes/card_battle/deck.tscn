@@ -1,0 +1,26 @@
+[gd_scene load_steps=4 format=3 uid="uid://wpviprmqxet2"]
+
+[ext_resource type="Texture2D" uid="uid://dh1bjajpx0ecb" path="res://art/cards/back01.png" id="1_nsdt0"]
+[ext_resource type="Script" path="res://scenes/card_battle/deck.gd" id="1_ugpwm"]
+[ext_resource type="PackedScene" uid="uid://c87eb4clrv66s" path="res://scenes/card_battle/card.tscn" id="3_v6nlc"]
+
+[node name="Deck" type="Node2D"]
+position = Vector2(928, 576)
+script = ExtResource("1_ugpwm")
+image = ExtResource("1_nsdt0")
+card_scene = ExtResource("3_v6nlc")
+metadata/_edit_group_ = true
+
+[node name="DeckImage" type="Sprite2D" parent="."]
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("1_nsdt0")
+
+[node name="CardCount" type="Label" parent="."]
+offset_left = -19.0
+offset_top = 141.0
+offset_right = 21.0
+offset_bottom = 164.0
+theme_override_font_sizes/font_size = 25
+text = "0"
+horizontal_alignment = 1
+vertical_alignment = 1
