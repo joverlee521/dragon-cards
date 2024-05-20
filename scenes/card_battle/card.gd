@@ -5,6 +5,11 @@ extends Area2D
 ## Emitted when the card is clicked
 signal card_clicked
 
+## Minimum label font size
+const MIN_LABEL_FONT_SIZE = 10
+## Maximum label font size
+const MAX_LABEL_FONT_SIZE = 350
+
 ## [CardAttributes] to use for the instantiated [Card]
 @export var card_attributes: CardAttributes = CardAttributes.new()
 
@@ -18,6 +23,11 @@ var clickable: bool = true
 # Resolved in https://github.com/godotengine/godot/pull/75688
 # which was released in Godot v4.3
 var _mouse_entered_card: bool = false
+
+
+# Here for testing purposes
+func _init(i_card_attributes: CardAttributes = CardAttributes.new()) -> void:
+	card_attributes = i_card_attributes
 
 
 func _ready() -> void:
@@ -47,14 +57,13 @@ func _ready() -> void:
 ## Adjust [Label] font size to fit within the width and height of the [Label]
 ## Includes a minimum font size of 10 to prevent text from disappearing
 func _update_label_font_size(label_node: Label) -> void:
-	const MIN_FONT_SIZE = 10
 	var font: Font = label_node.get_theme_default_font()
-	var font_size: int = 350
+	var font_size: int = MAX_LABEL_FONT_SIZE
 	var width: int = label_node.size.x - 5
 	var height: int = label_node.size.y - 5
 
 	while (
-			font_size > MIN_FONT_SIZE
+			font_size > MIN_LABEL_FONT_SIZE
 			and (font.get_string_size(label_node.text, label_node.horizontal_alignment, -1, font_size).x > width
 				or font.get_string_size(label_node.text, label_node.horizontal_alignment, -1, font_size).y > height)
 		):
@@ -67,15 +76,19 @@ func _update_label_font_size(label_node: Label) -> void:
 # See https://github.com/godotengine/godot/issues/29825
 # Resolved in https://github.com/godotengine/godot/pull/75688
 # which was released in Godot v4.3
-func _unhandled_input(event) -> void:
+func _unhandled_input(event: InputEvent) -> void:
 	if (
 		event.is_action_pressed("mouse_left_click")
 		and _mouse_entered_card
 		and clickable
 	):
-		selected = !selected
-		card_clicked.emit()
+		_set_selected()
 		get_viewport().set_input_as_handled()
+
+
+func _set_selected() -> void:
+	selected = !selected
+	card_clicked.emit()
 
 
 func _on_mouse_entered() -> void:

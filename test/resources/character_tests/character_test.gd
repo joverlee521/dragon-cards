@@ -41,7 +41,7 @@ func test_init_stats() -> void:
 func test_init_stats_with_custom_character_cards() -> void:
 	const expected_cards_size: int = 10
 	var expected_cards: Array[CardAttributes] = []
-	expected_cards.assign(range(10).map(func(n): return card))
+	expected_cards.assign(range(10).map(func(_n: int) -> CardAttributes: return card))
 	character.cards = expected_cards
 	character.init_stats()
 	assert_array(character.cards).has_size(expected_cards_size)

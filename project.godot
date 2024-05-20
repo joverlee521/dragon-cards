@@ -61,7 +61,6 @@ func before():
 func before_test():
 	pass
 "
-report/verbose_orphans=false
 ui/inspector/node_collapse=false
 
 [input]
