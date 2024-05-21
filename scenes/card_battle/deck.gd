@@ -2,8 +2,10 @@ class_name Deck
 extends Node2D
 ## Base deck for holding [CardAttributes] that can instantiate [Card]s
 
-## Emitted when cards are removed from [member Deck.cards]
+## Emitted when cards are removed from [member Deck._cards]
 signal removed_cards(cards: Array[CardAttributes])
+## Emitted when the [member Deck._cards] is empty
+signal emptied_deck
 
 @export_group("Deck Visual")
 ## The image of the deck when [member Deck.cards] is not empty
@@ -45,6 +47,8 @@ func remove_first_cards(num: int) -> void:
 	_cards.assign(_cards.slice(num))
 	_update_displays()
 	removed_cards.emit(cards_to_remove)
+	if _cards.is_empty():
+		emptied_deck.emit()
 
 
 ## Replace the [member Deck._cards] with the [param new_cards]
