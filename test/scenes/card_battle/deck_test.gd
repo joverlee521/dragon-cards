@@ -11,6 +11,7 @@ const __source = "res://scenes/card_battle/deck.gd"
 const DEFAULT_NUMBER_OF_CARDS = 5
 var card_attributes: CardAttributes = ResourceLoader.load("res://resources/card_attributes/cards/big_hit.tres")
 var cards: Array[CardAttributes] = []
+var runner: Object
 
 # Executed before each test is started
 func before_test() -> void:
@@ -18,11 +19,11 @@ func before_test() -> void:
 		func(_n: int) -> CardAttributes:
 			return card_attributes
 	))
+	runner = scene_runner("res://scenes/card_battle/deck.tscn")
+	runner.set_property("_cards", cards)
 
 
 func test_add_card() -> void:
-	var runner: Object = scene_runner("res://scenes/card_battle/deck.tscn")
-	runner.set_property("_cards", cards)
 	var expected_number_of_cards: int = DEFAULT_NUMBER_OF_CARDS + 1
 	runner.invoke("add_card", card_attributes)
 	assert_int(runner.get_property("_cards").size()).is_equal(expected_number_of_cards)
@@ -33,8 +34,6 @@ func test_add_card() -> void:
 
 
 func test_remove_all_cards() -> void:
-	var runner: Object = scene_runner("res://scenes/card_battle/deck.tscn")
-	runner.set_property("_cards", cards)
 	var expected_number_of_cards: int = 0
 	runner.invoke("remove_all_cards")
 	assert_int(runner.get_property("_cards").size()).is_equal(expected_number_of_cards)
@@ -55,8 +54,6 @@ func test_remove_first_cards(
 			[6],
 		]
 	) -> void:
-	var runner: Object = scene_runner("res://scenes/card_battle/deck.tscn")
-	runner.set_property("_cards", cards)
 	var expected_number_of_cards: int = DEFAULT_NUMBER_OF_CARDS - num_cards_to_remove
 	if expected_number_of_cards < 0:
 		expected_number_of_cards = 0
@@ -69,8 +66,6 @@ func test_remove_first_cards(
 
 
 func test_replace_cards() -> void:
-	var runner: Object = scene_runner("res://scenes/card_battle/deck.tscn")
-	runner.set_property("_cards", cards)
 	const expected_number_of_cards = 10
 	var new_cards: Array[CardAttributes] = []
 	new_cards.assign(range(expected_number_of_cards).map(

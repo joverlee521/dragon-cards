@@ -8,6 +8,7 @@ signal removed_cards(cards: Array[CardAttributes])
 signal emptied_deck
 
 @export_group("Deck Visual")
+@export var deck_name: String = ""
 ## The image of the deck when [member Deck.cards] is not empty
 @export var image: CompressedTexture2D
 
@@ -16,6 +17,8 @@ var _cards: Array[CardAttributes] = []
 
 
 func _ready() -> void:
+	if deck_name:
+		$DeckName.text = deck_name
 	$DeckImage.texture = image
 	_update_displays()
 

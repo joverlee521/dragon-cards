@@ -1,8 +1,9 @@
-[gd_scene load_steps=5 format=3 uid="uid://biq1mfvftv7wn"]
+[gd_scene load_steps=6 format=3 uid="uid://biq1mfvftv7wn"]
 
 [ext_resource type="Script" path="res://scenes/card_battle/card_battle.gd" id="1_eqlf3"]
 [ext_resource type="Script" path="res://resources/characters/character.gd" id="2_1gnlo"]
 [ext_resource type="Resource" uid="uid://c6ne1s60wvwga" path="res://resources/characters/vocations/player_vocations/warrior.tres" id="3_17jee"]
+[ext_resource type="PackedScene" uid="uid://wpviprmqxet2" path="res://scenes/card_battle/deck.tscn" id="4_k67rs"]
 
 [sub_resource type="Resource" id="Resource_wm4wy"]
 script = ExtResource("2_1gnlo")
@@ -47,3 +48,11 @@ layout_mode = 2
 size_flags_horizontal = 3
 text = "0"
 vertical_alignment = 1
+
+[node name="DiscardDeck" parent="." instance=ExtResource("4_k67rs")]
+position = Vector2(112, 888)
+deck_name = "Discards"
+
+[node name="PlayDeck" parent="." instance=ExtResource("4_k67rs")]
+position = Vector2(1808, 888)
+deck_name = "Player's Deck"

@@ -16,9 +16,10 @@ func _ready() -> void:
 
 ## Sets the scene to start of battle
 func start_battle() -> void:
-	_set_player_stats_labels()
+	_update_player_stats_labels()
 
 
-func _set_player_stats_labels() -> void:
+## Updates the text of player stats labels
+func _update_player_stats_labels() -> void:
 	$PlayerStats/Health.text = "%s / %s" % [str(player._health), str(player.vocation.max_health)]
 	$PlayerStats/Defense.text = str(player._defense)
