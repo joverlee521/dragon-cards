@@ -1,0 +1,49 @@
+[gd_scene load_steps=5 format=3 uid="uid://biq1mfvftv7wn"]
+
+[ext_resource type="Script" path="res://scenes/card_battle/card_battle.gd" id="1_eqlf3"]
+[ext_resource type="Script" path="res://resources/characters/character.gd" id="2_1gnlo"]
+[ext_resource type="Resource" uid="uid://c6ne1s60wvwga" path="res://resources/characters/vocations/player_vocations/warrior.tres" id="3_17jee"]
+
+[sub_resource type="Resource" id="Resource_wm4wy"]
+script = ExtResource("2_1gnlo")
+vocation = ExtResource("3_17jee")
+cards = Array[Resource("res://resources/card_attributes/card_attributes.gd")]([])
+
+[node name="CardBattle" type="Node"]
+script = ExtResource("1_eqlf3")
+player = SubResource("Resource_wm4wy")
+init_player_stats = true
+
+[node name="PlayerStats" type="GridContainer" parent="."]
+offset_left = 13.0
+offset_top = 600.0
+offset_right = 299.0
+offset_bottom = 708.0
+columns = 2
+metadata/_edit_group_ = true
+
+[node name="DefenseLabel" type="Label" parent="PlayerStats"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 20
+text = "Defense:"
+vertical_alignment = 1
+
+[node name="Defense" type="Label" parent="PlayerStats"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "0"
+vertical_alignment = 1
+
+[node name="HealthLabel" type="Label" parent="PlayerStats"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 20
+text = "Health:"
+vertical_alignment = 1
+
+[node name="Health" type="Label" parent="PlayerStats"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "0"
+vertical_alignment = 1
