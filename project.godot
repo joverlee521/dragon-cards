@@ -51,7 +51,7 @@ extends GdUnitTestSuite
 # TestSuite generated from
 const __source = \"${source_resource_path}\"
 
-# Shared variables withint TestSuite
+# Shared variables within TestSuite
 
 # Executed only once at the start of the TestSuite run
 func before():

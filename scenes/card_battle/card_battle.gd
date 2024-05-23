@@ -16,10 +16,22 @@ func _ready() -> void:
 
 ## Sets the scene to start of battle
 func start_battle() -> void:
-	_update_player_stats_labels()
+	_connect_player_stats_signals()
+	_update_player_health_label()
+	_update_player_defense_label()
 
 
-## Updates the text of player stats labels
-func _update_player_stats_labels() -> void:
-	$PlayerStats/Health.text = "%s / %s" % [str(player._health), str(player.vocation.max_health)]
-	$PlayerStats/Defense.text = str(player._defense)
+## Connects the player's emitted stats signals to the label updates
+func _connect_player_stats_signals() -> void:
+	player.health_changed.connect(_update_player_health_label)
+	player.defense_changed.connect(_update_player_defense_label)
+
+
+## Updates the text of player's health label
+func _update_player_health_label(player_health: int = player._health) -> void:
+	$PlayerStats/Health.text = "%s / %s" % [str(player_health), str(player.vocation.max_health)]
+
+
+## Updates the text of the player's defense label
+func _update_player_defense_label(player_defense: int = player._defense) -> void:
+	$PlayerStats/Defense.text = str(player_defense)
