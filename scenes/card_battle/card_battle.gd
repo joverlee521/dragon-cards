@@ -6,9 +6,12 @@ extends Node
 @export var player: Character = Character.new()
 ## Flag to init [member CardBattle.player] character stats on ready
 @export var init_player_stats: bool = false
+## The [Card] to instantiate for cards in battle
+@export var card_scene: PackedScene = load("res://scenes/card_battle/card.tscn")
 
 
 func _ready() -> void:
+	_connect_player_stats_signals()
 	if init_player_stats:
 		player.init_stats()
 	start_battle()
@@ -16,9 +19,32 @@ func _ready() -> void:
 
 ## Sets the scene to start of battle
 func start_battle() -> void:
-	_connect_player_stats_signals()
 	_update_player_health_label()
 	_update_player_defense_label()
+	_update_player_stamina_label()
+	player.cards.map($PlayDeck.add_card)
+	await get_tree().create_timer(0.5).timeout
+	start_player_turn()
+
+
+## Starts the player turn by
+## [br] 1. Setting the player hand with max stamina
+## [br] 2. Dealling a full hand of [Card]s
+func start_player_turn() -> void:
+	$PlayerHand.reset_stamina(player.vocation.max_stamina)
+	deal_cards(player.vocation.max_hand_size)
+
+
+## Deal [param num] cards from the [PlayDeck] to the [PlayerHand]
+func deal_cards(num: int) -> void:
+	var dealt_cards: Array[CardAttributes] = $PlayDeck.remove_first_cards(num)
+	for card in dealt_cards:
+		var new_card: Card = card_scene.instantiate()
+		new_card.card_attributes = card
+		# TODO: Replace timer with animations
+		await get_tree().create_timer(0.2).timeout
+		$PlayerHand.add_card(new_card)
+
 
 
 ## Connects the player's emitted stats signals to the label updates
@@ -35,3 +61,8 @@ func _update_player_health_label(player_health: int = player._health) -> void:
 ## Updates the text of the player's defense label
 func _update_player_defense_label(player_defense: int = player._defense) -> void:
 	$PlayerStats/Defense.text = str(player_defense)
+
+
+## Updates the text of the player's stamina label
+func _update_player_stamina_label(player_stamina: int = player.vocation.max_stamina) -> void:
+	$PlayerStats/Stamina.text = "%s / %s" % [str(player_stamina), str(player.vocation.max_stamina)]

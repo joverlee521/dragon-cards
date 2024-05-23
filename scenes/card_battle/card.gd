@@ -62,12 +62,13 @@ func _update_label_font_size(label_node: Label) -> void:
 	var width: int = label_node.size.x - 5
 	var height: int = label_node.size.y - 5
 
+	# TODO: Remove because this slows down the card scene instantiation SIGNIFICANTLY!
 	while (
 			font_size > MIN_LABEL_FONT_SIZE
 			and (font.get_string_size(label_node.text, label_node.horizontal_alignment, -1, font_size).x > width
 				or font.get_string_size(label_node.text, label_node.horizontal_alignment, -1, font_size).y > height)
 		):
-		font_size -= 1
+		font_size -= 5
 
 	label_node.add_theme_font_size_override('font_size', font_size)
 

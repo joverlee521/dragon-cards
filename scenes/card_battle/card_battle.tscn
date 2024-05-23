@@ -1,14 +1,24 @@
-[gd_scene load_steps=6 format=3 uid="uid://biq1mfvftv7wn"]
+[gd_scene load_steps=8 format=3 uid="uid://biq1mfvftv7wn"]
 
 [ext_resource type="Script" path="res://scenes/card_battle/card_battle.gd" id="1_eqlf3"]
 [ext_resource type="Script" path="res://resources/characters/character.gd" id="2_1gnlo"]
 [ext_resource type="Resource" uid="uid://c6ne1s60wvwga" path="res://resources/characters/vocations/player_vocations/warrior.tres" id="3_17jee"]
 [ext_resource type="PackedScene" uid="uid://wpviprmqxet2" path="res://scenes/card_battle/deck.tscn" id="4_k67rs"]
+[ext_resource type="Script" path="res://scenes/card_battle/player_hand.gd" id="5_dcxec"]
 
 [sub_resource type="Resource" id="Resource_wm4wy"]
 script = ExtResource("2_1gnlo")
 vocation = ExtResource("3_17jee")
 cards = Array[Resource("res://resources/card_attributes/card_attributes.gd")]([])
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3kd0m"]
+bg_color = Color(0.184314, 0.184314, 0.184314, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.113725, 0, 0.0470588, 1)
+border_blend = true
 
 [node name="CardBattle" type="Node"]
 script = ExtResource("1_eqlf3")
@@ -22,6 +32,19 @@ offset_right = 299.0
 offset_bottom = 708.0
 columns = 2
 metadata/_edit_group_ = true
+
+[node name="StaminaLabel" type="Label" parent="PlayerStats"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 20
+text = "Stamina:"
+vertical_alignment = 1
+
+[node name="Stamina" type="Label" parent="PlayerStats"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "0"
+vertical_alignment = 1
 
 [node name="DefenseLabel" type="Label" parent="PlayerStats"]
 layout_mode = 2
@@ -56,3 +79,20 @@ deck_name = "Discards"
 [node name="PlayDeck" parent="." instance=ExtResource("4_k67rs")]
 position = Vector2(1808, 888)
 deck_name = "Player's Deck"
+
+[node name="PlayerHand" type="PanelContainer" parent="."]
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 256.0
+offset_top = -354.0
+offset_right = -248.0
+offset_bottom = -34.0
+grow_horizontal = 2
+grow_vertical = 0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_3kd0m")
+script = ExtResource("5_dcxec")
+
+[connection signal="stamina_changed" from="PlayerHand" to="." method="_update_player_stamina_label"]
