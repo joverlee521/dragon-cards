@@ -43,21 +43,9 @@ func test_remove_all_cards() -> void:
 	assert_bool(deck_image.visible).is_false()
 
 
-func test_remove_first_cards(
-		num_cards_to_remove: int,
-		test_parameters:= [
-			[1],
-			[2],
-			[3],
-			[4],
-			[5],
-			[6],
-		]
-	) -> void:
-	var expected_number_of_cards: int = DEFAULT_NUMBER_OF_CARDS - num_cards_to_remove
-	if expected_number_of_cards < 0:
-		expected_number_of_cards = 0
-	runner.invoke("remove_first_cards", num_cards_to_remove)
+func test_remove_card() -> void:
+	var expected_number_of_cards: int = DEFAULT_NUMBER_OF_CARDS - 1
+	runner.invoke("remove_card")
 	assert_int(runner.get_property("_cards").size()).is_equal(expected_number_of_cards)
 	var card_count: Node = runner.find_child("CardCount")
 	assert_str(card_count.text).is_equal(str(expected_number_of_cards))

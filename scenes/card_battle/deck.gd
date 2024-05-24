@@ -18,6 +18,12 @@ func _ready() -> void:
 	_update_displays()
 
 
+## Returns whether the [member Deck._cards] is empty
+func is_empty() -> bool:
+	return _cards.is_empty()
+
+
+## Shuffles the [member Deck._cards]
 func shuffle() -> void:
 	_cards.shuffle()
 
@@ -30,21 +36,16 @@ func add_card(card: CardAttributes) -> void:
 
 ## Remove all [CardAttributes] from [member Deck._cards]
 func remove_all_cards() -> Array[CardAttributes]:
-	return remove_first_cards(_cards.size())
+	var removed_cards = _cards.duplicate(true)
+	_cards = []
+	return removed_cards
 
 
-## Remove the first [param num] [CardAttributes] from [member Deck._cards]
-func remove_first_cards(num: int) -> Array[CardAttributes]:
-	if _cards.size() == 0:
-		return []
-
-	if num > _cards.size():
-		num = _cards.size()
-
-	var cards_to_remove: Array[CardAttributes] = _cards.slice(0, num, 1, true)
-	_cards.assign(_cards.slice(num))
+## Returns [CardAttributes] from [member Deck._cards] at the [param index]
+func remove_card(index: int = 0) -> CardAttributes:
+	var removed_card: CardAttributes = _cards.pop_at(index)
 	_update_displays()
-	return cards_to_remove
+	return removed_card
 
 
 ## Replace the [member Deck._cards] with the [param new_cards]

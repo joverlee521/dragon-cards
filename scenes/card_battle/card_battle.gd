@@ -2,6 +2,11 @@ class_name CardBattle
 extends Node
 ## The root scene for the card battle
 
+## Time delayed at the start of the battle before the first hand is dealt
+const START_BATTLE_DELAY: float = 0.5
+## Time delayed between each card that is dealt
+const DEAL_CARD_DELAY: float = 0.3
+
 ## The player's [Character] resource
 @export var player: Character = Character.new()
 ## Flag to init [member CardBattle.player] character stats on ready
@@ -23,7 +28,7 @@ func start_battle() -> void:
 	_update_player_defense_label()
 	_update_player_stamina_label()
 	player.cards.map($PlayDeck.add_card)
-	await get_tree().create_timer(0.5).timeout
+	await get_tree().create_timer(START_BATTLE_DELAY).timeout
 	start_player_turn()
 
 
@@ -37,14 +42,16 @@ func start_player_turn() -> void:
 
 ## Deal [param num] cards from the [PlayDeck] to the [PlayerHand]
 func deal_cards(num: int) -> void:
-	var dealt_cards: Array[CardAttributes] = $PlayDeck.remove_first_cards(num)
-	for card in dealt_cards:
-		var new_card: Card = card_scene.instantiate()
-		new_card.card_attributes = card
-		# TODO: Replace timer with animations
-		await get_tree().create_timer(0.2).timeout
-		$PlayerHand.add_card(new_card)
+	for i in range(num):
+		if $PlayDeck.is_empty():
+			break
 
+		var card_attributes = $PlayDeck.remove_card()
+		var new_card: Card = card_scene.instantiate()
+		new_card.card_attributes = card_attributes
+		$PlayerHand.add_card(new_card)
+		# TODO: Replace timer with animations
+		await get_tree().create_timer(DEAL_CARD_DELAY).timeout
 
 
 ## Connects the player's emitted stats signals to the label updates
