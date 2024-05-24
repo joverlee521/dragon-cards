@@ -35,7 +35,9 @@ func start_battle() -> void:
 ## Starts the player turn by
 ## [br] 1. Setting the player hand with max stamina
 ## [br] 2. Dealling a full hand of [Card]s
+## [br] 3. Disabling the PlayCard button
 func start_player_turn() -> void:
+	$PlayerControls/PlayCard.disabled = true
 	$PlayerHand.reset_stamina(player.vocation.max_stamina)
 	deal_cards(player.vocation.max_hand_size)
 
@@ -46,7 +48,7 @@ func deal_cards(num: int) -> void:
 		if $PlayDeck.is_empty():
 			break
 
-		var card_attributes = $PlayDeck.remove_card()
+		var card_attributes: CardAttributes = $PlayDeck.remove_card()
 		var new_card: Card = card_scene.instantiate()
 		new_card.card_attributes = card_attributes
 		$PlayerHand.add_card(new_card)
@@ -73,3 +75,8 @@ func _update_player_defense_label(player_defense: int = player._defense) -> void
 ## Updates the text of the player's stamina label
 func _update_player_stamina_label(player_stamina: int = player.vocation.max_stamina) -> void:
 	$PlayerStats/Stamina.text = "%s / %s" % [str(player_stamina), str(player.vocation.max_stamina)]
+
+
+func _player_hand_card_selection_changed() -> void:
+	var player_selected_cards: int = get_tree().get_nodes_in_group($PlayerHand.PLAYER_SELECTED_CARDS).size()
+	$PlayerControls/PlayCard.disabled = player_selected_cards <= 0

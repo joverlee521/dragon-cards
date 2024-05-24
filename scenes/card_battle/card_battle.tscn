@@ -72,6 +72,27 @@ size_flags_horizontal = 3
 text = "0"
 vertical_alignment = 1
 
+[node name="PlayerControls" type="HBoxContainer" parent="."]
+offset_left = 760.0
+offset_top = 608.0
+offset_right = 1145.0
+offset_bottom = 685.0
+theme_override_constants/separation = 100
+alignment = 1
+metadata/_edit_group_ = true
+
+[node name="PlayCard" type="Button" parent="PlayerControls"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 35
+text = "Play"
+
+[node name="EndTurn" type="Button" parent="PlayerControls"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 35
+text = "End Turn"
+
 [node name="DiscardDeck" parent="." instance=ExtResource("4_k67rs")]
 position = Vector2(112, 888)
 deck_name = "Discards"
@@ -95,4 +116,5 @@ mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_3kd0m")
 script = ExtResource("5_dcxec")
 
+[connection signal="card_selection_changed" from="PlayerHand" to="." method="_player_hand_card_selection_changed"]
 [connection signal="stamina_changed" from="PlayerHand" to="." method="_update_player_stamina_label"]

@@ -4,6 +4,8 @@ extends PanelContainer
 
 ## Emitted whenever the [member PlayerHand._current_stamina] changes in value
 signal stamina_changed(new_value: int)
+## Emitted whenever [Card] selection changes
+signal card_selection_changed()
 
 ## The maximum number of cards that can be selected at once
 const MAX_SELECTED: int = 1
@@ -88,3 +90,4 @@ func _on_card_clicked(clicked_card: Card) -> void:
 		true if num_selected_cards < MAX_SELECTED else false
 	)
 	_position_all_cards()
+	card_selection_changed.emit()
