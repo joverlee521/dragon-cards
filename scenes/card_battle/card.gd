@@ -3,7 +3,7 @@ extends Area2D
 ## Base card scene that is instantiated when a card is dealt and/or played
 
 ## Emitted when the card is clicked
-signal card_clicked
+signal card_clicked(Card)
 
 ## Minimum label font size
 const MIN_LABEL_FONT_SIZE = 10
@@ -54,6 +54,11 @@ func _ready() -> void:
 		if child_node is Label:
 			_update_label_font_size(child_node)
 
+
+func set_clickable(i_clickable: bool) -> void:
+	clickable = i_clickable
+
+
 ## Adjust [Label] font size to fit within the width and height of the [Label]
 ## Includes a minimum font size of 10 to prevent text from disappearing
 func _update_label_font_size(label_node: Label) -> void:
@@ -89,7 +94,7 @@ func _unhandled_input(event: InputEvent) -> void:
 
 func _set_selected() -> void:
 	selected = !selected
-	card_clicked.emit()
+	card_clicked.emit(self)
 
 
 func _on_mouse_entered() -> void:

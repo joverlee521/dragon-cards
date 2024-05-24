@@ -7,12 +7,16 @@ signal stamina_changed(new_value: int)
 
 ## The maximum number of cards that can be selected at once
 const MAX_SELECTED: int = 1
+## Group name for cards that are not selected
+const PLAYER_NOT_SELECTED_CARDS = "player_not_selected_cards"
+## Group name for cards that are selected
+const PLAYER_SELECTED_CARDS = "player_selected_cards"
 
 ## The default y position for arranging cards in hand
 var _card_y: int = 0
 ## The x position spacing for cards in hand to evenly space all cards
 var _card_spacing: int = 0
-## The [Card]s currently in the players hand
+## The [Card]s currently in the players hand used for ordering and positioning
 var _cards: Array[Card] = []
 ## Current stamina of the player
 var _stamina: int = 0:
@@ -34,8 +38,11 @@ func reset_stamina(stamina: int) -> void:
 ## Repositions all of the [member Player._cards] within the container to fit
 ## the new card
 func add_card(card: Card) -> void:
+	# Signal connection to prevent selecting more cards than the MAX_SELECTED
+	card.card_clicked.connect(_on_card_clicked)
 	_cards.append(card)
 	add_child(card)
+	card.add_to_group(PLAYER_NOT_SELECTED_CARDS)
 	_position_all_cards()
 
 
@@ -58,3 +65,26 @@ func _position_card(card: Card, card_order: int) -> void:
 	card.position = Vector2(card_x, current_card_y)
 	card.z_index = card_order
 
+
+## Filters [member PlayerHand._cards] for [Card]s that are selected
+func _get_selected_cards() -> Array[Card]:
+	return _cards.filter(func(card): return card.is_selected)
+
+
+## Checks for selected cards and prevents selecting additional
+## cards if the number of selected cards is equal to [member PlayerHand.MAX_SELECTED]
+func _on_card_clicked(clicked_card: Card) -> void:
+	if clicked_card.selected:
+		clicked_card.add_to_group(PLAYER_SELECTED_CARDS)
+		clicked_card.remove_from_group(PLAYER_NOT_SELECTED_CARDS)
+	else:
+		clicked_card.add_to_group(PLAYER_NOT_SELECTED_CARDS)
+		clicked_card.remove_from_group(PLAYER_SELECTED_CARDS)
+
+	var num_selected_cards: int = get_tree().get_nodes_in_group(PLAYER_SELECTED_CARDS).size()
+	get_tree().call_group(
+		PLAYER_NOT_SELECTED_CARDS,
+		"set_clickable",
+		true if num_selected_cards < MAX_SELECTED else false
+	)
+	_position_all_cards()
