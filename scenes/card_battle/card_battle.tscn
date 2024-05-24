@@ -116,5 +116,9 @@ mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_3kd0m")
 script = ExtResource("5_dcxec")
 
+[node name="PlayedCard" type="Marker2D" parent="."]
+position = Vector2(193, 257)
+
+[connection signal="pressed" from="PlayerControls/PlayCard" to="." method="_on_play_card_pressed"]
 [connection signal="card_selection_changed" from="PlayerHand" to="." method="_player_hand_card_selection_changed"]
 [connection signal="stamina_changed" from="PlayerHand" to="." method="_update_player_stamina_label"]

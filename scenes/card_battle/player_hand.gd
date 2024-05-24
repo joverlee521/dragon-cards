@@ -5,7 +5,7 @@ extends PanelContainer
 ## Emitted whenever the [member PlayerHand._current_stamina] changes in value
 signal stamina_changed(new_value: int)
 ## Emitted whenever [Card] selection changes
-signal card_selection_changed()
+signal card_selection_changed(num_selected: int)
 
 ## The maximum number of cards that can be selected at once
 const MAX_SELECTED: int = 1
@@ -46,6 +46,22 @@ func add_card(card: Card) -> void:
 	add_child(card)
 	card.add_to_group(PLAYER_NOT_SELECTED_CARDS)
 	_position_all_cards()
+
+
+func play_selected_cards() -> Array[Card]:
+	get_tree().call_group(PLAYER_NOT_SELECTED_CARDS, "set_clickable", false)
+	var selected_cards: Array[Card] = []
+	selected_cards.assign(get_tree().get_nodes_in_group(PLAYER_SELECTED_CARDS))
+	for card in selected_cards:
+		_cards.erase(card)
+		card.remove_from_group(PLAYER_SELECTED_CARDS)
+		remove_child(card)
+	_position_all_cards()
+	return selected_cards
+
+
+func set_cards_clickable() -> void:
+	get_tree().call_group(PLAYER_NOT_SELECTED_CARDS, "set_clickable", true)
 
 
 ## Position all [member PlayerHand._cards] within the container
@@ -90,4 +106,4 @@ func _on_card_clicked(clicked_card: Card) -> void:
 		true if num_selected_cards < MAX_SELECTED else false
 	)
 	_position_all_cards()
-	card_selection_changed.emit()
+	card_selection_changed.emit(num_selected_cards)

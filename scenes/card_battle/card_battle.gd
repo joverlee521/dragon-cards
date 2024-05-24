@@ -6,6 +6,8 @@ extends Node
 const START_BATTLE_DELAY: float = 0.5
 ## Time delayed between each card that is dealt
 const DEAL_CARD_DELAY: float = 0.3
+## Time delayed between each card that is played
+const PLAYED_CARD_DELAY: float = 0.7
 
 ## The player's [Character] resource
 @export var player: Character = Character.new()
@@ -77,6 +79,18 @@ func _update_player_stamina_label(player_stamina: int = player.vocation.max_stam
 	$PlayerStats/Stamina.text = "%s / %s" % [str(player_stamina), str(player.vocation.max_stamina)]
 
 
-func _player_hand_card_selection_changed() -> void:
-	var player_selected_cards: int = get_tree().get_nodes_in_group($PlayerHand.PLAYER_SELECTED_CARDS).size()
-	$PlayerControls/PlayCard.disabled = player_selected_cards <= 0
+func _player_hand_card_selection_changed(num_selected: int) -> void:
+	$PlayerControls/PlayCard.disabled = num_selected <= 0
+
+
+func _on_play_card_pressed() -> void:
+	var played_cards: Array[Card] = $PlayerHand.play_selected_cards()
+	for card in played_cards:
+		add_child(card)
+		card.position = $PlayedCard.position
+		# TODO: Run card effects
+		await get_tree().create_timer(PLAYED_CARD_DELAY).timeout
+		remove_child(card)
+		$DiscardDeck.add_card(card.card_attributes.duplicate(true))
+		card.queue_free()
+	$PlayerHand.set_cards_clickable()
