@@ -8,6 +8,8 @@ const START_BATTLE_DELAY: float = 0.5
 const DEAL_CARD_DELAY: float = 0.3
 ## Time delayed between each card that is played
 const PLAYED_CARD_DELAY: float = 0.7
+## Time delayed between each card that is discarded
+const DISCARD_CARD_DELAY: float = 0
 
 ## The player's [Character] resource
 @export var player: Character = Character.new()
@@ -58,6 +60,12 @@ func deal_cards(num: int) -> void:
 		await get_tree().create_timer(DEAL_CARD_DELAY).timeout
 
 
+func discard_card(card: Card) -> void:
+	remove_child(card)
+	$DiscardDeck.add_card(card.card_attributes.duplicate(true))
+	card.queue_free()
+
+
 ## Connects the player's emitted stats signals to the label updates
 func _connect_player_stats_signals() -> void:
 	player.health_changed.connect(_update_player_health_label)
@@ -90,7 +98,11 @@ func _on_play_card_pressed() -> void:
 		card.position = $PlayedCard.position
 		# TODO: Run card effects
 		await get_tree().create_timer(PLAYED_CARD_DELAY).timeout
-		remove_child(card)
-		$DiscardDeck.add_card(card.card_attributes.duplicate(true))
-		card.queue_free()
+		discard_card(card)
 	$PlayerHand.set_cards_clickable()
+
+
+func _on_end_turn_pressed() -> void:
+	for card in $PlayerHand.discard_all_cards():
+		discard_card(card)
+		await get_tree().create_timer(DISCARD_CARD_DELAY).timeout

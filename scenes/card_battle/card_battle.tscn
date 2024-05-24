@@ -1,15 +1,21 @@
-[gd_scene load_steps=8 format=3 uid="uid://biq1mfvftv7wn"]
+[gd_scene load_steps=14 format=3 uid="uid://biq1mfvftv7wn"]
 
 [ext_resource type="Script" path="res://scenes/card_battle/card_battle.gd" id="1_eqlf3"]
 [ext_resource type="Script" path="res://resources/characters/character.gd" id="2_1gnlo"]
+[ext_resource type="Resource" uid="uid://dvu7ausdptdav" path="res://resources/card_attributes/cards/chaos_slash.tres" id="2_brf31"]
 [ext_resource type="Resource" uid="uid://c6ne1s60wvwga" path="res://resources/characters/vocations/player_vocations/warrior.tres" id="3_17jee"]
+[ext_resource type="Resource" uid="uid://di8t8yb5syu3a" path="res://resources/card_attributes/cards/defend.tres" id="3_lo2fa"]
+[ext_resource type="Resource" uid="uid://chi4gyal36j7o" path="res://resources/card_attributes/cards/slash.tres" id="4_aio81"]
 [ext_resource type="PackedScene" uid="uid://wpviprmqxet2" path="res://scenes/card_battle/deck.tscn" id="4_k67rs"]
 [ext_resource type="Script" path="res://scenes/card_battle/player_hand.gd" id="5_dcxec"]
+[ext_resource type="Resource" uid="uid://cyk6qweepfv6p" path="res://resources/card_attributes/cards/sword_spin.tres" id="5_e5qlo"]
+[ext_resource type="Resource" uid="uid://b723m4q0gy3df" path="res://resources/card_attributes/cards/cook.tres" id="6_24rqm"]
+[ext_resource type="Resource" uid="uid://df4d4hymojulf" path="res://resources/card_attributes/cards/cast_dark.tres" id="7_oas08"]
 
 [sub_resource type="Resource" id="Resource_wm4wy"]
 script = ExtResource("2_1gnlo")
 vocation = ExtResource("3_17jee")
-cards = Array[Resource("res://resources/card_attributes/card_attributes.gd")]([])
+cards = Array[Resource("res://resources/card_attributes/card_attributes.gd")]([ExtResource("2_brf31"), ExtResource("3_lo2fa"), ExtResource("4_aio81"), ExtResource("5_e5qlo"), ExtResource("6_24rqm"), ExtResource("7_oas08")])
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3kd0m"]
 bg_color = Color(0.184314, 0.184314, 0.184314, 1)
@@ -120,5 +126,6 @@ script = ExtResource("5_dcxec")
 position = Vector2(193, 257)
 
 [connection signal="pressed" from="PlayerControls/PlayCard" to="." method="_on_play_card_pressed"]
+[connection signal="pressed" from="PlayerControls/EndTurn" to="." method="_on_end_turn_pressed"]
 [connection signal="card_selection_changed" from="PlayerHand" to="." method="_player_hand_card_selection_changed"]
 [connection signal="stamina_changed" from="PlayerHand" to="." method="_update_player_stamina_label"]

@@ -60,6 +60,16 @@ func play_selected_cards() -> Array[Card]:
 	return selected_cards
 
 
+func discard_all_cards() -> Array[Card]:
+	for card in _cards:
+		card.remove_from_group(PLAYER_NOT_SELECTED_CARDS)
+		card.remove_from_group(PLAYER_SELECTED_CARDS)
+		remove_child(card)
+	var discarded_cards = _cards.duplicate(true)
+	_cards = []
+	return discarded_cards
+
+
 func set_cards_clickable() -> void:
 	get_tree().call_group(PLAYER_NOT_SELECTED_CARDS, "set_clickable", true)
 
