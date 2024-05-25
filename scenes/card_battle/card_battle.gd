@@ -68,7 +68,8 @@ func deal_cards(num: int) -> void:
 
 
 func discard_card(card: Card) -> void:
-	remove_child(card)
+	if card.get_parent() == self:
+		remove_child(card)
 	$DiscardDeck.add_card(card.card_attributes.duplicate(true))
 	card.queue_free()
 
@@ -78,7 +79,8 @@ func start_enemies_turn() -> void:
 	$PlayerControls/EndTurn.disabled = true
 	$PlayerHand.set_cards_clickable(false)
 	for enemy in get_tree().get_nodes_in_group($EnemyManager.ENEMIES_IN_BATTLE):
-		await _play_enemy_card(enemy.use_next_card())
+		await _play_enemy_card(enemy.get_next_card())
+	get_tree().call_group($EnemyManager.ENEMIES_IN_BATTLE, "pick_next_card")
 	start_player_turn()
 
 
