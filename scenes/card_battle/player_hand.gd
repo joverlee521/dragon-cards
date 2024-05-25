@@ -53,12 +53,14 @@ func play_selected_cards() -> Array[Card]:
 	get_tree().call_group(PLAYER_NOT_SELECTED_CARDS, "set_clickable", false)
 	var selected_cards: Array[Card] = []
 	selected_cards.assign(get_tree().get_nodes_in_group(PLAYER_SELECTED_CARDS))
+	var total_stamina_cost: int = _get_total_stamina_cost(selected_cards)
 	for card in selected_cards:
 		_cards.erase(card)
 		card.remove_from_group(PLAYER_SELECTED_CARDS)
 		remove_child(card)
 	_position_all_cards()
 	card_selection_changed.emit(false)
+	_stamina -= total_stamina_cost
 	return selected_cards
 
 
@@ -97,11 +99,6 @@ func _position_card(card: Card, card_order: int) -> void:
 	card.z_index = card_order
 
 
-## Filters [member PlayerHand._cards] for [Card]s that are selected
-func _get_selected_cards() -> Array[Card]:
-	return _cards.filter(func(card: Card) -> bool: return card.is_selected)
-
-
 ## Checks for selected cards and prevents selecting additional
 ## cards if the number of selected cards is equal to [member PlayerHand.MAX_SELECTED]
 func _on_card_clicked(clicked_card: Card) -> void:
@@ -112,12 +109,19 @@ func _on_card_clicked(clicked_card: Card) -> void:
 		clicked_card.add_to_group(PLAYER_NOT_SELECTED_CARDS)
 		clicked_card.remove_from_group(PLAYER_SELECTED_CARDS)
 
-	var num_selected_cards: int = get_tree().get_nodes_in_group(PLAYER_SELECTED_CARDS).size()
-	get_tree().call_group(
-		PLAYER_NOT_SELECTED_CARDS,
-		"set_clickable",
-		num_selected_cards < MAX_SELECTED
-	)
+	set_cards_clickable(get_tree().get_nodes_in_group(PLAYER_SELECTED_CARDS).size() < MAX_SELECTED)
 	_position_all_cards()
-	var selected_cards_playable: bool = num_selected_cards > 0
-	card_selection_changed.emit(selected_cards_playable)
+	card_selection_changed.emit(_determine_selected_cards_playable())
+
+
+func _get_total_stamina_cost(cards: Array[Card]) -> int:
+	var sum_stamina_cost: Callable = func(accum: int, card: Card) -> int:
+		return accum + card.get_stamina_cost()
+	return cards.reduce(sum_stamina_cost, 0)
+
+
+func _determine_selected_cards_playable() -> bool:
+	var selected_cards: Array[Card] = []
+	selected_cards.assign(get_tree().get_nodes_in_group(PLAYER_SELECTED_CARDS))
+	return (selected_cards.size() > 0
+		and _get_total_stamina_cost(selected_cards) <= _stamina)

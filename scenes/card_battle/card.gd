@@ -55,6 +55,10 @@ func _ready() -> void:
 			_update_label_font_size(child_node)
 
 
+func get_stamina_cost() -> int:
+	return card_attributes.stamina_cost
+
+
 func scale_animation(new_scale: Vector2, duration: float) -> void:
 	var tween = create_tween()
 	tween.tween_property(self, "scale", new_scale, duration).set_delay(duration * 0.5)
