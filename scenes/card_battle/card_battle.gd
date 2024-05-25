@@ -111,7 +111,7 @@ func _play_card(card: Card) -> void:
 	add_child(card)
 	card.position = $PlayedCard.position
 	# TODO: Run card effects
-	await card.scale_animation(PLAYED_CARD_SCALE, PLAYED_CARD_DELAY)
+	await card.run_scale_animation(PLAYED_CARD_SCALE, PLAYED_CARD_DELAY)
 
 
 func _on_play_card_pressed() -> void:

@@ -90,7 +90,7 @@ func _position_card(card: Card, card_order: int) -> void:
 	var card_x: int = card_order * _card_spacing
 
 	var current_card_y: int = _card_y
-	if card.selected:
+	if card.is_selected():
 		current_card_y -= 50
 
 	card.position = Vector2(card_x, current_card_y)
@@ -107,7 +107,7 @@ func _remove_card(card: Card) -> void:
 ## Checks for selected cards and prevents selecting additional
 ## cards if the number of selected cards is equal to [member PlayerHand.MAX_SELECTED]
 func _on_card_clicked(clicked_card: Card) -> void:
-	if clicked_card.selected:
+	if clicked_card.is_selected():
 		clicked_card.add_to_group(PLAYER_SELECTED_CARDS)
 		clicked_card.remove_from_group(PLAYER_NOT_SELECTED_CARDS)
 	else:
