@@ -20,9 +20,9 @@ func instantiate_enemies(enemies: Array[PackedScene]) -> void:
 		enemy.position = get_node("Enemy%s" % i).position
 		add_child(enemy)
 		enemy.add_to_group(ENEMIES_IN_BATTLE)
-		enemy.selected = false
+		enemy.set_selected(false)
 		if i == 0:
-			enemy.selected = true
+			enemy.set_selected(true)
 		enemy.enemy_clicked.connect(_on_enemy_clicked)
 		enemy.pick_next_card()
 
