@@ -17,6 +17,8 @@ const DISCARD_CARD_DELAY: float = 0
 @export var init_player_stats: bool = false
 ## The [Card] to instantiate for cards in battle
 @export var card_scene: PackedScene = load("res://scenes/card_battle/card.tscn")
+## The [Enemy]s to fight in card battle
+@export var enemies: Array[PackedScene] = [] # Array[Enemy]
 
 
 func _ready() -> void:
@@ -33,6 +35,7 @@ func start_battle() -> void:
 	_update_player_stamina_label()
 	player.cards.map($PlayDeck.add_card)
 	await get_tree().create_timer(START_BATTLE_DELAY).timeout
+	$EnemyManager.add_enemies(enemies)
 	start_player_turn()
 
 

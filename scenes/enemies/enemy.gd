@@ -2,7 +2,7 @@
 # Only inherited by enemy scene scripts
 class_name Enemy extends Area2D
 
-signal enemy_selected(enemy) # enemy: Enemy
+signal enemy_clicked(Enemy) # enemy: Enemy
 
 @export_group("EnemyStats")
 @export var character: Character
@@ -34,6 +34,11 @@ func _ready():
 	$Sprite/SelectionBorder.hide()
 
 
+## Chooses a random [CardAttribute] from [member Enemy.character._cards]
+func pick_next_card() -> void:
+	next_card_attribute = character.cards.pick_random()
+
+
 ## Connects the character's emitted stats signals to the label updates
 func _connect_character_stats_signals() -> void:
 	character.health_changed.connect(_update_health_label)
@@ -56,7 +61,7 @@ func _unhandled_input(event):
 	if (event.is_action_pressed("mouse_left_click")
 	and mouse_entered_enemy):
 		selected = true
-		emit_signal("enemy_selected", self)
+		enemy_clicked.emit(self)
 
 		self.get_viewport().set_input_as_handled()
 

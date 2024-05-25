@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://biq1mfvftv7wn"]
+[gd_scene load_steps=18 format=3 uid="uid://biq1mfvftv7wn"]
 
 [ext_resource type="Script" path="res://scenes/card_battle/card_battle.gd" id="1_eqlf3"]
 [ext_resource type="Script" path="res://resources/characters/character.gd" id="2_1gnlo"]
@@ -11,6 +11,10 @@
 [ext_resource type="Resource" uid="uid://cyk6qweepfv6p" path="res://resources/card_attributes/cards/sword_spin.tres" id="5_e5qlo"]
 [ext_resource type="Resource" uid="uid://b723m4q0gy3df" path="res://resources/card_attributes/cards/cook.tres" id="6_24rqm"]
 [ext_resource type="Resource" uid="uid://df4d4hymojulf" path="res://resources/card_attributes/cards/cast_dark.tres" id="7_oas08"]
+[ext_resource type="PackedScene" uid="uid://ev5dne8iq6p4" path="res://scenes/enemies/goblin.tscn" id="10_dak5q"]
+[ext_resource type="PackedScene" uid="uid://3fu10efu25ke" path="res://scenes/enemies/goblin_king.tscn" id="11_fof4w"]
+[ext_resource type="PackedScene" uid="uid://dtkjbo52s682w" path="res://scenes/enemies/goblin_mage.tscn" id="12_gfyra"]
+[ext_resource type="Script" path="res://scenes/card_battle/enemy_manager.gd" id="15_nb8t6"]
 
 [sub_resource type="Resource" id="Resource_wm4wy"]
 script = ExtResource("2_1gnlo")
@@ -30,6 +34,7 @@ border_blend = true
 script = ExtResource("1_eqlf3")
 player = SubResource("Resource_wm4wy")
 init_player_stats = true
+enemies = [ExtResource("10_dak5q"), ExtResource("11_fof4w"), ExtResource("12_gfyra")]
 
 [node name="PlayerStats" type="GridContainer" parent="."]
 offset_left = 13.0
@@ -123,7 +128,23 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_3kd0m")
 script = ExtResource("5_dcxec")
 
 [node name="PlayedCard" type="Marker2D" parent="."]
-position = Vector2(193, 257)
+position = Vector2(448, 256)
+
+[node name="EnemyManager" type="PanelContainer" parent="."]
+offset_left = 640.0
+offset_top = 32.0
+offset_right = 1880.0
+offset_bottom = 576.0
+script = ExtResource("15_nb8t6")
+
+[node name="Enemy0" type="Marker2D" parent="EnemyManager"]
+position = Vector2(192, 352)
+
+[node name="Enemy1" type="Marker2D" parent="EnemyManager"]
+position = Vector2(608, 160)
+
+[node name="Enemy2" type="Marker2D" parent="EnemyManager"]
+position = Vector2(1024, 344)
 
 [connection signal="pressed" from="PlayerControls/PlayCard" to="." method="_on_play_card_pressed"]
 [connection signal="pressed" from="PlayerControls/EndTurn" to="." method="_on_end_turn_pressed"]
