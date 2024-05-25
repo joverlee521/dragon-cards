@@ -103,8 +103,8 @@ func _update_player_stamina_label(player_stamina: int = player.vocation.max_stam
 	$PlayerStats/Stamina.text = "%s / %s" % [str(player_stamina), str(player.vocation.max_stamina)]
 
 
-func _player_hand_card_selection_changed(num_selected: int) -> void:
-	$PlayerControls/PlayCard.disabled = num_selected <= 0
+func _player_hand_card_selection_changed(selected_cards_playable: bool) -> void:
+	$PlayerControls/PlayCard.disabled = !selected_cards_playable
 
 
 func _play_card(card: Card) -> void:

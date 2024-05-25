@@ -4,8 +4,9 @@ extends PanelContainer
 
 ## Emitted whenever the [member PlayerHand._current_stamina] changes in value
 signal stamina_changed(new_value: int)
-## Emitted whenever [Card] selection changes
-signal card_selection_changed(num_selected: int)
+## Emitted whenever [Card] selection changes with boolean of whether
+## selected cards are playable
+signal card_selection_changed(selected_cards_playable: bool)
 
 ## The maximum number of cards that can be selected at once
 const MAX_SELECTED: int = 1
@@ -57,6 +58,7 @@ func play_selected_cards() -> Array[Card]:
 		card.remove_from_group(PLAYER_SELECTED_CARDS)
 		remove_child(card)
 	_position_all_cards()
+	card_selection_changed.emit(false)
 	return selected_cards
 
 
@@ -65,8 +67,9 @@ func discard_all_cards() -> Array[Card]:
 		card.remove_from_group(PLAYER_NOT_SELECTED_CARDS)
 		card.remove_from_group(PLAYER_SELECTED_CARDS)
 		remove_child(card)
-	var discarded_cards = _cards.duplicate(true)
+	var discarded_cards: Array[Card] = _cards.duplicate(true)
 	_cards = []
+	card_selection_changed.emit(false)
 	return discarded_cards
 
 
@@ -96,7 +99,7 @@ func _position_card(card: Card, card_order: int) -> void:
 
 ## Filters [member PlayerHand._cards] for [Card]s that are selected
 func _get_selected_cards() -> Array[Card]:
-	return _cards.filter(func(card): return card.is_selected)
+	return _cards.filter(func(card: Card) -> bool: return card.is_selected)
 
 
 ## Checks for selected cards and prevents selecting additional
@@ -113,7 +116,8 @@ func _on_card_clicked(clicked_card: Card) -> void:
 	get_tree().call_group(
 		PLAYER_NOT_SELECTED_CARDS,
 		"set_clickable",
-		true if num_selected_cards < MAX_SELECTED else false
+		num_selected_cards < MAX_SELECTED
 	)
 	_position_all_cards()
-	card_selection_changed.emit(num_selected_cards)
+	var selected_cards_playable: bool = num_selected_cards > 0
+	card_selection_changed.emit(selected_cards_playable)
