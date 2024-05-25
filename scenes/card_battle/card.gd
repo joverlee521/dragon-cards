@@ -83,6 +83,10 @@ func get_stamina_cost() -> int:
 	return card_attributes.stamina_cost
 
 
+func set_selected(selected: bool) -> void:
+	_selected = selected
+
+
 func set_clickable(clickable: bool) -> void:
 	_clickable = clickable
 

@@ -117,10 +117,9 @@ func _play_card(card: Card) -> void:
 
 
 func _on_play_card_pressed() -> void:
-	var played_cards: Array[Card] = $PlayerHand.play_selected_cards()
-	for card in played_cards:
-		await _play_card(card)
-		discard_card(card)
+	var card: Card = $PlayerHand.play_selected_card()
+	await _play_card(card)
+	discard_card(card)
 	$PlayerHand.set_cards_clickable(true)
 
 

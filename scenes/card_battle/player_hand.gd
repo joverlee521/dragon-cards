@@ -2,18 +2,30 @@ class_name PlayerHand
 extends PanelContainer
 ## Container for [Card]s that are in the player's hand
 
+# Signals ##########################################################################################
 ## Emitted whenever the [member PlayerHand._current_stamina] changes in value
 signal stamina_changed(new_value: int)
-## Emitted whenever [Card] selection changes with boolean of whether
-## selected cards are playable
-signal card_selection_changed(selected_cards_playable: bool)
+## Emitted whenever [Card] selection changes with boolean of whether selected card is playable
+signal card_selection_changed(selected_card_playable: bool)
 
-## The maximum number of cards that can be selected at once
-const MAX_SELECTED: int = 1
-## Group name for cards that are not selected
-const PLAYER_NOT_SELECTED_CARDS = "player_not_selected_cards"
-## Group name for cards that are selected
-const PLAYER_SELECTED_CARDS = "player_selected_cards"
+# Enums ############################################################################################
+
+
+
+# Constants ########################################################################################
+
+## Group for getting [Card] nodes that are in [PlayerHand]
+const CARDS_IN_PLAYER_HAND: String = "cards_in_player_hand"
+
+# @export variables ################################################################################
+
+
+
+# Public variables #################################################################################
+
+
+
+# Private variables ################################################################################
 
 ## The default y position for arranging cards in hand
 var _card_y: int = 0
@@ -23,46 +35,58 @@ var _card_spacing: int = 0
 var _cards: Array[Card] = []
 ## Current stamina of the player
 var _stamina: int = 0:
-	set(val):
-		_stamina = val
-		stamina_changed.emit(_stamina)
+	set = _set_stamina
+
+# @onready variables ###############################################################################
 
 
+
+# Optional _init method ############################################################################
+
+
+
+# Optional _enter_tree() method ####################################################################
+
+
+
+# Optional _ready method ###########################################################################
 func _ready() -> void:
 	_card_y = int(get_rect().size.y / 2)
 
 
-## Resets the [member PlayerHand._stamina] to the [param stamina]
+# Optional remaining built-in virtual methods ######################################################
+
+
+
+# Public methods ###################################################################################
+
 func reset_stamina(stamina: int) -> void:
 	_stamina = stamina
 
 
-## Adds [param card] to the [member Player._cards] and adds it as a child Node.
-## Repositions all of the [member Player._cards] within the container to fit
-## the new card
 func add_card(card: Card) -> void:
 	# Signal connection to prevent selecting more cards than the MAX_SELECTED
 	card.card_clicked.connect(_on_card_clicked)
 	_cards.append(card)
 	add_child(card)
-	card.add_to_group(PLAYER_NOT_SELECTED_CARDS)
+	card.add_to_group(CARDS_IN_PLAYER_HAND)
 	_position_all_cards()
 
 
-func play_selected_cards() -> Array[Card]:
-	get_tree().call_group(PLAYER_NOT_SELECTED_CARDS, "set_clickable", false)
-	var selected_cards: Array[Card] = []
-	selected_cards.assign(get_tree().get_nodes_in_group(PLAYER_SELECTED_CARDS))
+func play_selected_card() -> Card:
+	set_cards_clickable(false)
+	var selected_cards: Array[Card] = _get_selected_card()
+	assert(selected_cards.size() == 1, "Unable to play because no cards are selected")
 
-	var total_stamina_cost: int = _get_total_stamina_cost(selected_cards)
-	assert(total_stamina_cost <= _stamina,
-		"Unable to play selected cards because the total stamina cost is greater than the player's stamina")
-	_stamina -= total_stamina_cost
+	var selected_card: Card = selected_cards[0]
+	var stamina_cost: int = selected_card.get_stamina_cost()
+	assert(stamina_cost <= _stamina, "Unable to play selected card because the stamina cost is greater than the player's remaining stamina")
 
-	selected_cards.map(_remove_card)
+	_stamina -= stamina_cost
+	_remove_card(selected_card)
 	_position_all_cards()
 	card_selection_changed.emit(false)
-	return selected_cards
+	return selected_card
 
 
 func discard_all_cards() -> Array[Card]:
@@ -74,7 +98,54 @@ func discard_all_cards() -> Array[Card]:
 
 
 func set_cards_clickable(clickable: bool) -> void:
-	get_tree().call_group(PLAYER_NOT_SELECTED_CARDS, "set_clickable", clickable)
+	get_tree().call_group(CARDS_IN_PLAYER_HAND, "set_clickable", clickable)
+
+
+# Private methods ##################################################################################
+
+## Returns selected card, using Array[Card] because there's no optional return types
+func _get_selected_card() -> Array[Card]:
+	var selected_cards: Array[Card] = []
+	for card in get_tree().get_nodes_in_group(CARDS_IN_PLAYER_HAND):
+		if card.is_selected():
+			selected_cards.append(card)
+
+	assert(selected_cards.size() <= 1, "Only one card can be selected in PlayerHand")
+	return selected_cards
+
+
+func _remove_card(card: Card) -> void:
+	_cards.erase(card)
+	card.remove_from_group(CARDS_IN_PLAYER_HAND)
+	remove_child(card)
+
+
+## Checks for selected cards and prevents selecting additional
+## cards if the number of selected cards is equal to [member PlayerHand.MAX_SELECTED]
+func _on_card_clicked(clicked_card: Card) -> void:
+	for card in get_tree().get_nodes_in_group(CARDS_IN_PLAYER_HAND):
+		if card == clicked_card:
+			continue
+
+		if clicked_card.is_selected():
+			card.set_selected(false)
+			card.set_clickable(false)
+		else:
+			card.set_clickable(true)
+
+	_position_all_cards()
+	card_selection_changed.emit(_determine_selected_card_playable())
+
+
+func _determine_selected_card_playable() -> bool:
+	var selected_cards: Array[Card] = _get_selected_card()
+	var one_card_selected: bool = selected_cards.size() == 1
+	var stamina_cost_less_than_player_stamina: bool = false
+
+	if one_card_selected:
+		stamina_cost_less_than_player_stamina = selected_cards[0].get_stamina_cost() <= _stamina
+
+	return one_card_selected and stamina_cost_less_than_player_stamina
 
 
 ## Position all [member PlayerHand._cards] within the container
@@ -97,36 +168,9 @@ func _position_card(card: Card, card_order: int) -> void:
 	card.z_index = card_order
 
 
-func _remove_card(card: Card) -> void:
-	_cards.erase(card)
-	card.remove_from_group(PLAYER_NOT_SELECTED_CARDS)
-	card.remove_from_group(PLAYER_SELECTED_CARDS)
-	remove_child(card)
+func _set_stamina(value: int) -> void:
+	_stamina = value
+	stamina_changed.emit(_stamina)
 
 
-## Checks for selected cards and prevents selecting additional
-## cards if the number of selected cards is equal to [member PlayerHand.MAX_SELECTED]
-func _on_card_clicked(clicked_card: Card) -> void:
-	if clicked_card.is_selected():
-		clicked_card.add_to_group(PLAYER_SELECTED_CARDS)
-		clicked_card.remove_from_group(PLAYER_NOT_SELECTED_CARDS)
-	else:
-		clicked_card.add_to_group(PLAYER_NOT_SELECTED_CARDS)
-		clicked_card.remove_from_group(PLAYER_SELECTED_CARDS)
-
-	set_cards_clickable(get_tree().get_nodes_in_group(PLAYER_SELECTED_CARDS).size() < MAX_SELECTED)
-	_position_all_cards()
-	card_selection_changed.emit(_determine_selected_cards_playable())
-
-
-func _get_total_stamina_cost(cards: Array[Card]) -> int:
-	var sum_stamina_cost: Callable = func(accum: int, card: Card) -> int:
-		return accum + card.get_stamina_cost()
-	return cards.reduce(sum_stamina_cost, 0)
-
-
-func _determine_selected_cards_playable() -> bool:
-	var selected_cards: Array[Card] = []
-	selected_cards.assign(get_tree().get_nodes_in_group(PLAYER_SELECTED_CARDS))
-	return (selected_cards.size() > 0
-		and _get_total_stamina_cost(selected_cards) <= _stamina)
+# Subclasses #######################################################################################
