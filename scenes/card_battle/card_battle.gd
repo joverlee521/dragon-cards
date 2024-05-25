@@ -38,7 +38,7 @@ func start_battle() -> void:
 	_update_player_stamina_label()
 	player.cards.map($PlayDeck.add_card)
 	await get_tree().create_timer(START_BATTLE_DELAY).timeout
-	$EnemyManager.add_enemies(_instantiate_enemies())
+	$EnemyManager.instantiate_enemies(enemies)
 	start_player_turn()
 
 
@@ -77,7 +77,8 @@ func start_enemies_turn() -> void:
 	$PlayerControls/PlayCard.disabled = true
 	$PlayerControls/EndTurn.disabled = true
 	$PlayerHand.set_cards_clickable(false)
-	await $EnemyManager.play_enemy_cards()
+	for enemy in get_tree().get_nodes_in_group($EnemyManager.ENEMIES_IN_BATTLE):
+		await _play_enemy_card(enemy.use_next_card())
 	start_player_turn()
 
 
@@ -128,20 +129,9 @@ func _on_end_turn_pressed() -> void:
 	start_enemies_turn()
 
 
-func _instantiate_enemies() -> Array[Enemy]:
-	var enemy_nodes: Array[Enemy] = []
-	for enemy_scene in enemies:
-		var enemy: Enemy = enemy_scene.instantiate()
-		enemy.played_card.connect(_on_enemy_played_card)
-		enemy_nodes.append(enemy)
-	return enemy_nodes
-
-
-func _on_enemy_played_card(card_attributes: CardAttributes) -> void:
+func _play_enemy_card(card_attributes: CardAttributes) -> void:
 	var card: Card = card_scene.instantiate()
 	card.card_attributes = card_attributes
 	card.set_clickable(false)
 	await _play_card(card)
 	card.queue_free()
-	$EnemyManager.enemy_card_handled.emit()
-

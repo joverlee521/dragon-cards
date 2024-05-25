@@ -4,8 +4,6 @@ class_name Enemy extends Area2D
 
 ## Emitted when [Enemy] is clicked
 signal enemy_clicked(Enemy)
-## Emitted when [Enemy] plays their next card
-signal played_card(CardAttributes)
 
 @export_group("EnemyStats")
 @export var character: Character
@@ -42,8 +40,9 @@ func pick_next_card() -> void:
 	_next_card_attribute = character.cards.pick_random()
 
 
-func play_next_card() -> void:
-	played_card.emit(_next_card_attribute.duplicate(true))
+## Returns a copy of the [member Enemy._next_card_attribute]
+func use_next_card() -> CardAttributes:
+	return _next_card_attribute.duplicate(true)
 
 
 ## Connects the character's emitted stats signals to the label updates
