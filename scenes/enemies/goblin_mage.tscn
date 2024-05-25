@@ -1,10 +1,14 @@
 [gd_scene load_steps=8 format=3 uid="uid://dtkjbo52s682w"]
 
 [ext_resource type="PackedScene" uid="uid://dvxykdt47uuju" path="res://scenes/enemies/enemy.tscn" id="1_y55jn"]
+[ext_resource type="Script" path="res://resources/characters/character.gd" id="2_bd7jg"]
 [ext_resource type="Resource" uid="uid://c2tl0vldksnc2" path="res://resources/characters/vocations/enemy_vocations/goblin_mage.tres" id="2_cutfu"]
 [ext_resource type="Texture2D" uid="uid://cya3qkp1hytlb" path="res://art/PixelCardArt/CardRPGPack/Card RPG Monsters/goblin_6.png" id="2_lcdju"]
-[ext_resource type="Resource" uid="uid://bwoc6seq4ax2t" path="res://resources/card_attributes/cards/cast_magic.tres" id="2_vn3h8"]
-[ext_resource type="Resource" uid="uid://di8t8yb5syu3a" path="res://resources/card_attributes/cards/defend.tres" id="3_yffjo"]
+
+[sub_resource type="Resource" id="Resource_na0jy"]
+script = ExtResource("2_bd7jg")
+vocation = ExtResource("2_cutfu")
+cards = Array[Resource("res://resources/card_attributes/card_attributes.gd")]([])
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_y63hn"]
 resource_local_to_scene = true
@@ -16,8 +20,7 @@ atlas = ExtResource("2_lcdju")
 region = Rect2(0, 0, 64, 39)
 
 [node name="Enemy" instance=ExtResource("1_y55jn")]
-character = ExtResource("2_cutfu")
-cards = [ExtResource("2_vn3h8"), ExtResource("3_yffjo")]
+character = SubResource("Resource_na0jy")
 
 [node name="CollisionShape" parent="." index="0"]
 position = Vector2(0, 3)

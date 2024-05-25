@@ -6,7 +6,6 @@ signal enemy_selected(enemy) # enemy: Enemy
 
 @export_group("EnemyStats")
 @export var character: Character
-@export var cards: Array = []
 
 var next_card_attribute: CardAttributes:
 	set(value):
@@ -28,28 +27,25 @@ var selected: bool = false:
 
 func _ready():
 	character.resource_local_to_scene = true
-	character.init_health()
-	set_stat_labels()
+	character.init_stats()
+	_connect_character_stats_signals()
+	_update_health_label()
+	_update_defense_label()
 	$Sprite/SelectionBorder.hide()
 
 
-func set_stat_labels() -> void:
-	$HealthLabel.text = str(character.health)
-	if character.defense > 0:
-		$DefenseLabel.text = str(character.defense)
-	else:
-		$DefenseLabel.text = ''
+## Connects the character's emitted stats signals to the label updates
+func _connect_character_stats_signals() -> void:
+	character.health_changed.connect(_update_health_label)
+	character.defense_changed.connect(_update_defense_label)
 
 
-func pick_next_card_attribute() -> void:
-	next_card_attribute = cards.pick_random()
+func _update_health_label(new_value: int = character._health) -> void:
+	$HealthLabel.text = str(new_value)
 
 
-func get_next_card_attribute() -> CardAttributes:
-	var played_card_attribute = next_card_attribute
-	played_card_attribute.set_card_player(character)
-	next_card_attribute = null
-	return played_card_attribute
+func _update_defense_label(new_value: int = character._defense) -> void:
+	$DefenseLabel.text = str(new_value) if new_value > 0 else ""
 
 
 # Custom handler for input to work around overlapping Area2D objects both getting input
