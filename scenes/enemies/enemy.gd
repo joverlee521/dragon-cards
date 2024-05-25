@@ -2,19 +2,22 @@
 # Only inherited by enemy scene scripts
 class_name Enemy extends Area2D
 
-signal enemy_clicked(Enemy) # enemy: Enemy
+## Emitted when [Enemy] is clicked
+signal enemy_clicked(Enemy)
+## Emitted when [Enemy] plays their next card
+signal played_card(CardAttributes)
 
 @export_group("EnemyStats")
 @export var character: Character
 
-var next_card_attribute: CardAttributes:
+var _next_card_attribute: CardAttributes:
 	set(value):
-		next_card_attribute = value
-		if is_node_ready() and next_card_attribute != null:
+		_next_card_attribute = value
+		if is_node_ready() and _next_card_attribute != null:
 			$NextMove.text = ""
-			if next_card_attribute.attack > 0:
+			if _next_card_attribute.attack > 0:
 				$NextMove.text += "<A>"
-			if next_card_attribute.defense > 0:
+			if _next_card_attribute.defense > 0:
 				$NextMove.text += "<D>"
 
 # Click selection variables
@@ -36,7 +39,11 @@ func _ready():
 
 ## Chooses a random [CardAttribute] from [member Enemy.character._cards]
 func pick_next_card() -> void:
-	next_card_attribute = character.cards.pick_random()
+	_next_card_attribute = character.cards.pick_random()
+
+
+func play_next_card() -> void:
+	played_card.emit(_next_card_attribute.duplicate(true))
 
 
 ## Connects the character's emitted stats signals to the label updates

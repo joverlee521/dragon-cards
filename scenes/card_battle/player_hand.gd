@@ -70,8 +70,8 @@ func discard_all_cards() -> Array[Card]:
 	return discarded_cards
 
 
-func set_cards_clickable() -> void:
-	get_tree().call_group(PLAYER_NOT_SELECTED_CARDS, "set_clickable", true)
+func set_cards_clickable(clickable: bool) -> void:
+	get_tree().call_group(PLAYER_NOT_SELECTED_CARDS, "set_clickable", clickable)
 
 
 ## Position all [member PlayerHand._cards] within the container

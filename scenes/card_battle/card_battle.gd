@@ -8,8 +8,11 @@ const START_BATTLE_DELAY: float = 0.5
 const DEAL_CARD_DELAY: float = 0.3
 ## Time delayed between each card that is played
 const PLAYED_CARD_DELAY: float = 0.7
+## Final scale of played card
+const PLAYED_CARD_SCALE: Vector2 = Vector2(1.3, 1.3)
 ## Time delayed between each card that is discarded
 const DISCARD_CARD_DELAY: float = 0
+
 
 ## The player's [Character] resource
 @export var player: Character = Character.new()
@@ -35,7 +38,7 @@ func start_battle() -> void:
 	_update_player_stamina_label()
 	player.cards.map($PlayDeck.add_card)
 	await get_tree().create_timer(START_BATTLE_DELAY).timeout
-	$EnemyManager.add_enemies(enemies)
+	$EnemyManager.add_enemies(_instantiate_enemies())
 	start_player_turn()
 
 
@@ -45,6 +48,7 @@ func start_battle() -> void:
 ## [br] 3. Disabling the PlayCard button
 func start_player_turn() -> void:
 	$PlayerControls/PlayCard.disabled = true
+	$PlayerControls/EndTurn.disabled = false
 	$PlayerHand.reset_stamina(player.vocation.max_stamina)
 	deal_cards(player.vocation.max_hand_size)
 
@@ -67,6 +71,14 @@ func discard_card(card: Card) -> void:
 	remove_child(card)
 	$DiscardDeck.add_card(card.card_attributes.duplicate(true))
 	card.queue_free()
+
+
+func start_enemies_turn() -> void:
+	$PlayerControls/PlayCard.disabled = true
+	$PlayerControls/EndTurn.disabled = true
+	$PlayerHand.set_cards_clickable(false)
+	await $EnemyManager.play_enemy_cards()
+	start_player_turn()
 
 
 ## Connects the player's emitted stats signals to the label updates
@@ -94,18 +106,42 @@ func _player_hand_card_selection_changed(num_selected: int) -> void:
 	$PlayerControls/PlayCard.disabled = num_selected <= 0
 
 
+func _play_card(card: Card) -> void:
+	add_child(card)
+	card.position = $PlayedCard.position
+	# TODO: Run card effects
+	await card.scale_animation(PLAYED_CARD_SCALE, PLAYED_CARD_DELAY)
+
+
 func _on_play_card_pressed() -> void:
 	var played_cards: Array[Card] = $PlayerHand.play_selected_cards()
 	for card in played_cards:
-		add_child(card)
-		card.position = $PlayedCard.position
-		# TODO: Run card effects
-		await get_tree().create_timer(PLAYED_CARD_DELAY).timeout
+		await _play_card(card)
 		discard_card(card)
-	$PlayerHand.set_cards_clickable()
+	$PlayerHand.set_cards_clickable(true)
 
 
 func _on_end_turn_pressed() -> void:
-	for card in $PlayerHand.discard_all_cards():
+	for card: Card in $PlayerHand.discard_all_cards():
 		discard_card(card)
 		await get_tree().create_timer(DISCARD_CARD_DELAY).timeout
+	start_enemies_turn()
+
+
+func _instantiate_enemies() -> Array[Enemy]:
+	var enemy_nodes: Array[Enemy] = []
+	for enemy_scene in enemies:
+		var enemy: Enemy = enemy_scene.instantiate()
+		enemy.played_card.connect(_on_enemy_played_card)
+		enemy_nodes.append(enemy)
+	return enemy_nodes
+
+
+func _on_enemy_played_card(card_attributes: CardAttributes) -> void:
+	var card: Card = card_scene.instantiate()
+	card.card_attributes = card_attributes
+	card.set_clickable(false)
+	await _play_card(card)
+	card.queue_free()
+	$EnemyManager.enemy_card_handled.emit()
+

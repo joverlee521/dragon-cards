@@ -4,12 +4,11 @@ extends PanelContainer
 
 ## Emitted when all enemies are defeated
 signal all_enemies_defeated
-
-## Group for all enemiese in battle
-const ENEMIES = "enemies_in_battle"
+## Emitted when the played enemy card has been handled by the [CardBattle]
+signal enemy_card_handled
 
 ## Enemies in this card battle
-var _enemies: Array[PackedScene] = []
+var _enemies: Array[Enemy] = []
 
 
 func _ready() -> void:
@@ -17,17 +16,16 @@ func _ready() -> void:
 	mouse_filter = Control.MOUSE_FILTER_IGNORE
 
 
-func add_enemies(enemies: Array[PackedScene]) -> void:
+func add_enemies(enemies: Array[Enemy]) -> void:
 	_enemies = enemies
 	instantiate_enemies()
 
 
 func instantiate_enemies() -> void:
 	for i in len(_enemies):
-		var enemy: Enemy = _enemies[i].instantiate()
+		var enemy: Enemy = _enemies[i]
 		enemy.position = get_node("Enemy%s" % i).position
 		add_child(enemy)
-		enemy.add_to_group(ENEMIES)
 		enemy.selected = false
 		if i == 0:
 			enemy.selected = true
@@ -35,7 +33,13 @@ func instantiate_enemies() -> void:
 		enemy.pick_next_card()
 
 
+func play_enemy_cards() -> void:
+	for enemy in _enemies:
+		enemy.play_next_card()
+		await enemy_card_handled
+
+
 func _on_enemy_clicked(clicked_enemy: Enemy) -> void:
-	for enemy in get_tree().get_nodes_in_group(ENEMIES):
+	for enemy in _enemies:
 		if enemy != clicked_enemy:
 			enemy.selected = false
