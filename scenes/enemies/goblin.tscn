@@ -1,0 +1,43 @@
+[gd_scene load_steps=9 format=3 uid="uid://ev5dne8iq6p4"]
+
+[ext_resource type="PackedScene" uid="uid://dvxykdt47uuju" path="res://scenes/enemies/enemy.tscn" id="1_lnrol"]
+[ext_resource type="Resource" uid="uid://dvdg0ofo26io0" path="res://resources/characters/vocations/enemy_vocations/goblin.tres" id="2_cefo0"]
+[ext_resource type="Resource" uid="uid://vikvvdlt7y4u" path="res://resources/card_attributes/cards/smash.tres" id="2_qkoot"]
+[ext_resource type="Resource" uid="uid://chi4gyal36j7o" path="res://resources/card_attributes/cards/slash.tres" id="3_5tnem"]
+[ext_resource type="Resource" uid="uid://di8t8yb5syu3a" path="res://resources/card_attributes/cards/defend.tres" id="4_biga3"]
+[ext_resource type="Texture2D" uid="uid://diwb42bdv4vno" path="res://art/PixelCardArt/CardRPGPack/Card RPG Monsters/goblin_1.png" id="5_ah35b"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_jbx20"]
+resource_local_to_scene = true
+size = Vector2(117, 137)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_t35f4"]
+resource_local_to_scene = true
+atlas = ExtResource("5_ah35b")
+region = Rect2(0, 0, 33, 39)
+
+[node name="Enemy" instance=ExtResource("1_lnrol")]
+position = Vector2(432, 208)
+character = ExtResource("2_cefo0")
+cards = [ExtResource("2_qkoot"), ExtResource("3_5tnem"), ExtResource("4_biga3")]
+
+[node name="CollisionShape" parent="." index="0"]
+position = Vector2(-0.5, 2.5)
+shape = SubResource("RectangleShape2D_jbx20")
+
+[node name="Sprite" parent="." index="1"]
+scale = Vector2(3.5, 3.5)
+texture = SubResource("AtlasTexture_t35f4")
+
+[node name="SelectionBorder" parent="Sprite" index="0"]
+visible = true
+offset_left = -16.5
+offset_top = -19.5
+offset_right = -16.5
+offset_bottom = -19.5
+
+[node name="HealthLabel" parent="." index="2"]
+offset_left = -17.98
+offset_top = -110.025
+offset_right = 26.02
+offset_bottom = -82.025
