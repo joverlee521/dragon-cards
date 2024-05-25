@@ -53,23 +53,21 @@ func play_selected_cards() -> Array[Card]:
 	get_tree().call_group(PLAYER_NOT_SELECTED_CARDS, "set_clickable", false)
 	var selected_cards: Array[Card] = []
 	selected_cards.assign(get_tree().get_nodes_in_group(PLAYER_SELECTED_CARDS))
+
 	var total_stamina_cost: int = _get_total_stamina_cost(selected_cards)
-	for card in selected_cards:
-		_cards.erase(card)
-		card.remove_from_group(PLAYER_SELECTED_CARDS)
-		remove_child(card)
+	assert(total_stamina_cost <= _stamina,
+		"Unable to play selected cards because the total stamina cost is greater than the player's stamina")
+	_stamina -= total_stamina_cost
+
+	selected_cards.map(_remove_card)
 	_position_all_cards()
 	card_selection_changed.emit(false)
-	_stamina -= total_stamina_cost
 	return selected_cards
 
 
 func discard_all_cards() -> Array[Card]:
-	for card in _cards:
-		card.remove_from_group(PLAYER_NOT_SELECTED_CARDS)
-		card.remove_from_group(PLAYER_SELECTED_CARDS)
-		remove_child(card)
 	var discarded_cards: Array[Card] = _cards.duplicate(true)
+	discarded_cards.map(_remove_card)
 	_cards = []
 	card_selection_changed.emit(false)
 	return discarded_cards
@@ -97,6 +95,13 @@ func _position_card(card: Card, card_order: int) -> void:
 
 	card.position = Vector2(card_x, current_card_y)
 	card.z_index = card_order
+
+
+func _remove_card(card: Card) -> void:
+	_cards.erase(card)
+	card.remove_from_group(PLAYER_NOT_SELECTED_CARDS)
+	card.remove_from_group(PLAYER_SELECTED_CARDS)
+	remove_child(card)
 
 
 ## Checks for selected cards and prevents selecting additional
