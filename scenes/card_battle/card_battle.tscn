@@ -32,6 +32,7 @@ border_blend = true
 
 [node name="CardBattle" type="Node"]
 script = ExtResource("1_eqlf3")
+PLAYED_CARD_SCALE = Vector2(1, 1)
 player = SubResource("Resource_wm4wy")
 init_player_stats = true
 enemies = Array[PackedScene]([ExtResource("10_dak5q"), ExtResource("11_fof4w"), ExtResource("12_gfyra")])
