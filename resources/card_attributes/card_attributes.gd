@@ -2,6 +2,12 @@ class_name CardAttributes
 extends Resource
 ## Base resource for storing and calculating card effects
 
+# Signals ##########################################################################################
+
+
+
+# Enums ############################################################################################
+
 ## Options for the [member CardAttributes.target_type]
 enum TARGET_TYPE {
 	## Card only attacks a single target
@@ -9,6 +15,12 @@ enum TARGET_TYPE {
 	## Card attacks groups of targets
 	GROUP,
 }
+
+# Constants ########################################################################################
+
+
+
+# @export variables ################################################################################
 
 @export_group("Card Visual")
 ## Displayed card name
@@ -43,3 +55,41 @@ enum TARGET_TYPE {
 @export var status_effects_on_card_player: Array[StatusEffect]
 ## Card's status effects applied to the card target
 @export var status_effects_on_card_target: Array[StatusEffect]
+
+# Public variables #################################################################################
+
+
+
+# Private variables ################################################################################
+
+
+
+# @onready variables ###############################################################################
+
+
+
+# Optional _init method ############################################################################
+
+
+
+# Optional _enter_tree() method ####################################################################
+
+
+
+# Optional _ready method ###########################################################################
+
+
+
+# Optional remaining built-in virtual methods ######################################################
+
+
+
+# Public methods ###################################################################################
+
+
+
+# Private methods ##################################################################################
+
+
+
+# Subclasses #######################################################################################
