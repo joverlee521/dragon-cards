@@ -170,10 +170,12 @@ func _play_card(card: Card, card_affectees: CardAttributes.CardAffectees) -> voi
 
 
 func _on_play_card_pressed() -> void:
+	$PlayerControls/EndTurn.disabled = true
 	var card: Card = $PlayerHand.play_selected_card()
 	await _play_card(card, _create_player_owner_card_affectees())
 	discard_card(card)
 	$PlayerHand.set_cards_clickable(true)
+	$PlayerControls/EndTurn.disabled = false
 
 
 func _on_end_turn_pressed() -> void:
