@@ -92,6 +92,9 @@ func get_next_card() -> CardAttributes:
 	return _next_card_attribute.duplicate(true)
 
 
+func create_card_target() -> CardAttributes.CardTarget:
+	return CardAttributes.CardTarget.new(character, global_position)
+
 # Private methods ##############################################################
 
 ## Connects the character's emitted stats signals to the label updates

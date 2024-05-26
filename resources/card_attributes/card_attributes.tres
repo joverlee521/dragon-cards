@@ -4,13 +4,13 @@
 
 [resource]
 script = ExtResource("1_gnj32")
-card_name = ""
-card_description = ""
-target_type = 0
-attack = 0
-defense = 0
-stamina_cost = 0
-damage_type = 0
-damage_element = 0
-status_effects_on_card_player = Array[Resource("res://resources/card_attributes/status_effect.gd")]([])
-status_effects_on_card_target = Array[Resource("res://resources/card_attributes/status_effect.gd")]([])
+card_name = null
+card_description = null
+target_type = null
+attack = null
+defense = null
+stamina_cost = null
+damage_type = null
+damage_element = null
+status_effects_on_card_player = null
+status_effects_on_card_target = null

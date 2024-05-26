@@ -53,6 +53,8 @@ func _init(i_card_attributes: CardAttributes = CardAttributes.new()) -> void:
 
 # Optional _ready method ###########################################################################
 func _ready() -> void:
+	$CardAnimationLayer/CardAnimation.hide()
+	card_attributes.triggered_animation.connect(_on_triggered_animation)
 	_set_card_background_textures()
 	# TODO: Remove because this slows down the card scene instantiation SIGNIFICANTLY!
 	_update_label_font_size()
@@ -100,7 +102,26 @@ func run_scale_animation(new_scale: Vector2, duration: float, delay: float = 0.0
 	await tween.finished
 
 
+func play(card_affectees: CardAttributes.CardAffectees) -> void:
+	card_attributes.apply_effects(card_affectees)
+
+
 # Private methods ##############################################################
+
+func _on_triggered_animation(animation_name: String, animation_position: Vector2) -> void:
+	var card_animation: AnimatedSprite2D = $CardAnimationLayer/CardAnimation.duplicate()
+	$CardAnimationLayer.add_child(card_animation)
+	# Check requested animation exists
+	assert(card_animation.sprite_frames.has_animation(animation_name),
+		"Cannot play animation <%s> that does not exist!" % animation_name)
+
+	card_animation.position = animation_position
+	card_animation.show()
+	card_animation.play(animation_name)
+	await card_animation.animation_finished
+	$CardAnimationLayer.remove_child(card_animation)
+	card_animation.queue_free()
+
 
 func _toggle_selected() -> void:
 	_selected = !_selected

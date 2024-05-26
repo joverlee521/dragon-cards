@@ -128,8 +128,8 @@ func start_enemies_turn() -> void:
 	$PlayerControls/EndTurn.disabled = true
 	$PlayerHand.set_cards_clickable(false)
 
-	for enemy in get_tree().get_nodes_in_group($EnemyManager.ENEMIES_IN_BATTLE):
-		await _play_enemy_card(enemy.get_next_card())
+	for enemy: Enemy in $EnemyManager.get_all_enemies():
+		await _play_enemy_card(enemy)
 
 	get_tree().call_group($EnemyManager.ENEMIES_IN_BATTLE, "pick_next_card")
 	start_player_turn()
@@ -159,16 +159,16 @@ func _player_hand_card_selection_changed(selected_cards_playable: bool) -> void:
 	$PlayerControls/PlayCard.disabled = !selected_cards_playable
 
 
-func _play_card(card: Card) -> void:
+func _play_card(card: Card, card_affectees: CardAttributes.CardAffectees) -> void:
 	add_child(card)
 	card.position = $PlayedCard.position
-	# TODO: Run card effects
+	card.play(card_affectees)
 	await card.run_scale_animation(PLAYED_CARD_SCALE, PLAYED_CARD_DELAY)
 
 
 func _on_play_card_pressed() -> void:
 	var card: Card = $PlayerHand.play_selected_card()
-	await _play_card(card)
+	await _play_card(card, _create_player_owner_card_affectees())
 	discard_card(card)
 	$PlayerHand.set_cards_clickable(true)
 
@@ -180,12 +180,31 @@ func _on_end_turn_pressed() -> void:
 	start_enemies_turn()
 
 
-func _play_enemy_card(card_attributes: CardAttributes) -> void:
+func _play_enemy_card(enemy: Enemy) -> void:
 	var card: Card = card_scene.instantiate()
+	var card_attributes: CardAttributes = enemy.get_next_card()
 	card.card_attributes = card_attributes
 	card.set_clickable(false)
-	await _play_card(card)
+	await _play_card(card, _create_enemy_owner_card_affectees(enemy))
 	card.queue_free()
 
+
+func _create_player_owner_card_affectees() -> CardAttributes.CardAffectees:
+	var card_owner:= CardAttributes.CardTarget.new(player, $PlayerSprite.global_position)
+	var owner_team: Array[CardAttributes.CardTarget] = []
+
+	var selected_enemy: Enemy = $EnemyManager.get_selected_enemy()
+	var opposer: = selected_enemy.create_card_target()
+	var opposer_team: Array[CardAttributes.CardTarget] = $EnemyManager.get_all_other_enemies_as_card_targets(selected_enemy)
+	return CardAttributes.CardAffectees.new(card_owner, owner_team, opposer, opposer_team)
+
+
+func _create_enemy_owner_card_affectees(enemy_owner: Enemy) -> CardAttributes.CardAffectees:
+	var card_owner := enemy_owner.create_card_target()
+	var owner_team: Array[CardAttributes.CardTarget] = $EnemyManager.get_all_other_enemies_as_card_targets(enemy_owner)
+
+	var opposer: = CardAttributes.CardTarget.new(player, $PlayerSprite.global_position)
+	var opposer_team: Array[CardAttributes.CardTarget] = []
+	return CardAttributes.CardAffectees.new(card_owner, owner_team, opposer, opposer_team)
 
 # Subclasses #######################################################################################

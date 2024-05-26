@@ -67,11 +67,56 @@ func instantiate_enemies(enemies: Array[PackedScene]) -> void:
 		enemy.pick_next_card()
 
 
+func get_all_enemies() -> Array[Enemy]:
+	return _as_enemy_array(get_tree().get_nodes_in_group(ENEMIES_IN_BATTLE))
+
+
+func get_all_enemies_as_card_targets() -> Array[CardAttributes.CardTarget]:
+	return _as_card_targets_array(get_all_enemies().map(_get_enemy_card_target))
+
+
+func get_selected_enemy() -> Enemy:
+	var selected_enemies: Array[Enemy] = _as_enemy_array(
+		get_all_enemies().filter(func (enemy: Enemy) -> bool: return enemy.is_selected())
+	)
+
+	assert(selected_enemies.size() == 1, "There should only be one selected enemy")
+	return selected_enemies[0]
+
+
+func get_all_other_enemies(excluded_enemy: Enemy) -> Array[Enemy]:
+	return _as_enemy_array(get_all_enemies().filter(
+		func (enemy: Enemy) -> bool: return enemy != excluded_enemy
+	))
+
+
+func get_all_other_enemies_as_card_targets(excluded_enemy: Enemy) -> Array[CardAttributes.CardTarget]:
+	return _as_card_targets_array(
+		get_all_other_enemies(excluded_enemy).map(_get_enemy_card_target)
+	)
+
+
 # Private methods ##################################################################################
 
 func _on_enemy_clicked(clicked_enemy: Enemy) -> void:
 	for enemy in get_tree().get_nodes_in_group(ENEMIES_IN_BATTLE):
 		if enemy != clicked_enemy:
 			enemy.set_selected(false)
+
+
+func _get_enemy_card_target(enemy: Enemy) -> CardAttributes.CardTarget:
+	return enemy.create_card_target()
+
+
+func _as_enemy_array(input: Array) -> Array[Enemy]:
+	var enemies: Array[Enemy] = []
+	enemies.assign(input)
+	return enemies
+
+
+func _as_card_targets_array(input: Array) -> Array[CardAttributes.CardTarget]:
+	var targets: Array[CardAttributes.CardTarget] = []
+	targets.assign(input)
+	return targets
 
 # Subclasses #######################################################################################
