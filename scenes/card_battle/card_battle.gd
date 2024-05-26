@@ -2,19 +2,19 @@ class_name CardBattle
 extends Node
 ## The root scene for the card battle
 
-# Signals ##########################################################################################
+#region Signals ##########################################################################################
 
 
-
-# Enums ############################################################################################
-
-
-
-# Constants ########################################################################################
+#endregion
+#region Enums ############################################################################################
 
 
+#endregion
+#region Constants ########################################################################################
 
-# @export variables ################################################################################
+
+#endregion
+#region @export variables ################################################################################
 
 @export_group("Action Timers and Scale")
 ## Time delayed at the start of the battle before the first hand is dealt
@@ -38,39 +38,41 @@ extends Node
 ## The [Enemy]s to fight in card battle
 @export var enemies: Array[PackedScene] = [] # Array[Enemy]
 
-# Public variables #################################################################################
+#endregion
+#region Public variables #################################################################################
 
 
-
-# Private variables ################################################################################
-
-
-
-# @onready variables ###############################################################################
+#endregion
+#region Private variables ################################################################################
 
 
-
-# Optional _init method ############################################################################
-
-
-
-# Optional _enter_tree() method ####################################################################
+#endregion
+#region @onready variables ###############################################################################
 
 
+#endregion
+#region Optional _init method ############################################################################
 
-# Optional _ready method ###########################################################################
+
+#endregion
+#region Optional _enter_tree() method ####################################################################
+
+
+#endregion
+#region Optional _ready method ###########################################################################
+
 func _ready() -> void:
 	_connect_player_stats_signals()
 	if init_player_stats:
 		player.init_stats()
 	start_battle()
 
+#endregion
+#region Optional remaining built-in virtual methods ######################################################
 
-# Optional remaining built-in virtual methods ######################################################
 
-
-
-# Public methods ###################################################################################
+#endregion
+#region Public methods ###################################################################################
 
 func start_battle() -> void:
 	$PlayerSprite.texture = player.vocation.vocation_sprite
@@ -134,8 +136,8 @@ func start_enemies_turn() -> void:
 	get_tree().call_group($EnemyManager.ENEMIES_IN_BATTLE, "pick_next_card")
 	start_player_turn()
 
-
-# Private methods ##################################################################################
+#endregion
+#region Private methods ##################################################################################
 
 ## Connects the player's emitted stats signals to the label updates
 func _connect_player_stats_signals() -> void:
@@ -208,4 +210,8 @@ func _create_enemy_owner_card_affectees(enemy_owner: Enemy) -> CardAttributes.Ca
 	var opposer_team: Array[CardAttributes.CardTarget] = []
 	return CardAttributes.CardAffectees.new(card_owner, owner_team, opposer, opposer_team)
 
-# Subclasses #######################################################################################
+#endregion
+#region Subclasses #######################################################################################s
+
+
+#endregion

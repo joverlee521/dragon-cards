@@ -2,13 +2,13 @@ class_name CardAttributes
 extends Resource
 ## Base resource for storing and calculating card effects
 
-# Signals ##########################################################################################
+#region Signals ####################################################################################
 
 ## Emitted when the [CardAttributes] triggers an animation
 signal triggered_animation(animation_name: String, animation_position: Vector2)
-#endregion
 
-# Enums ############################################################################################
+#endregion
+#region Enums ######################################################################################
 
 ## Options for the [member CardAttributes.target_type]
 enum TARGET_TYPE {
@@ -18,11 +18,12 @@ enum TARGET_TYPE {
 	GROUP,
 }
 
-# Constants ########################################################################################
+#endregion
+#region Constants ##################################################################################
 
 
-
-# @export variables ################################################################################
+#endregion
+#region @export variables ##########################################################################
 
 @export_group("Card Visual")
 ## Displayed card name
@@ -64,35 +65,36 @@ enum TARGET_TYPE {
 ## Card's status effects applied to the card target
 @export var status_effects_on_card_target: Array[StatusEffect]
 
-# Public variables #################################################################################
+#endregion
+#region Public variables ###########################################################################
 
 
-
-# Private variables ################################################################################
-
-
-
-# @onready variables ###############################################################################
+#endregion
+#region Private variables ##########################################################################
 
 
-
-# Optional _init method ############################################################################
-
-
-
-# Optional _enter_tree() method ####################################################################
+#endregion
+#region @onready variables #########################################################################
 
 
-
-# Optional _ready method ###########################################################################
-
-
-
-# Optional remaining built-in virtual methods ######################################################
+#endregion
+#region Optional _init method ######################################################################
 
 
+#endregion
+#region Optional _enter_tree() method ##############################################################
 
-# Public methods ###################################################################################
+
+#endregion
+#region Optional _ready method #####################################################################
+
+
+#endregion
+#region Optional remaining built-in virtual methods ################################################
+
+
+#endregion
+#region Public methods #############################################################################
 
 ## Apply [CardAttributes]'s effects to the [param card_affectees].
 ## Optionally, the [param _card_env] can change the [CardAttributes]'s effects
@@ -119,8 +121,8 @@ func apply_defense(target: CardTarget) -> void:
 		triggered_animation.emit(_get_defense_animation_string(), target.global_position)
 		target.character.add_defense(defense)
 
-
-# Private methods ##################################################################################
+#endregion
+#region Private methods ############################################################################
 
 ## Get the animation name for the attack animation
 func _get_attack_animation_string() -> String:
@@ -141,8 +143,8 @@ func _get_attack_animation_string() -> String:
 func _get_defense_animation_string() -> String:
 	return "AddArmor"
 
-
-# Subclasses #######################################################################################
+#endregion
+#region Subclasses #################################################################################
 
 ## The base class representing a [CardAttributes]'s target
 class CardTarget:
@@ -181,3 +183,5 @@ class CardEnvironment:
 			   i_discard_deck_cards: Array[CardAttributes]) -> void:
 		play_deck_cards = i_play_deck_cards
 		discard_deck_cards = i_discard_deck_cards
+
+#endregion

@@ -2,55 +2,58 @@ class_name EnemyManager
 extends PanelContainer
 ## Container for managing the [Enemy] scenes in the [CardBattle]
 
-# Signals ##########################################################################################
+#region Signals ##########################################################################################
 
 ## Emitted when all enemies are defeated
 signal all_enemies_defeated
 
-# Enums ############################################################################################
+#endregion
+#region Enums ############################################################################################
 
 
-
-# Constants ########################################################################################
+#endregion
+#region Constants ########################################################################################
 
 ## Group for getting [Enemy] nodes that are in battle
 const ENEMIES_IN_BATTLE: String = "enemies_in_battle"
 
-# @export variables ################################################################################
+#endregion
+#region @export variables ################################################################################
 
 
-
-# Public variables #################################################################################
-
-
-
-# Private variables ################################################################################
+#endregion
+#region Public variables #################################################################################
 
 
-
-# @onready variables ###############################################################################
-
-
-
-# Optional _init method ############################################################################
+#endregion
+#region Private variables ################################################################################
 
 
+#endregion
+#region @onready variables ###############################################################################
 
-# Optional _enter_tree() method ####################################################################
+
+#endregion
+#region Optional _init method ############################################################################
 
 
+#endregion
+#region Optional _enter_tree() method ####################################################################
 
-# Optional _ready method ###########################################################################
+
+#endregion
+#region Optional _ready method ###########################################################################
+
 func _ready() -> void:
 	# Ignore mouse events here so the individual enemies can be clicked
 	mouse_filter = Control.MOUSE_FILTER_IGNORE
 
+#endregion
+#region Optional remaining built-in virtual methods ######################################################
 
-# Optional remaining built-in virtual methods ######################################################
 
-
-
-# Public methods ###################################################################################
+#endregion
+#region Public methods ###################################################################################
 
 func instantiate_enemies(enemies: Array[PackedScene]) -> void:
 	assert(enemies.size() <= 3, "Enemy manager can only hold up to 3 enemies")
@@ -96,8 +99,8 @@ func get_all_other_enemies_as_card_targets(excluded_enemy: Enemy) -> Array[CardA
 		get_all_other_enemies(excluded_enemy).map(_get_enemy_card_target)
 	)
 
-
-# Private methods ##################################################################################
+#endregion
+#region Private methods ##################################################################################
 
 func _on_enemy_clicked(clicked_enemy: Enemy) -> void:
 	for enemy in get_all_enemies():
@@ -129,4 +132,8 @@ func _as_card_targets_array(input: Array) -> Array[CardAttributes.CardTarget]:
 	targets.assign(input)
 	return targets
 
-# Subclasses #######################################################################################
+#endregion
+#region Subclasses #######################################################################################
+
+
+#endregion

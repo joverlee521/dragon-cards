@@ -2,30 +2,33 @@ class_name PlayerHand
 extends PanelContainer
 ## Container for [Card]s that are in the player's hand
 
-# Signals ##########################################################################################
+#region Signals ##########################################################################################
+
 ## Emitted whenever the [member PlayerHand._current_stamina] changes in value
 signal stamina_changed(new_value: int)
 ## Emitted whenever [Card] selection changes with boolean of whether selected card is playable
 signal card_selection_changed(selected_card_playable: bool)
 
-# Enums ############################################################################################
+#endregion
+#region Enums ############################################################################################
 
 
-
-# Constants ########################################################################################
+#endregion
+#region Constants ########################################################################################
 
 ## Group for getting [Card] nodes that are in [PlayerHand]
 const CARDS_IN_PLAYER_HAND: String = "cards_in_player_hand"
 
-# @export variables ################################################################################
+#endregion
+#region @export variables ################################################################################
 
 
+#endregion
+#region Public variables #################################################################################
 
-# Public variables #################################################################################
 
-
-
-# Private variables ################################################################################
+#endregion
+#region Private variables ################################################################################
 
 ## The default y position for arranging cards in hand
 var _card_y: int = 0
@@ -37,28 +40,30 @@ var _cards: Array[Card] = []
 var _stamina: int = 0:
 	set = _set_stamina
 
-# @onready variables ###############################################################################
+#endregion
+#region @onready variables ###############################################################################
 
 
-
-# Optional _init method ############################################################################
-
-
-
-# Optional _enter_tree() method ####################################################################
+#endregion
+#region Optional _init method ############################################################################
 
 
+#endregion
+#region Optional _enter_tree() method ####################################################################
 
-# Optional _ready method ###########################################################################
+
+#endregion
+#region Optional _ready method ###########################################################################
+
 func _ready() -> void:
 	_card_y = int(get_rect().size.y / 2)
 
+#endregion
+#region Optional remaining built-in virtual methods ######################################################
 
-# Optional remaining built-in virtual methods ######################################################
 
-
-
-# Public methods ###################################################################################
+#endregion
+#region Public methods ###################################################################################
 
 func reset_stamina(stamina: int) -> void:
 	_stamina = stamina
@@ -100,8 +105,8 @@ func discard_all_cards() -> Array[Card]:
 func set_cards_clickable(clickable: bool) -> void:
 	get_tree().call_group(CARDS_IN_PLAYER_HAND, "set_clickable", clickable)
 
-
-# Private methods ##################################################################################
+#endregion
+#region Private methods ##################################################################################
 
 ## Returns selected card, using Array[Card] because there's no optional return types
 func _get_selected_card() -> Array[Card]:
@@ -172,5 +177,8 @@ func _set_stamina(value: int) -> void:
 	_stamina = value
 	stamina_changed.emit(_stamina)
 
+#endregion
+#region Subclasses #######################################################################################
 
-# Subclasses #######################################################################################
+
+#endregion

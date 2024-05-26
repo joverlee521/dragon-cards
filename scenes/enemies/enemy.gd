@@ -3,7 +3,7 @@ extends Area2D
 # Base enemy class that does not have a linked scene
 # Only inherited by enemy scene scripts
 
-# Signals ##########################################################################################
+#region Signals ##########################################################################################
 
 ## Emitted when [Enemy] is clicked
 signal enemy_clicked(enemy: Enemy)
@@ -11,25 +11,27 @@ signal enemy_clicked(enemy: Enemy)
 ## Emitted when [Enemy] dies
 signal enemy_died(enemy: Enemy)
 
-# Enums ############################################################################################
+#endregion
+#region Enums ############################################################################################
 
 
+#endregion
+#region Constants ########################################################################################
 
-# Constants ########################################################################################
 
-
-
-# @export variables ################################################################################
+#endregion
+#region @export variables ################################################################################
 
 ## The [Character] used for instantiated [Enemy]
 ## Expected to only provide the [member Character.vocation] for [Enemy]
 @export var character: Character
 
-# Public variables #################################################################################
+#endregion
+#region Public variables #################################################################################
 
 
-
-# Private variables ################################################################################
+#endregion
+#region Private variables ################################################################################
 
 var _next_card_attribute: CardAttributes:
 	set = _set_next_card_attribute
@@ -39,19 +41,21 @@ var _selected: bool = false:
 
 var _mouse_entered_enemy: bool = false
 
-# @onready variables ###############################################################################
+#endregion
+#region @onready variables ###############################################################################
 
 
-
-# Optional _init method ############################################################################
-
-
-
-# Optional _enter_tree() method ####################################################################
+#endregion
+#region Optional _init method ############################################################################
 
 
+#endregion
+#region Optional _enter_tree() method ####################################################################
 
-# Optional _ready method ###########################################################################
+
+#endregion
+#region Optional _ready method ###########################################################################
+
 func _ready() -> void:
 	character.resource_local_to_scene = true
 	character.init_stats()
@@ -60,8 +64,9 @@ func _ready() -> void:
 	_update_defense_label()
 	$Sprite/SelectionBorder.hide()
 
+#endregion
+#region Optional remaining built-in virtual methods ######################################################
 
-# Optional remaining built-in virtual methods ######################################################
 func _unhandled_input(event: InputEvent) -> void:
 	# Custom handler for input to work around overlapping Area2D objects both getting input
 	# See https://github.com/godotengine/godot/issues/29825
@@ -74,8 +79,8 @@ func _unhandled_input(event: InputEvent) -> void:
 
 		self.get_viewport().set_input_as_handled()
 
-
-# Public methods ###################################################################################
+#endregion
+#region Public methods ###################################################################################
 
 func is_selected() -> bool:
 	return _selected
@@ -98,7 +103,8 @@ func get_next_card() -> CardAttributes:
 func create_card_target() -> CardAttributes.CardTarget:
 	return CardAttributes.CardTarget.new(character, global_position)
 
-# Private methods ##############################################################
+#endregion
+#region Private methods ##############################################################
 
 ## Connects the character's emitted stats signals to the label updates
 func _connect_character_stats_signals() -> void:
@@ -146,5 +152,8 @@ func _on_mouse_entered() -> void:
 func _on_mouse_exited() -> void:
 	_mouse_entered_enemy = false
 
+#endregion
+#region Subclasses ###################################################################
 
-# Subclasses ###################################################################
+
+#endregion

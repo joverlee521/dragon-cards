@@ -2,32 +2,35 @@ class_name Card
 extends Area2D
 ## Base card scene that is instantiated when a card is dealt and/or played
 
-# Signals ##########################################################################################
+#region Signals ##########################################################################################
 
 ## Emitted when the card is clicked
 signal card_clicked(card: Card)
 
-# Enums ############################################################################################
+#endregion
+#region Enums ############################################################################################
 
 
-
-# Constants ########################################################################################
+#endregion
+#region Constants ########################################################################################
 
 ## Minimum label font size
 const MIN_LABEL_FONT_SIZE = 10
 ## Maximum label font size
 const MAX_LABEL_FONT_SIZE = 350
 
-# @export variables ################################################################################
+#endregion
+#region @export variables ################################################################################
 
 ## [CardAttributes] to use for the instantiated [Card]
 @export var card_attributes: CardAttributes = CardAttributes.new()
 
-# Public variables #################################################################################
+#endregion
+#region Public variables #################################################################################
 
 
-
-# Private variables ################################################################################
+#endregion
+#region Private variables ################################################################################
 
 var _selected: bool = false
 var _clickable: bool = true
@@ -37,21 +40,24 @@ var _clickable: bool = true
 # which was released in Godot v4.3
 var _mouse_entered_card: bool = false
 
-# @onready variables ###############################################################################
+#endregion
+#region @onready variables ###############################################################################
 
 
-
-# Optional _init method ############################################################################
+#endregion
+#region Optional _init method ############################################################################
 
 # Here for testing purposes
 func _init(i_card_attributes: CardAttributes = CardAttributes.new()) -> void:
 	card_attributes = i_card_attributes
 
-# Optional _enter_tree() method ####################################################################
+#endregion
+#region Optional _enter_tree() method ####################################################################
 
 
+#endregion
+#region Optional _ready method ###########################################################################
 
-# Optional _ready method ###########################################################################
 func _ready() -> void:
 	$CardAnimationLayer/CardAnimation.hide()
 	card_attributes.triggered_animation.connect(_on_triggered_animation)
@@ -59,8 +65,9 @@ func _ready() -> void:
 	# TODO: Remove because this slows down the card scene instantiation SIGNIFICANTLY!
 	_update_label_font_size()
 
+#endregion
+#region Optional remaining built-in virtual methods ######################################################
 
-# Optional remaining built-in virtual methods ######################################################
 func _unhandled_input(event: InputEvent) -> void:
 	# Custom handler for input to work around overlapping Area2D objects both getting input
 	# See https://github.com/godotengine/godot/issues/29825
@@ -74,8 +81,8 @@ func _unhandled_input(event: InputEvent) -> void:
 		_toggle_selected()
 		get_viewport().set_input_as_handled()
 
-
-# Public methods ###################################################################################
+#endregion
+#region Public methods ###################################################################################
 
 func is_selected() -> bool:
 	return _selected
@@ -106,8 +113,8 @@ func play(card_affectees: CardAttributes.CardAffectees,
 		  card_env: CardAttributes.CardEnvironment) -> void:
 	card_attributes.apply_effects(card_affectees, card_env)
 
-
-# Private methods ##############################################################
+#endregion
+#region Private methods ##############################################################
 
 func _on_triggered_animation(animation_name: String, animation_position: Vector2) -> void:
 	var card_animation: AnimatedSprite2D = $CardAnimationLayer/CardAnimation.duplicate()
@@ -177,5 +184,8 @@ func _on_mouse_entered() -> void:
 func _on_mouse_exited() -> void:
 	_mouse_entered_card = false
 
+#endregion
+#region Subclasses ###################################################################
 
-# Subclasses ###################################################################
+
+#endregion

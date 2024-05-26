@@ -2,58 +2,61 @@ class_name Deck
 extends Node2D
 ## Base deck for holding [CardAttributes] that can instantiate [Card]s
 
-# Signals ##########################################################################################
+#region Signals ##########################################################################################
 
 
-
-# Enums ############################################################################################
-
-
-
-# Constants ########################################################################################
+#endregion
+#region Enums ############################################################################################
 
 
+#endregion
+#region Constants ########################################################################################
 
-# @export variables ################################################################################
+
+#endregion
+#region @export variables ################################################################################
 
 @export_group("Deck Visual")
 @export var deck_name: String = ""
 ## The image of the deck when [member Deck.cards] is not empty
 @export var image: CompressedTexture2D
 
-# Public variables #################################################################################
+#endregion
+#region Public variables #################################################################################
 
 
-
-# Private variables ################################################################################
+#endregion
+#region Private variables ################################################################################
 
 ## The [CardAttributes] currently in the deck
 var _cards: Array[CardAttributes] = []
 
-# @onready variables ###############################################################################
+#endregion
+#region @onready variables ###############################################################################
 
 
-
-# Optional _init method ############################################################################
-
-
-
-# Optional _enter_tree() method ####################################################################
+#endregion
+#region Optional _init method ############################################################################
 
 
+#endregion
+#region Optional _enter_tree() method ####################################################################
 
-# Optional _ready method ###########################################################################
+
+#endregion
+#region Optional _ready method ###########################################################################
+
 func _ready() -> void:
 	$DeckName.text = deck_name
 	$DeckImage.texture = image
 	_update_displays()
 
+#endregion
+#region Optional remaining built-in virtual methods ######################################################
 
-# Optional remaining built-in virtual methods ######################################################
 
-
-
-# Public methods ###################################################################################
+#endregion
+#region Public methods ###################################################################################
 
 func get_cards() -> Array[CardAttributes]:
 	return _cards
@@ -92,8 +95,8 @@ func replace_cards(new_cards: Array[CardAttributes]) -> void:
 	_cards.assign(new_cards)
 	_update_displays()
 
-
-# Private methods ##############################################################
+#endregion
+#region Private methods ##############################################################
 
 ## Match the displayed card count to the number of [CardAttributes] in [member Deck._cards].
 ## Only display deck image if there are [member Deck._cards] is not empty
@@ -101,4 +104,8 @@ func _update_displays() -> void:
 	$CardCount.text = str(len(_cards))
 	$DeckImage.visible = not _cards.is_empty()
 
-# Subclasses ###################################################################
+#endregion
+#region Subclasses ###################################################################
+
+
+#endregion
