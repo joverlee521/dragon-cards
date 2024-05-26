@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://biq1mfvftv7wn"]
+[gd_scene load_steps=17 format=3 uid="uid://biq1mfvftv7wn"]
 
 [ext_resource type="Script" path="res://scenes/card_battle/card_battle.gd" id="1_eqlf3"]
 [ext_resource type="Script" path="res://resources/characters/character.gd" id="2_1gnlo"]
@@ -9,6 +9,7 @@
 [ext_resource type="Resource" uid="uid://b723m4q0gy3df" path="res://resources/card_attributes/cards/cook.tres" id="4_qwyqf"]
 [ext_resource type="Resource" uid="uid://jb8kyjy1mpfm" path="res://resources/card_attributes/cards/healthy_hit.tres" id="5_5cjxl"]
 [ext_resource type="Script" path="res://scenes/card_battle/player_hand.gd" id="5_dcxec"]
+[ext_resource type="Resource" uid="uid://7fy7ogesapen" path="res://resources/card_attributes/cards/shield_bash.tres" id="6_jlg2x"]
 [ext_resource type="PackedScene" uid="uid://ev5dne8iq6p4" path="res://scenes/enemies/goblin.tscn" id="10_dak5q"]
 [ext_resource type="PackedScene" uid="uid://3fu10efu25ke" path="res://scenes/enemies/goblin_king.tscn" id="11_fof4w"]
 [ext_resource type="PackedScene" uid="uid://dtkjbo52s682w" path="res://scenes/enemies/goblin_mage.tscn" id="12_gfyra"]
@@ -17,7 +18,7 @@
 [sub_resource type="Resource" id="Resource_wm4wy"]
 script = ExtResource("2_1gnlo")
 vocation = ExtResource("3_17jee")
-cards = Array[Resource("res://resources/card_attributes/card_attributes.gd")]([ExtResource("2_brf31"), ExtResource("4_aio81"), ExtResource("4_aio81"), ExtResource("4_aio81"), ExtResource("4_aio81"), ExtResource("4_qwyqf"), ExtResource("5_5cjxl")])
+cards = Array[Resource("res://resources/card_attributes/card_attributes.gd")]([ExtResource("2_brf31"), ExtResource("4_aio81"), ExtResource("4_aio81"), ExtResource("4_aio81"), ExtResource("4_aio81"), ExtResource("4_qwyqf"), ExtResource("5_5cjxl"), ExtResource("6_jlg2x")])
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3kd0m"]
 bg_color = Color(0.184314, 0.184314, 0.184314, 1)

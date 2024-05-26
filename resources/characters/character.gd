@@ -86,6 +86,10 @@ func at_max_health() -> bool:
 	return _health == vocation.max_health
 
 
+func get_health() -> int:
+	return _health
+
+
 func remove_all_defense() -> void:
 	_defense = 0
 

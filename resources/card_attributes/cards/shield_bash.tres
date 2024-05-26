@@ -1,8 +1,8 @@
-[gd_resource type="Resource" script_class="CardAttributes" load_steps=9 format=3 uid="uid://7fy7ogesapen"]
+[gd_resource type="Resource" script_class="ShieldBash" load_steps=9 format=3 uid="uid://7fy7ogesapen"]
 
 [ext_resource type="Texture2D" uid="uid://2yfc8cad37e4" path="res://art/PixelCardArt/CardRPGPack/Card RPG items/Accessory_orb2.png" id="1_raufc"]
 [ext_resource type="Texture2D" uid="uid://b8yvew12myo05" path="res://art/PixelCardArt/FantasyCardPack/pixelCardAssest_V01.png" id="2_2slga"]
-[ext_resource type="Script" path="res://resources/card_attributes/card_attributes.gd" id="3_u8nhu"]
+[ext_resource type="Script" path="res://resources/card_attributes/cards/shield_bash.gd" id="3_u8nhu"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_deh3j"]
 resource_local_to_scene = true
