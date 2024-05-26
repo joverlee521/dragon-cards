@@ -1,7 +1,7 @@
-[gd_resource type="Resource" script_class="CardAttributes" load_steps=9 format=3 uid="uid://jb8kyjy1mpfm"]
+[gd_resource type="Resource" script_class="HealthyHit" load_steps=9 format=3 uid="uid://jb8kyjy1mpfm"]
 
 [ext_resource type="Texture2D" uid="uid://tromqipaql6u" path="res://art/PixelCardArt/CardRPGPack/Card RPG items/weapon_axe1.png" id="1_dbj52"]
-[ext_resource type="Script" path="res://resources/card_attributes/card_attributes.gd" id="2_pstuw"]
+[ext_resource type="Script" path="res://resources/card_attributes/cards/healthy_hit.gd" id="2_pstuw"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_561bi"]
 atlas = ExtResource("1_dbj52")

@@ -82,6 +82,10 @@ func init_stats() -> void:
 		cards = vocation.cards.duplicate(true)
 
 
+func at_max_health() -> bool:
+	return _health == vocation.max_health
+
+
 func remove_all_defense() -> void:
 	_defense = 0
 
