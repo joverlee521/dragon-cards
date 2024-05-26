@@ -77,12 +77,18 @@ func start_battle() -> void:
 	_update_player_defense_label()
 	_update_player_stamina_label()
 	player.cards.map($PlayDeck.add_card)
+	$PlayDeck.shuffle()
 	await get_tree().create_timer(START_BATTLE_DELAY).timeout
 	$EnemyManager.instantiate_enemies(enemies)
 	start_player_turn()
 
 
 func start_player_turn() -> void:
+	if $PlayDeck.is_empty():
+		refresh_play_deck_from_discard()
+		# TODO: Add display for skipping player's turn
+		start_enemies_turn()
+		return
 	$PlayerControls/PlayCard.disabled = true
 	$PlayerControls/EndTurn.disabled = false
 	$PlayerHand.reset_stamina(player.vocation.max_stamina)
@@ -109,6 +115,11 @@ func discard_card(card: Card) -> void:
 		remove_child(card)
 	$DiscardDeck.add_card(card.card_attributes.duplicate(true))
 	card.queue_free()
+
+
+func refresh_play_deck_from_discard() -> void:
+	$DiscardDeck.remove_all_cards().map($PlayDeck.add_card)
+	$PlayDeck.shuffle()
 
 
 func start_enemies_turn() -> void:
