@@ -176,12 +176,12 @@ class CardAffectees:
 ## The base class representing environmental factors
 ## that can change a [CardAttributes]'s effects
 class CardEnvironment:
-	var play_deck_cards: Array[CardAttributes] = []
-	var discard_deck_cards: Array[CardAttributes] = []
+	var play_deck: Deck
+	var discard_deck: Deck
 
-	func _init(i_play_deck_cards: Array[CardAttributes],
-			   i_discard_deck_cards: Array[CardAttributes]) -> void:
-		play_deck_cards = i_play_deck_cards
-		discard_deck_cards = i_discard_deck_cards
+	func _init(i_play_deck: Deck,
+			   i_discard_deck: Deck) -> void:
+		play_deck = i_play_deck
+		discard_deck = i_discard_deck
 
 #endregion
