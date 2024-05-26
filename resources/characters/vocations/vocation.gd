@@ -2,6 +2,20 @@ class_name Vocation
 extends Resource
 ## Base resource for storing and vocation stats
 
+# Signals ##########################################################################################
+
+
+
+# Enums ############################################################################################
+
+
+
+# Constants ########################################################################################
+
+
+
+# @export variables ################################################################################
+
 @export_group("Vocation Visual")
 ## Displayed vocation name
 @export var vocation_name: String = ""
@@ -23,6 +37,19 @@ extends Resource
 ## TODO: Replace with items that contains their own cards
 @export var cards: Array[CardAttributes] = []
 
+# Public variables #################################################################################
+
+
+
+# Private variables ################################################################################
+
+
+
+# @onready variables ###############################################################################
+
+
+
+# Optional _init method ############################################################################
 
 # Here for testing purposes
 func _init(
@@ -37,3 +64,26 @@ func _init(
 	damage_element_resistances = i_damage_element_resistances
 	damage_element_weaknesses = i_damage_element_weaknesses
 	cards = i_cards
+
+
+# Optional _enter_tree() method ####################################################################
+
+
+
+# Optional _ready method ###########################################################################
+
+
+
+# Optional remaining built-in virtual methods ######################################################
+
+
+
+# Public methods ###################################################################################
+
+
+
+# Private methods ##################################################################################
+
+
+
+# Subclasses #######################################################################################
