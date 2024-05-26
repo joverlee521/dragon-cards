@@ -64,6 +64,7 @@ func instantiate_enemies(enemies: Array[PackedScene]) -> void:
 		if i == 0:
 			enemy.set_selected(true)
 		enemy.enemy_clicked.connect(_on_enemy_clicked)
+		enemy.enemy_died.connect(_on_enemy_died)
 		enemy.pick_next_card()
 
 
@@ -99,9 +100,18 @@ func get_all_other_enemies_as_card_targets(excluded_enemy: Enemy) -> Array[CardA
 # Private methods ##################################################################################
 
 func _on_enemy_clicked(clicked_enemy: Enemy) -> void:
-	for enemy in get_tree().get_nodes_in_group(ENEMIES_IN_BATTLE):
+	for enemy in get_all_enemies():
 		if enemy != clicked_enemy:
 			enemy.set_selected(false)
+
+
+func _on_enemy_died(dead_enemy: Enemy) -> void:
+	dead_enemy.remove_from_group(ENEMIES_IN_BATTLE)
+	var selected_enemies: Array[Enemy] = _as_enemy_array(
+		get_all_enemies().filter(func (enemy: Enemy) -> bool: return enemy.is_selected())
+	)
+	if selected_enemies.size() == 0:
+		get_all_enemies()[0].set_selected(true)
 
 
 func _get_enemy_card_target(enemy: Enemy) -> CardAttributes.CardTarget:

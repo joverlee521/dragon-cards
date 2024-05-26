@@ -112,12 +112,16 @@ func take_damage(damage: int, ignore_defense: bool = false) -> void:
 
 func _set_defense(value: int) -> void:
 	_defense = value
+	if _defense < 0:
+		_defense = 0
 	defense_changed.emit(_defense)
 
 
 func _set_health(value: int) -> void:
 	_health = value
-	health_changed.emit(value)
+	if _health < 0:
+		_health = 0
+	health_changed.emit(_health)
 
 
 # Subclasses #######################################################################################

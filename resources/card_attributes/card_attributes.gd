@@ -120,14 +120,14 @@ func _apply_effects_to_opposer_team(opposer_team: Array[CardTarget]) -> void:
 
 func _apply_attack(target: CardTarget) -> void:
 	if attack > 0:
-		target.character.take_damage(attack)
 		triggered_animation.emit(_get_attack_animation_string(), target.global_position)
+		target.character.take_damage(attack)
 
 
 func _apply_defense(target: CardTarget) -> void:
 	if defense > 0:
-		target.character.add_defense(defense)
 		triggered_animation.emit(_get_defense_animation_string(), target.global_position)
+		target.character.add_defense(defense)
 
 
 ## Get the animation name for the attack animation
