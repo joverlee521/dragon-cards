@@ -24,7 +24,7 @@ func test_update_player_health_label() -> void:
 	const HEALTH_DAMAGE: int = 10
 	var expected_player_health = player._health - HEALTH_DAMAGE
 	var expected_health_label: String = "%s / %s" % [expected_player_health, player.vocation.max_health]
-	player.take_damage(HEALTH_DAMAGE, true)
+	player.take_damage(HEALTH_DAMAGE, Weapon.DAMAGE_ELEMENT.NONE, true)
 	await_signal_on(player, "health_changed", [expected_player_health])
 	assert_str(health_label.text).is_equal(expected_health_label)
 

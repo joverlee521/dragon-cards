@@ -16,9 +16,11 @@ enum WEAPON_CLASS {LIGHT, MEDIUM, HEAVY, MAGIC, DEFENSE, NONE}
 ## [br]Determines [member CardAttributes.damage_type] for the [member Weapon.cards]
 enum DAMAGE_TYPE {NONE, CUTTING, BLUNT, MAGIC}
 
-## Weapon damage element. Individual damage element effects TBD.
+## Weapon damage element.
 ##
-## [br]Determines [member CardAttributes.damage_element] for the [member Weapon.cards]
+## [br] Determines [member CardAttributes.damage_element] for the [member Weapon.cards]
+## [br] If in [member Vocation.damage_element_resistances] then halves the attack damage
+## [br] If in [member Vocation.damage_element_weaknesses] then doubles the attack damage
 enum DAMAGE_ELEMENT {NONE, FIRE, ICE, LIGHTNING, WATER, LIGHT, DARK}
 
 #endregion

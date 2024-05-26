@@ -16,7 +16,7 @@ var emitter: Object
 
 func before_test() -> void:
 	card = CardAttributes.new()
-	vocation = Vocation.new(25, 5, [], [], [card])
+	vocation = Vocation.new(25, 5, [Weapon.DAMAGE_ELEMENT.FIRE], [Weapon.DAMAGE_ELEMENT.WATER], [card])
 	character = Character.new(vocation, [])
 	emitter = monitor_signals(character)
 
@@ -71,7 +71,7 @@ func test_add_health() -> void:
 func test_take_damage_not_ignoring_defense() -> void:
 	const expected_defense: int = 0
 	const expected_health: int = 20
-	character.take_damage(10)
+	character.take_damage(10, Weapon.DAMAGE_ELEMENT.NONE)
 	await assert_signal(emitter).is_emitted("defense_changed", [expected_defense])
 	await assert_signal(emitter).is_emitted("health_changed", [expected_health])
 	assert_int(character._defense).is_equal(expected_defense)
@@ -81,8 +81,20 @@ func test_take_damage_not_ignoring_defense() -> void:
 func test_take_damage_ignoring_defense() -> void:
 	var expected_defense: int = vocation.starting_defense
 	const expected_health: int = 15
-	character.take_damage(10, true)
+	character.take_damage(10,  Weapon.DAMAGE_ELEMENT.NONE, true)
 	await assert_signal(emitter).wait_until(50).is_not_emitted("defense_changed")
 	await assert_signal(emitter).is_emitted("health_changed", [expected_health])
 	assert_int(character._defense).is_equal(expected_defense)
 	assert_int(character._health).is_equal(expected_health)
+
+
+func test_calculate_damage(
+		base_attack:int,
+		damage_element: Weapon.DAMAGE_ELEMENT,
+		expected_damage: int,
+		test_parameters := [
+			[5, Weapon.DAMAGE_ELEMENT.FIRE, 3],
+			[5, Weapon.DAMAGE_ELEMENT.WATER, 10]
+		]) -> void:
+	var damage: int = character._calculate_damage(base_attack, damage_element)
+	assert_int(damage).is_equal(expected_damage)

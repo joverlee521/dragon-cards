@@ -110,10 +110,10 @@ func apply_effects(card_affectees: CardAffectees, _card_env: CardEnvironment) ->
 			apply_attack(target)
 
 
-func apply_attack(target: CardTarget) -> void:
+func apply_attack(target: CardTarget, ignore_defense: bool = false) -> void:
 	if attack > 0:
 		triggered_animation.emit(_get_attack_animation_string(), target.global_position)
-		target.character.take_damage(attack)
+		target.character.take_damage(attack, damage_element, ignore_defense)
 
 
 func apply_defense(target: CardTarget) -> void:

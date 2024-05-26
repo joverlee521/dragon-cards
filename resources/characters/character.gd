@@ -94,11 +94,17 @@ func add_health(num: int) -> void:
 	_health += num
 
 
-## Subtract [param damage] from [member Character._defense] and if there
+## Reduce [member Character._defense] and/or [member Character._health]
+##
+## Uses [param base_attack] and [param damage_element] to calculate the total damage.
+## Subtract damage from [member Character._defense] and if there
 ## is remaining damage, then subtract from [member Character._health]
-## Subtracts directly from [member Character._health] if [param ignore_defense]
+## Subtract damage directly from [member Character._health] if [param ignore_defense]
 ## is set to true.
-func take_damage(damage: int, ignore_defense: bool = false) -> void:
+func take_damage(base_attack: int,
+				 damage_element: Weapon.DAMAGE_ELEMENT,
+				 ignore_defense: bool = false) -> void:
+	var damage: int = _calculate_damage(base_attack, damage_element)
 	if not ignore_defense:
 		if damage > _defense:
 			damage -= _defense
@@ -111,6 +117,22 @@ func take_damage(damage: int, ignore_defense: bool = false) -> void:
 
 #endregion
 #region Private methods ##################################################################################
+
+## Calculate the total damage using [param base_attack] and [param damage_element]
+##
+## If the [param damage_element] is in [member Vocation.damage_element_resistances], half the damage
+## If the [param damage_element] is in [member Vocation.damage_element_weaknesses], double the damage
+func _calculate_damage(base_attack: int, damage_element: Weapon.DAMAGE_ELEMENT) -> int:
+	var damage: float = base_attack
+
+	if damage_element in vocation.damage_element_resistances:
+		damage = damage * 0.5
+
+	if damage_element in vocation.damage_element_weaknesses:
+		damage = damage * 2
+
+	return ceil(damage)
+
 
 func _set_defense(value: int) -> void:
 	_defense = value
