@@ -102,8 +102,9 @@ func run_scale_animation(new_scale: Vector2, duration: float, delay: float = 0.0
 	await tween.finished
 
 
-func play(card_affectees: CardAttributes.CardAffectees) -> void:
-	card_attributes.apply_effects(card_affectees)
+func play(card_affectees: CardAttributes.CardAffectees,
+		  card_env: CardAttributes.CardEnvironment) -> void:
+	card_attributes.apply_effects(card_affectees, card_env)
 
 
 # Private methods ##############################################################

@@ -6,7 +6,8 @@
 script = ExtResource("1_gnj32")
 card_name = null
 card_description = null
-target_type = null
+owner_target_type = 0
+opposer_target_type = 0
 attack = null
 defense = null
 stamina_cost = null

@@ -160,9 +160,10 @@ func _player_hand_card_selection_changed(selected_cards_playable: bool) -> void:
 
 
 func _play_card(card: Card, card_affectees: CardAttributes.CardAffectees) -> void:
+	var card_env := CardAttributes.CardEnvironment.new($PlayDeck.get_cards(), $DiscardDeck.get_cards())
 	add_child(card)
 	card.position = $PlayedCard.position
-	card.play(card_affectees)
+	card.play(card_affectees, card_env)
 	await card.run_scale_animation(PLAYED_CARD_SCALE, PLAYED_CARD_DELAY)
 
 

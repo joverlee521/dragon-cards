@@ -6,6 +6,7 @@ extends Resource
 
 ## Emitted when the [CardAttributes] triggers an animation
 signal triggered_animation(animation_name: String, animation_position: Vector2)
+#endregion
 
 # Enums ############################################################################################
 
@@ -40,8 +41,13 @@ enum TARGET_TYPE {
 @export var card_description : String = ""
 
 @export_group("Card Stats")
+## Card's [enum CardAttributes.TARGET_TYPE] for affectting owners
+## [br] SINGLE = only affect the owner of the card
+## [br] GROUP = affect owner and the owner team
 @export var owner_target_type: TARGET_TYPE = TARGET_TYPE.SINGLE
 ## Card's [enum CardAttributes.TARGET_TYPE] for affecting opposers
+## [br] SINGLE = only affect the opposer
+## [br] GROUP = affect the opposer and the opposer team
 @export var opposer_target_type: TARGET_TYPE = TARGET_TYPE.SINGLE
 ## Card's base attack damage
 @export var attack: int = 0
@@ -88,47 +94,33 @@ enum TARGET_TYPE {
 
 # Public methods ###################################################################################
 
-func apply_effects(card_affectees: CardAffectees) -> void:
-	_apply_effects_to_owner(card_affectees.owner)
+## Apply [CardAttributes]'s effects to the [param card_affectees].
+## Optionally, the [param _card_env] can change the [CardAttributes]'s effects
+func apply_effects(card_affectees: CardAffectees, _card_env: CardEnvironment) -> void:
+	apply_defense(card_affectees.owner)
 	if owner_target_type == TARGET_TYPE.GROUP:
-		_apply_effects_to_owner_team(card_affectees.owner_team)
+		for target in card_affectees.owner_team:
+			apply_defense(target)
 
-	_apply_effects_to_opposer(card_affectees.opposer)
+	apply_attack(card_affectees.opposer)
 	if opposer_target_type == TARGET_TYPE.GROUP:
-		_apply_effects_to_opposer_team(card_affectees.opposer_team)
+		for target in card_affectees.opposer_team:
+			apply_attack(target)
 
 
-# Private methods ##################################################################################
-
-func _apply_effects_to_owner(owner: CardTarget) -> void:
-	_apply_defense(owner)
-
-
-func _apply_effects_to_owner_team(owner_team: Array[CardTarget]) -> void:
-	for target in owner_team:
-		_apply_defense(target)
-
-
-func _apply_effects_to_opposer(opposer: CardTarget) -> void:
-	_apply_attack(opposer)
-
-
-func _apply_effects_to_opposer_team(opposer_team: Array[CardTarget]) -> void:
-	for target in opposer_team:
-		_apply_attack(target)
-
-
-func _apply_attack(target: CardTarget) -> void:
+func apply_attack(target: CardTarget) -> void:
 	if attack > 0:
 		triggered_animation.emit(_get_attack_animation_string(), target.global_position)
 		target.character.take_damage(attack)
 
 
-func _apply_defense(target: CardTarget) -> void:
+func apply_defense(target: CardTarget) -> void:
 	if defense > 0:
 		triggered_animation.emit(_get_defense_animation_string(), target.global_position)
 		target.character.add_defense(defense)
 
+
+# Private methods ##################################################################################
 
 ## Get the animation name for the attack animation
 func _get_attack_animation_string() -> String:
@@ -152,6 +144,7 @@ func _get_defense_animation_string() -> String:
 
 # Subclasses #######################################################################################
 
+## The base class representing a [CardAttributes]'s target
 class CardTarget:
 	var character: Character = Character.new()
 	var global_position: Vector2 = Vector2(0,0)
@@ -161,6 +154,7 @@ class CardTarget:
 		global_position = i_global_position
 
 
+## The base class representing all of the relations of a [CardAttributes]'s targets
 class CardAffectees:
 	var owner: CardTarget
 	var owner_team: Array[CardTarget]
@@ -175,3 +169,15 @@ class CardAffectees:
 		owner_team = i_owner_team
 		opposer = i_opposer
 		opposer_team = i_opposer_team
+
+
+## The base class representing environmental factors
+## that can change a [CardAttributes]'s effects
+class CardEnvironment:
+	var play_deck_cards: Array[CardAttributes] = []
+	var discard_deck_cards: Array[CardAttributes] = []
+
+	func _init(i_play_deck_cards: Array[CardAttributes],
+			   i_discard_deck_cards: Array[CardAttributes]) -> void:
+		play_deck_cards = i_play_deck_cards
+		discard_deck_cards = i_discard_deck_cards

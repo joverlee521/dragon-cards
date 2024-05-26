@@ -55,6 +55,10 @@ func _ready() -> void:
 
 # Public methods ###################################################################################
 
+func get_cards() -> Array[CardAttributes]:
+	return _cards
+
+
 func is_empty() -> bool:
 	return _cards.is_empty()
 
