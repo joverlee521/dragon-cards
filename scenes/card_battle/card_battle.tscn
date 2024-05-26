@@ -146,6 +146,10 @@ position = Vector2(608, 160)
 [node name="Enemy2" type="Marker2D" parent="EnemyManager"]
 position = Vector2(1024, 344)
 
+[node name="PlayerSprite" type="Sprite2D" parent="."]
+position = Vector2(152, 280)
+scale = Vector2(3.90984, 4.36207)
+
 [connection signal="pressed" from="PlayerControls/PlayCard" to="." method="_on_play_card_pressed"]
 [connection signal="pressed" from="PlayerControls/EndTurn" to="." method="_on_end_turn_pressed"]
 [connection signal="card_selection_changed" from="PlayerHand" to="." method="_player_hand_card_selection_changed"]

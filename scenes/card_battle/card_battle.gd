@@ -73,6 +73,7 @@ func _ready() -> void:
 # Public methods ###################################################################################
 
 func start_battle() -> void:
+	$PlayerSprite.texture = player.vocation.vocation_sprite
 	_update_player_health_label()
 	_update_player_defense_label()
 	_update_player_stamina_label()
