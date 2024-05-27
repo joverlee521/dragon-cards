@@ -7,12 +7,12 @@ extends CardAttributes
 ## Permanently remove all discarded cards for the current card battle
 
 func apply_effects(card_affectees: CardAffectees, card_env: CardEnvironment) -> void:
-	var num_cards_in_discard_deck = card_env.discard_deck.get_cards().size()
+	var num_cards_in_discard_deck := card_env.discard_deck.get_cards().size()
 
 	if num_cards_in_discard_deck == 0:
 		apply_attack(card_affectees.opposer)
 	else:
-		for i in num_cards_in_discard_deck:
+		for i: int in num_cards_in_discard_deck:
 			apply_attack(card_affectees.opposer)
 			attack += 1
 

@@ -24,9 +24,9 @@ const CARD_BATTLE_SCENE := preload("res://scenes/card_battle/card_battle.tscn")
 #endregion
 #region Public variables ###########################################################################
 
-var player_vocations: Array = get_resources(PLAYER_VOCATIONS_DIR, "tres", [])
-var cards: Array = get_resources(CARD_ATTRIBUTES_DIR, "tres", [])
-var all_enemies: Array = get_resources(ENEMY_SCENES_DIR, "tscn", ["enemy.tscn"])
+var player_vocations: Array[String] = get_resources(PLAYER_VOCATIONS_DIR, "tres", [])
+var cards: Array[String] = get_resources(CARD_ATTRIBUTES_DIR, "tres", [])
+var all_enemies: Array[String] = get_resources(ENEMY_SCENES_DIR, "tscn", ["enemy.tscn"])
 var enemies: Array = [] # Array[Array[PackedScene]]
 var enemy_options: Array = []
 
@@ -79,16 +79,15 @@ func start_battle() -> void:
 	add_child(new_card_battle)
 
 
-func load_player():
-	var cards: Array = get_selected_cards()
+func load_player() -> Character:
+	var selected_cards: Array = get_selected_cards()
 	var player_vocation_options: Node = $PlayerContainer/VocationContainer/PlayerVocationOptions
 	var player_vocation: String = PLAYER_VOCATIONS_DIR + player_vocation_options.get_selected_metadata()
-	var loaded_player_vocation = ResourceLoader.load(player_vocation)
-	print(loaded_player_vocation.max_health)
-	return Character.new(loaded_player_vocation, cards)
+	var loaded_player_vocation: Vocation = ResourceLoader.load(player_vocation)
+	return Character.new(loaded_player_vocation, selected_cards)
 
 
-func get_selected_cards():
+func get_selected_cards() -> Array:
 	var selected_cards = {}
 	for child_node in $PlayerContainer/CardsContainer/CardsSelection.get_children():
 		if is_instance_of(child_node, SpinBox) and child_node.value > 0:
@@ -149,8 +148,8 @@ func load_next_enemies():
 func get_resources(
 		path: String,
 		file_extension: String,
-		skip_resources: Array[String]) -> Array:
-	var resources := []
+		skip_resources: Array[String]) -> Array[String]:
+	var resources: Array[String] = []
 	var dir := DirAccess.open(path)
 	if dir:
 		dir.list_dir_begin()

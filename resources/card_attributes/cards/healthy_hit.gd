@@ -4,7 +4,7 @@ extends CardAttributes
 ##
 ## Do double damage if the card owner is at max health
 
-func apply_effects(card_affectees: CardAffectees, card_env: CardEnvironment) -> void:
+func apply_effects(card_affectees: CardAffectees, _card_env: CardEnvironment) -> void:
 	var original_attack: int = attack
 
 	if card_affectees.owner.character.at_max_health():
