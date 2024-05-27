@@ -25,6 +25,7 @@ const CARD_BATTLE_SCENE = preload("res://scenes/card_battle/card_battle.tscn")
 #endregion
 #region Private variables ##########################################################################
 
+var _start_screen: Node
 
 #endregion
 #region @onready variables #########################################################################
@@ -42,8 +43,7 @@ const CARD_BATTLE_SCENE = preload("res://scenes/card_battle/card_battle.tscn")
 #region Optional _ready method #####################################################################
 
 func _ready() -> void:
-	var card_battle = CARD_BATTLE_SCENE.instantiate()
-	add_child(card_battle)
+	_start_screen = $StartScreen
 
 #endregion
 #region Optional remaining built-in virtual methods ################################################
@@ -56,6 +56,10 @@ func _ready() -> void:
 #endregion
 #region Private methods ############################################################################
 
+func _on_start_game_pressed() -> void:
+	remove_child(_start_screen)
+	var card_battle = CARD_BATTLE_SCENE.instantiate()
+	add_child(card_battle)
 
 #endregion
 #region Subclasses #################################################################################
