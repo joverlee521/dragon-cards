@@ -4,8 +4,8 @@ extends Area2D
 
 #region Signals ##########################################################################################
 
-## Emitted when the card is clicked
-signal card_clicked(card: Card)
+## Emitted when the card is released after dragging
+signal card_released(card: Card)
 
 #endregion
 #region Enums ############################################################################################
@@ -32,13 +32,14 @@ const MAX_LABEL_FONT_SIZE = 350
 #endregion
 #region Private variables ################################################################################
 
-var _selected: bool = false
 var _clickable: bool = true
 # Custom handler for input to work around overlapping Area2D objects both getting input
 # See https://github.com/godotengine/godot/issues/29825
 # Resolved in https://github.com/godotengine/godot/pull/75688
 # which was released in Godot v4.3
 var _mouse_entered_card: bool = false
+var _dragging: bool = false
+var _pre_dragging_position: Vector2
 
 #endregion
 #region @onready variables ###############################################################################
@@ -68,36 +69,42 @@ func _ready() -> void:
 #endregion
 #region Optional remaining built-in virtual methods ######################################################
 
+func _process(_delta:float) -> void:
+	if _dragging:
+		var mouse_position := get_viewport().get_mouse_position()
+		self.global_position = Vector2(mouse_position.x, mouse_position.y)
+
+
 func _unhandled_input(event: InputEvent) -> void:
 	# Custom handler for input to work around overlapping Area2D objects both getting input
 	# See https://github.com/godotengine/godot/issues/29825
 	# Resolved in https://github.com/godotengine/godot/pull/75688
 	# which was released in Godot v4.3
-	if (
-		event.is_action_pressed("mouse_left_click")
-		and _mouse_entered_card
-		and _clickable
-	):
-		_toggle_selected()
+	if _mouse_entered_card and _clickable:
+		if event.is_action_pressed("mouse_left_click"):
+			_pre_dragging_position = self.global_position
+			_dragging = true
+		elif event.is_action_released("mouse_left_click"):
+			_dragging = false
+			card_released.emit(self)
+
 		get_viewport().set_input_as_handled()
+
 
 #endregion
 #region Public methods ###################################################################################
-
-func is_selected() -> bool:
-	return _selected
 
 
 func get_stamina_cost() -> int:
 	return card_attributes.stamina_cost
 
 
-func set_selected(selected: bool) -> void:
-	_selected = selected
-
-
 func set_clickable(clickable: bool) -> void:
 	_clickable = clickable
+
+
+func return_to_pre_dragging_position() -> void:
+	self.global_position = _pre_dragging_position
 
 
 ## Run the scale animation to change the [member Card.scale] to the [param new_scale]
@@ -129,11 +136,6 @@ func _on_triggered_animation(animation_name: String, animation_position: Vector2
 	await card_animation.animation_finished
 	$CardAnimationLayer.remove_child(card_animation)
 	card_animation.queue_free()
-
-
-func _toggle_selected() -> void:
-	_selected = !_selected
-	card_clicked.emit(self)
 
 
 func _set_card_background_textures() -> void:
