@@ -4,6 +4,8 @@ extends Resource
 
 #region Signals ##########################################################################################
 
+## Emitted when health reaches zero
+signal health_depleted
 ## Emitted whenever [memeber Character._health] changes in value
 signal health_changed(new_value: int)
 ## Emitted whenever [member Character._defense] changes in value
@@ -154,6 +156,9 @@ func _set_health(value: int) -> void:
 	if _health < 0:
 		_health = 0
 	health_changed.emit(_health)
+
+	if _health == 0:
+		health_depleted.emit()
 
 #endregion
 #region Subclasses #######################################################################################
