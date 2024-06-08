@@ -81,6 +81,7 @@ func _ready() -> void:
 func start_battle() -> void:
 	$EndBattleCanvas.hide()
 	$PlayerSprite.texture = player.vocation.vocation_sprite
+	$PlayerHand.discard_all_cards()
 	$PlayDeck.remove_all_cards()
 	$DiscardDeck.remove_all_cards()
 	_update_player_health_label()
