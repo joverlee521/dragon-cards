@@ -101,9 +101,9 @@ func start_player_turn() -> void:
 		# TODO: Add display for skipping player's turn
 		start_enemies_turn()
 		return
-	$PlayerControls/PlayCard.disabled = true
 	$PlayerHand.reset_stamina(player.vocation.max_stamina)
 	await deal_cards(player.vocation.max_hand_size)
+	$PlayerHand.set_cards_clickable(true)
 	$PlayerControls/EndTurn.disabled = false
 
 
@@ -116,6 +116,7 @@ func deal_cards(num: int) -> void:
 		var card_attributes: CardAttributes = $PlayDeck.remove_card()
 		var new_card: Card = card_scene.instantiate()
 		new_card.card_attributes = card_attributes
+		new_card.set_clickable(false)
 		$PlayerHand.add_card(new_card)
 		# TODO: Replace timer with animations
 		await get_tree().create_timer(DEAL_CARD_DELAY).timeout
@@ -135,7 +136,6 @@ func refresh_play_deck_from_discard() -> void:
 
 
 func start_enemies_turn() -> void:
-	$PlayerControls/PlayCard.disabled = true
 	$PlayerControls/EndTurn.disabled = true
 	$PlayerHand.set_cards_clickable(false)
 
@@ -197,25 +197,12 @@ func _update_player_stamina_label(player_stamina: int = player.vocation.max_stam
 	$PlayerStats/Stamina.text = "%s / %s" % [str(player_stamina), str(player.vocation.max_stamina)]
 
 
-func _player_hand_card_selection_changed(selected_cards_playable: bool) -> void:
-	$PlayerControls/PlayCard.disabled = !selected_cards_playable
-
-
 func _play_card(card: Card, card_affectees: CardAttributes.CardAffectees) -> void:
 	var card_env := CardAttributes.CardEnvironment.new($PlayDeck, $DiscardDeck)
 	add_child(card)
 	card.position = $PlayedCard.position
 	card.play(card_affectees, card_env)
 	await card.run_scale_animation(PLAYED_CARD_SCALE, PLAYED_CARD_DELAY)
-
-
-func _on_play_card_pressed() -> void:
-	$PlayerControls/EndTurn.disabled = true
-	var card: Card = $PlayerHand.play_selected_card()
-	await _play_card(card, _create_player_owner_card_affectees())
-	discard_card(card)
-	$PlayerHand.set_cards_clickable(true)
-	$PlayerControls/EndTurn.disabled = false
 
 
 func _on_end_turn_pressed() -> void:

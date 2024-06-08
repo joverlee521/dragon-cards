@@ -84,19 +84,14 @@ text = "0"
 vertical_alignment = 1
 
 [node name="PlayerControls" type="HBoxContainer" parent="."]
-offset_left = 760.0
+anchors_preset = -1
+offset_left = 1520.0
 offset_top = 608.0
-offset_right = 1145.0
+offset_right = 1905.0
 offset_bottom = 685.0
 theme_override_constants/separation = 100
-alignment = 1
+alignment = 2
 metadata/_edit_group_ = true
-
-[node name="PlayCard" type="Button" parent="PlayerControls"]
-layout_mode = 2
-size_flags_horizontal = 3
-theme_override_font_sizes/font_size = 35
-text = "Play"
 
 [node name="EndTurn" type="Button" parent="PlayerControls"]
 layout_mode = 2
@@ -151,6 +146,7 @@ position = Vector2(152, 280)
 scale = Vector2(3.90984, 4.36207)
 
 [node name="EndBattleCanvas" type="CanvasLayer" parent="."]
+visible = false
 
 [node name="EndBattleContainer" type="CenterContainer" parent="EndBattleCanvas"]
 anchors_preset = 15
@@ -171,8 +167,6 @@ text = "End Card Battle Status"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[connection signal="pressed" from="PlayerControls/PlayCard" to="." method="_on_play_card_pressed"]
 [connection signal="pressed" from="PlayerControls/EndTurn" to="." method="_on_end_turn_pressed"]
-[connection signal="card_selection_changed" from="PlayerHand" to="." method="_player_hand_card_selection_changed"]
 [connection signal="stamina_changed" from="PlayerHand" to="." method="_update_player_stamina_label"]
 [connection signal="all_enemies_defeated" from="EnemyManager" to="." method="_on_all_enemies_defeated"]
