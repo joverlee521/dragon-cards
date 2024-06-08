@@ -101,4 +101,5 @@ size_flags_horizontal = 4
 theme_override_font_sizes/font_size = 30
 text = "Start"
 
+[connection signal="pressed" from="EnemyContainer/PlayTestControls/EndlessMode" to="." method="_on_endless_mode_pressed"]
 [connection signal="pressed" from="EnemyContainer/PlayTestControls/StartGame" to="." method="start_battle"]

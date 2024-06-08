@@ -70,7 +70,6 @@ func _on_start_game_pressed() -> void:
 func _on_exit_card_battle(_exit_status: CardBattle.EXIT_STATUS, _player: Character) -> void:
 	remove_child(_card_battle)
 	_card_battle.queue_free()
-	get_tree().paused = false
 	# TODO: use _exit_status to determine which scene to switch to here
 	# TODO: pass _player to the next scene
 	add_child(_start_screen)

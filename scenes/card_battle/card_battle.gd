@@ -81,6 +81,8 @@ func _ready() -> void:
 func start_battle() -> void:
 	$EndBattleCanvas.hide()
 	$PlayerSprite.texture = player.vocation.vocation_sprite
+	$PlayDeck.remove_all_cards()
+	$DiscardDeck.remove_all_cards()
 	_update_player_health_label()
 	_update_player_defense_label()
 	_update_player_stamina_label()
@@ -148,7 +150,6 @@ func start_enemies_turn() -> void:
 ## Stops all processes and emits signal to exit card battle
 ## The [param _exit_status] represents whether the player won or lost the card battle
 func _exit_card_battle(_exit_status: EXIT_STATUS) -> void:
-	get_tree().paused = true
 	player.remove_all_defense()
 
 	var end_battle_status_text := ""

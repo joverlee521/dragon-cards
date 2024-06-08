@@ -34,6 +34,7 @@ var enemy_options: Array = []
 #region Private variables ##########################################################################
 
 var _card_battle: Node
+var _endless_mode: bool = false
 
 #endregion
 #region @onready variables #########################################################################
@@ -70,22 +71,20 @@ func _ready() -> void:
 
 func start_battle() -> void:
 	hide()
-	load_enemies()
 	_card_battle = CARD_BATTLE_SCENE.instantiate()
-	_card_battle.player = load_player()
-	_card_battle.enemies.assign(enemies.pop_front())
 	_card_battle.exit_card_battle.connect(end_battle)
-	#_card_battle.endless_mode = $EnemyContainer/PlayTestControls/EndlessMode.button_pressed
-	#_card_battle.defeated_battle_enemies.connect(load_next_enemies)
-	add_child(_card_battle)
+	load_player()
+	load_enemies()
+	load_card_battle_enemies()
+	get_tree().get_root().add_child(_card_battle)
 
 
-func load_player() -> Character:
+func load_player() -> void:
 	var selected_cards: Array = get_selected_cards()
 	var player_vocation_options: Node = $PlayerContainer/VocationContainer/PlayerVocationOptions
 	var player_vocation: String = PLAYER_VOCATIONS_DIR + player_vocation_options.get_selected_metadata()
 	var loaded_player_vocation: Vocation = ResourceLoader.load(player_vocation)
-	return Character.new(loaded_player_vocation, selected_cards)
+	_card_battle.player = Character.new(loaded_player_vocation, selected_cards)
 
 
 func get_selected_cards() -> Array:
@@ -106,14 +105,13 @@ func get_selected_cards() -> Array:
 
 func load_enemies() -> void:
 
-	if $EnemyContainer/PlayTestControls/EndlessMode.button_pressed:
+	if _endless_mode:
 		load_endless_enemies()
 	else:
 		var single_battle := []
 		for enemy_option: Node in enemy_options:
 			if enemy_option.get_selected_id() >= 0:
 				single_battle.append(load(ENEMY_SCENES_DIR + enemy_option.get_selected_metadata()))
-		print(single_battle)
 		enemies.append(single_battle)
 
 
@@ -122,28 +120,35 @@ func load_endless_enemies() -> void:
 	for filename in all_enemies:
 		enemy_scenes.append(load(ENEMY_SCENES_DIR + filename))
 
-	for enemy_scene: Node in enemy_scenes:
+	for enemy_scene: PackedScene in enemy_scenes:
 		enemies.append([enemy_scene])
 
-	for first_enemy: Node in enemy_scenes:
-		for second_enemy: Node in enemy_scenes:
+	for first_enemy: PackedScene in enemy_scenes:
+		for second_enemy: PackedScene in enemy_scenes:
 			enemies.append([first_enemy, second_enemy])
 
-	for first_enemy: Node in enemy_scenes:
-		for second_enemy: Node in enemy_scenes:
-			for third_enemy: Node in enemy_scenes:
+	for first_enemy: PackedScene in enemy_scenes:
+		for second_enemy: PackedScene in enemy_scenes:
+			for third_enemy: PackedScene in enemy_scenes:
 				enemies.append([first_enemy, second_enemy, third_enemy])
 
 
 func end_battle(_exit_status: CardBattle.EXIT_STATUS, _player: Character) -> void:
 	remove_child(_card_battle)
-	show()
+
+	if _endless_mode and _exit_status == CardBattle.EXIT_STATUS.WIN:
+		load_card_battle_enemies()
+		add_child(_card_battle)
+		_card_battle.start_battle()
+	else:
+		_card_battle.queue_free()
+		show()
 
 
-func load_next_enemies() -> void:
-	await get_tree().create_timer(2).timeout
-	$CardBattle.enemies = enemies.pop_front()
-	$CardBattle.start_battle()
+func load_card_battle_enemies() -> void:
+	var current_enemies: Array = enemies.pop_front()
+	_card_battle.enemies.assign(current_enemies)
+	enemies.append(current_enemies)
 
 
 func get_resources(
@@ -203,6 +208,8 @@ func create_enemies_options(option_node: Node) -> void:
 #endregion
 #region Private methods ############################################################################
 
+func _on_endless_mode_pressed() -> void:
+	_endless_mode = $EnemyContainer/PlayTestControls/EndlessMode.button_pressed
 
 #endregion
 #region Subclasses #################################################################################
