@@ -1,0 +1,20 @@
+[gd_resource type="Resource" script_class="Vocation" load_steps=6 format=3 uid="uid://d0tmwjqtbej2x"]
+
+[ext_resource type="Resource" uid="uid://chi4gyal36j7o" path="res://resources/card_attributes/cards/slash.tres" id="1_tchm7"]
+[ext_resource type="Script" path="res://resources/characters/vocations/vocation.gd" id="1_umjpk"]
+[ext_resource type="Texture2D" uid="uid://ctb62w2rvbwvr" path="res://art/PixelCardArt/CardRPGPack/Card RPG Monsters/skeleton_1.png" id="2_3uio2"]
+[ext_resource type="Resource" uid="uid://vikvvdlt7y4u" path="res://resources/card_attributes/cards/smash.tres" id="2_gi785"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_frdet"]
+atlas = ExtResource("2_3uio2")
+region = Rect2(0, 0, 38, 51)
+
+[resource]
+script = ExtResource("1_umjpk")
+vocation_name = "Skeleton"
+vocation_sprite = SubResource("AtlasTexture_frdet")
+max_health = 18
+starting_defense = 0
+damage_element_resistances = Array[int]([6])
+damage_element_weaknesses = Array[int]([5])
+cards = Array[Resource("res://resources/card_attributes/card_attributes.gd")]([ExtResource("1_tchm7"), ExtResource("2_gi785")])

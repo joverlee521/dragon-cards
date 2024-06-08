@@ -1,0 +1,75 @@
+[gd_scene load_steps=10 format=3 uid="uid://dvxykdt47uuju"]
+
+[ext_resource type="Script" path="res://scenes/enemies/enemy.gd" id="1_0813v"]
+[ext_resource type="Resource" uid="uid://chi4gyal36j7o" path="res://resources/card_attributes/cards/slash.tres" id="2_0dac2"]
+[ext_resource type="Texture2D" uid="uid://cp1s7swi0ovc3" path="res://art/PixelCardArt/CardRPGPack/Card RPG Monsters/goblin_5.png" id="2_ox7bp"]
+[ext_resource type="Resource" uid="uid://di8t8yb5syu3a" path="res://resources/card_attributes/cards/defend.tres" id="3_fkici"]
+[ext_resource type="Script" path="res://resources/characters/character.gd" id="4_br4xl"]
+[ext_resource type="Resource" uid="uid://dvdg0ofo26io0" path="res://resources/characters/vocations/enemy_vocations/goblin.tres" id="5_5jw36"]
+
+[sub_resource type="Resource" id="Resource_vk83f"]
+script = ExtResource("4_br4xl")
+vocation = ExtResource("5_5jw36")
+cards = Array[Resource("res://resources/card_attributes/card_attributes.gd")]([ExtResource("2_0dac2"), ExtResource("3_fkici"), ExtResource("2_0dac2"), ExtResource("3_fkici")])
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_8xdh1"]
+resource_local_to_scene = true
+size = Vector2(192, 216)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qxrro"]
+resource_local_to_scene = true
+atlas = ExtResource("2_ox7bp")
+region = Rect2(0, 0, 48.1013, 54.5189)
+
+[node name="Enemy" type="Area2D"]
+position = Vector2(392, 264)
+script = ExtResource("1_0813v")
+character = SubResource("Resource_vk83f")
+metadata/_edit_group_ = true
+
+[node name="CollisionShape" type="CollisionShape2D" parent="."]
+unique_name_in_owner = true
+position = Vector2(0, 4)
+shape = SubResource("RectangleShape2D_8xdh1")
+
+[node name="Sprite" type="Sprite2D" parent="."]
+position = Vector2(-1, 3)
+scale = Vector2(4, 4)
+texture = SubResource("AtlasTexture_qxrro")
+
+[node name="SelectionBorder" type="ReferenceRect" parent="Sprite"]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -24.0
+offset_top = -27.0
+offset_right = -24.0
+offset_bottom = -27.0
+grow_horizontal = 2
+grow_vertical = 2
+editor_only = false
+
+[node name="HealthLabel" type="Label" parent="."]
+offset_left = -32.0
+offset_top = -136.0
+offset_right = 8.0
+offset_bottom = -113.0
+theme_override_font_sizes/font_size = 20
+text = "0"
+
+[node name="DefenseLabel" type="Label" parent="."]
+offset_left = -96.0
+offset_top = -136.0
+offset_right = -56.0
+offset_bottom = -108.0
+theme_override_font_sizes/font_size = 20
+
+[node name="NextMove" type="Label" parent="."]
+offset_left = 56.0
+offset_top = -136.0
+offset_right = 96.0
+offset_bottom = -113.0
+
+[connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]

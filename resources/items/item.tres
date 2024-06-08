@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="Item" load_steps=2 format=3 uid="uid://j6jxh6hm73kq"]
+
+[ext_resource type="Script" path="res://resources/items/item.gd" id="1_q5e4e"]
+
+[resource]
+script = ExtResource("1_q5e4e")
+name = ""
+card_attributes = Array[Resource("res://resources/card_attributes/card_attributes.gd")]([])

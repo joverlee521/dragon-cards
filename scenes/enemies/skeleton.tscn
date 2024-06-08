@@ -1,0 +1,38 @@
+[gd_scene load_steps=8 format=3 uid="uid://bmo05rmdeo8ap"]
+
+[ext_resource type="PackedScene" uid="uid://dvxykdt47uuju" path="res://scenes/enemies/enemy.tscn" id="1_14j4x"]
+[ext_resource type="Resource" uid="uid://d0tmwjqtbej2x" path="res://resources/characters/vocations/enemy_vocations/skeleton.tres" id="2_lcjir"]
+[ext_resource type="Script" path="res://resources/characters/character.gd" id="2_wlq4h"]
+[ext_resource type="Texture2D" uid="uid://ctb62w2rvbwvr" path="res://art/PixelCardArt/CardRPGPack/Card RPG Monsters/skeleton_1.png" id="3_0dyim"]
+
+[sub_resource type="Resource" id="Resource_puvfh"]
+script = ExtResource("2_wlq4h")
+vocation = ExtResource("2_lcjir")
+cards = Array[Resource("res://resources/card_attributes/card_attributes.gd")]([])
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_qqsxe"]
+resource_local_to_scene = true
+size = Vector2(153, 203)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_w0tkv"]
+resource_local_to_scene = true
+atlas = ExtResource("3_0dyim")
+region = Rect2(0, 0, 38, 51)
+
+[node name="Enemy" instance=ExtResource("1_14j4x")]
+position = Vector2(368, 240)
+character = SubResource("Resource_puvfh")
+
+[node name="CollisionShape" parent="." index="0"]
+position = Vector2(-0.5, 3.5)
+shape = SubResource("RectangleShape2D_qqsxe")
+
+[node name="Sprite" parent="." index="1"]
+texture = SubResource("AtlasTexture_w0tkv")
+
+[node name="SelectionBorder" parent="Sprite" index="0"]
+visible = true
+offset_left = -19.0
+offset_top = -25.5
+offset_right = -19.0
+offset_bottom = -25.5

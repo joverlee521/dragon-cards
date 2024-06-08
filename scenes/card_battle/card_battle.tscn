@@ -1,236 +1,178 @@
-[gd_scene load_steps=9 format=3 uid="uid://dgy6vpaplva53"]
+[gd_scene load_steps=17 format=3 uid="uid://biq1mfvftv7wn"]
 
-[ext_resource type="Script" path="res://scenes/card_battle/card_battle.gd" id="1_qgs4d"]
-[ext_resource type="Script" path="res://scenes/card_battle/node_scripts/player_hand.gd" id="3_6tv8r"]
-[ext_resource type="Script" path="res://scenes/card_battle/node_scripts/play_deck.gd" id="4_wmml7"]
-[ext_resource type="Texture2D" uid="uid://dh1bjajpx0ecb" path="res://art/cards/back01.png" id="5_eaoof"]
-[ext_resource type="PackedScene" uid="uid://c87eb4clrv66s" path="res://scenes/card_battle/card.tscn" id="6_jqovr"]
-[ext_resource type="Script" path="res://scenes/card_battle/node_scripts/discard_deck.gd" id="11_v2avs"]
-[ext_resource type="Script" path="res://scenes/card_battle/node_scripts/enemies_arena.gd" id="12_nrroq"]
-[ext_resource type="Script" path="res://scenes/card_battle/node_scripts/end_battle_screen.gd" id="13_b77cx"]
+[ext_resource type="Script" path="res://scenes/card_battle/card_battle.gd" id="1_eqlf3"]
+[ext_resource type="Script" path="res://resources/characters/character.gd" id="2_1gnlo"]
+[ext_resource type="Resource" uid="uid://dvu7ausdptdav" path="res://resources/card_attributes/cards/chaos_slash.tres" id="2_brf31"]
+[ext_resource type="Resource" uid="uid://c6ne1s60wvwga" path="res://resources/characters/vocations/player_vocations/warrior.tres" id="3_17jee"]
+[ext_resource type="Resource" uid="uid://chi4gyal36j7o" path="res://resources/card_attributes/cards/slash.tres" id="4_aio81"]
+[ext_resource type="PackedScene" uid="uid://wpviprmqxet2" path="res://scenes/card_battle/deck.tscn" id="4_k67rs"]
+[ext_resource type="Resource" uid="uid://b723m4q0gy3df" path="res://resources/card_attributes/cards/cook.tres" id="4_qwyqf"]
+[ext_resource type="Resource" uid="uid://jb8kyjy1mpfm" path="res://resources/card_attributes/cards/healthy_hit.tres" id="5_5cjxl"]
+[ext_resource type="Script" path="res://scenes/card_battle/player_hand.gd" id="5_dcxec"]
+[ext_resource type="Resource" uid="uid://7fy7ogesapen" path="res://resources/card_attributes/cards/shield_bash.tres" id="6_jlg2x"]
+[ext_resource type="PackedScene" uid="uid://ev5dne8iq6p4" path="res://scenes/enemies/goblin.tscn" id="10_dak5q"]
+[ext_resource type="PackedScene" uid="uid://3fu10efu25ke" path="res://scenes/enemies/goblin_king.tscn" id="11_fof4w"]
+[ext_resource type="PackedScene" uid="uid://dtkjbo52s682w" path="res://scenes/enemies/goblin_mage.tscn" id="12_gfyra"]
+[ext_resource type="Script" path="res://scenes/card_battle/enemy_manager.gd" id="15_nb8t6"]
+
+[sub_resource type="Resource" id="Resource_wm4wy"]
+script = ExtResource("2_1gnlo")
+vocation = ExtResource("3_17jee")
+cards = Array[Resource("res://resources/card_attributes/card_attributes.gd")]([ExtResource("2_brf31"), ExtResource("4_aio81"), ExtResource("4_aio81"), ExtResource("4_aio81"), ExtResource("4_aio81"), ExtResource("4_qwyqf"), ExtResource("5_5cjxl"), ExtResource("6_jlg2x")])
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3kd0m"]
+bg_color = Color(0.184314, 0.184314, 0.184314, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.113725, 0, 0.0470588, 1)
+border_blend = true
 
 [node name="CardBattle" type="Node"]
-script = ExtResource("1_qgs4d")
+script = ExtResource("1_eqlf3")
+PLAYED_CARD_SCALE = Vector2(1, 1)
+player = SubResource("Resource_wm4wy")
+init_player_stats = true
+enemies = Array[PackedScene]([ExtResource("10_dak5q"), ExtResource("11_fof4w"), ExtResource("12_gfyra")])
 
-[node name="HealthLabel" type="Label" parent="."]
-offset_left = 72.0
-offset_top = 656.0
-offset_right = 256.0
-offset_bottom = 736.0
-theme_override_font_sizes/font_size = 30
-text = "Health"
+[node name="PlayerStats" type="GridContainer" parent="."]
+offset_left = 13.0
+offset_top = 600.0
+offset_right = 299.0
+offset_bottom = 708.0
+columns = 2
+metadata/_edit_group_ = true
 
-[node name="Health" type="Label" parent="."]
-offset_left = 208.0
-offset_top = 656.0
-offset_right = 392.0
-offset_bottom = 736.0
-theme_override_font_sizes/font_size = 30
+[node name="StaminaLabel" type="Label" parent="PlayerStats"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 20
+text = "Stamina:"
+vertical_alignment = 1
+
+[node name="Stamina" type="Label" parent="PlayerStats"]
+layout_mode = 2
+size_flags_horizontal = 3
 text = "0"
+vertical_alignment = 1
 
-[node name="DefenseLabel" type="Label" parent="."]
-offset_left = 64.0
-offset_top = 576.0
-offset_right = 248.0
-offset_bottom = 656.0
-theme_override_font_sizes/font_size = 30
-text = "Defense"
+[node name="DefenseLabel" type="Label" parent="PlayerStats"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 20
+text = "Defense:"
+vertical_alignment = 1
 
-[node name="Defense" type="Label" parent="."]
-offset_left = 208.0
-offset_top = 576.0
-offset_right = 392.0
-offset_bottom = 656.0
-theme_override_font_sizes/font_size = 30
+[node name="Defense" type="Label" parent="PlayerStats"]
+layout_mode = 2
+size_flags_horizontal = 3
 text = "0"
+vertical_alignment = 1
 
-[node name="PlayerHand" type="ColorRect" parent="."]
-offset_left = 320.0
-offset_top = 784.0
-offset_right = 1608.0
-offset_bottom = 1032.0
-color = Color(0.984314, 0.568627, 1, 1)
-script = ExtResource("3_6tv8r")
+[node name="HealthLabel" type="Label" parent="PlayerStats"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 20
+text = "Health:"
+vertical_alignment = 1
 
-[node name="PlayCard" type="Button" parent="PlayerHand"]
-layout_mode = 0
-offset_left = 224.0
-offset_top = -160.0
-offset_right = 424.0
-offset_bottom = -80.0
-theme_override_font_sizes/font_size = 50
+[node name="Health" type="Label" parent="PlayerStats"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "0"
+vertical_alignment = 1
+
+[node name="PlayerControls" type="HBoxContainer" parent="."]
+offset_left = 760.0
+offset_top = 608.0
+offset_right = 1145.0
+offset_bottom = 685.0
+theme_override_constants/separation = 100
+alignment = 1
+metadata/_edit_group_ = true
+
+[node name="PlayCard" type="Button" parent="PlayerControls"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 35
 text = "Play"
 
-[node name="DiscardCard" type="Button" parent="PlayerHand"]
-layout_mode = 0
-offset_left = 616.0
-offset_top = -160.0
-offset_right = 816.0
-offset_bottom = -80.0
-theme_override_font_sizes/font_size = 50
-text = "Discard"
-
-[node name="StaminaLabel" type="Label" parent="PlayerHand"]
-layout_mode = 0
-offset_left = 240.0
-offset_top = -256.0
-offset_right = 424.0
-offset_bottom = -176.0
-theme_override_font_sizes/font_size = 30
-text = "Stamina"
-
-[node name="Stamina" type="Label" parent="PlayerHand"]
-layout_mode = 0
-offset_left = 392.0
-offset_top = -256.0
-offset_right = 576.0
-offset_bottom = -176.0
-theme_override_font_sizes/font_size = 30
-text = "0"
-
-[node name="DiscardLabel" type="Label" parent="PlayerHand"]
-layout_mode = 0
-offset_left = 616.0
-offset_top = -256.0
-offset_right = 800.0
-offset_bottom = -176.0
-theme_override_font_sizes/font_size = 30
-text = "Discards"
-
-[node name="Discard" type="Label" parent="PlayerHand"]
-layout_mode = 0
-offset_left = 768.0
-offset_top = -256.0
-offset_right = 952.0
-offset_bottom = -176.0
-theme_override_font_sizes/font_size = 30
-text = "0"
-
-[node name="EndTurn" type="Button" parent="PlayerHand"]
-layout_mode = 0
-offset_left = 1312.0
-offset_top = -160.0
-offset_right = 1538.0
-offset_bottom = -83.0
-theme_override_font_sizes/font_size = 50
+[node name="EndTurn" type="Button" parent="PlayerControls"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 35
 text = "End Turn"
 
-[node name="PlayDeck" type="Node2D" parent="."]
-position = Vector2(1765, 880)
-script = ExtResource("4_wmml7")
-image = ExtResource("5_eaoof")
-card_scene = ExtResource("6_jqovr")
-metadata/_edit_group_ = true
+[node name="DiscardDeck" parent="." instance=ExtResource("4_k67rs")]
+position = Vector2(112, 888)
+deck_name = "Discards"
 
-[node name="DeckImage" type="Sprite2D" parent="PlayDeck"]
-scale = Vector2(0.5, 0.5)
-texture = ExtResource("5_eaoof")
+[node name="PlayDeck" parent="." instance=ExtResource("4_k67rs")]
+position = Vector2(1808, 888)
+deck_name = "Player's Deck"
 
-[node name="CardCount" type="Label" parent="PlayDeck"]
-offset_left = -19.0
-offset_top = 141.0
-offset_right = 21.0
-offset_bottom = 164.0
-theme_override_font_sizes/font_size = 25
-text = "0"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="DiscardDeck" type="Node2D" parent="."]
-position = Vector2(154, 880)
-script = ExtResource("11_v2avs")
-metadata/_edit_group_ = true
-
-[node name="DeckImage" type="Sprite2D" parent="DiscardDeck"]
-scale = Vector2(0.5, 0.5)
-texture = ExtResource("5_eaoof")
-
-[node name="CardCount" type="Label" parent="DiscardDeck"]
-offset_left = -19.0
-offset_top = 141.0
-offset_right = 21.0
-offset_bottom = 164.0
-theme_override_font_sizes/font_size = 25
-text = "0"
-horizontal_alignment = 1
-vertical_alignment = 1
+[node name="PlayerHand" type="PanelContainer" parent="."]
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 256.0
+offset_top = -354.0
+offset_right = -248.0
+offset_bottom = -34.0
+grow_horizontal = 2
+grow_vertical = 0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_3kd0m")
+script = ExtResource("5_dcxec")
 
 [node name="PlayedCard" type="Marker2D" parent="."]
-position = Vector2(840, 288)
+position = Vector2(448, 256)
 
-[node name="SkipPlayerTurnLabel" type="Label" parent="."]
-visible = false
-offset_left = 32.0
-offset_top = 64.0
-offset_right = 228.0
-offset_bottom = 92.0
-theme_override_font_sizes/font_size = 30
-text = "Skipping Player Turn"
-
-[node name="EnemiesArena" type="ColorRect" parent="."]
-offset_left = 1096.0
+[node name="EnemyManager" type="PanelContainer" parent="."]
+offset_left = 640.0
 offset_top = 32.0
-offset_right = 1896.0
-offset_bottom = 456.0
-color = Color(0.592157, 0.882353, 1, 1)
-script = ExtResource("12_nrroq")
+offset_right = 1880.0
+offset_bottom = 576.0
+script = ExtResource("15_nb8t6")
 
-[node name="Enemy0" type="Marker2D" parent="EnemiesArena"]
-position = Vector2(176, 240)
+[node name="Enemy0" type="Marker2D" parent="EnemyManager"]
+position = Vector2(192, 352)
 
-[node name="Enemy1" type="Marker2D" parent="EnemiesArena"]
-position = Vector2(416, 128)
+[node name="Enemy1" type="Marker2D" parent="EnemyManager"]
+position = Vector2(608, 160)
 
-[node name="Enemy2" type="Marker2D" parent="EnemiesArena"]
-position = Vector2(632, 328)
+[node name="Enemy2" type="Marker2D" parent="EnemyManager"]
+position = Vector2(1024, 344)
 
-[node name="EndBattleScreen" type="CanvasLayer" parent="."]
-script = ExtResource("13_b77cx")
+[node name="PlayerSprite" type="Sprite2D" parent="."]
+position = Vector2(152, 280)
+scale = Vector2(3.90984, 4.36207)
 
-[node name="EndBattleBackground" type="ColorRect" parent="EndBattleScreen"]
+[node name="EndBattleCanvas" type="CanvasLayer" parent="."]
+
+[node name="EndBattleContainer" type="CenterContainer" parent="EndBattleCanvas"]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(0, 0.541176, 0.541176, 1)
 
-[node name="EndState" type="Label" parent="EndBattleScreen"]
-offset_left = 128.0
-offset_top = 192.0
-offset_right = 1800.0
-offset_bottom = 329.0
-theme_override_font_sizes/font_size = 100
-text = "End State"
+[node name="EndBattleBackground" type="ColorRect" parent="EndBattleCanvas/EndBattleContainer"]
+custom_minimum_size = Vector2(1900, 1000)
+layout_mode = 2
+color = Color(0.196078, 0.607843, 1, 0.686275)
+
+[node name="EndBattleStatus" type="Label" parent="EndBattleCanvas/EndBattleContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 50
+text = "End Card Battle Status"
 horizontal_alignment = 1
 vertical_alignment = 1
-autowrap_mode = 3
 
-[node name="NewBattle" type="Button" parent="EndBattleScreen"]
-offset_left = 800.0
-offset_top = 576.0
-offset_right = 1142.0
-offset_bottom = 653.0
-theme_override_font_sizes/font_size = 50
-text = "Restart Battle"
-
-[node name="ReturnToStartScreen" type="Button" parent="EndBattleScreen"]
-offset_left = 712.0
-offset_top = 736.0
-offset_right = 1259.0
-offset_bottom = 813.0
-theme_override_font_sizes/font_size = 50
-text = "Return to Start Screen"
-
-[connection signal="cards_discarded" from="PlayerHand" to="." method="_on_cards_discarded"]
-[connection signal="cards_played" from="PlayerHand" to="." method="_on_cards_played"]
-[connection signal="player_turn_ended" from="PlayerHand" to="." method="_on_player_turn_ended"]
-[connection signal="pressed" from="PlayerHand/PlayCard" to="PlayerHand" method="_on_play_cards"]
-[connection signal="pressed" from="PlayerHand/DiscardCard" to="PlayerHand" method="_on_discard_cards"]
-[connection signal="pressed" from="PlayerHand/EndTurn" to="PlayerHand" method="_on_end_turn"]
-[connection signal="card_dealt" from="PlayDeck" to="PlayerHand" method="_on_deck_dealt_card"]
-[connection signal="cards_refreshed" from="DiscardDeck" to="PlayDeck" method="_on_cards_refreshed"]
-[connection signal="all_enemies_defeated" from="EnemiesArena" to="." method="_on_enemies_defeated"]
-[connection signal="enemies_acted" from="EnemiesArena" to="." method="_on_enemies_acted"]
-[connection signal="pressed" from="EndBattleScreen/NewBattle" to="." method="_on_new_battle"]
-[connection signal="pressed" from="EndBattleScreen/ReturnToStartScreen" to="." method="_on_return_to_start_screen"]
+[connection signal="pressed" from="PlayerControls/PlayCard" to="." method="_on_play_card_pressed"]
+[connection signal="pressed" from="PlayerControls/EndTurn" to="." method="_on_end_turn_pressed"]
+[connection signal="card_selection_changed" from="PlayerHand" to="." method="_player_hand_card_selection_changed"]
+[connection signal="stamina_changed" from="PlayerHand" to="." method="_update_player_stamina_label"]
+[connection signal="all_enemies_defeated" from="EnemyManager" to="." method="_on_all_enemies_defeated"]

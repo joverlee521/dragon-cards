@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="CardAttributes" load_steps=2 format=3 uid="uid://bgyyiuqv888qx"]
+
+[ext_resource type="Script" path="res://resources/card_attributes/card_attributes.gd" id="1_gnj32"]
+
+[resource]
+script = ExtResource("1_gnj32")
+card_name = null
+card_description = null
+owner_target_type = 0
+opposer_target_type = 0
+attack = null
+defense = null
+stamina_cost = null
+damage_type = null
+damage_element = null
+status_effects_on_card_player = null
+status_effects_on_card_target = null

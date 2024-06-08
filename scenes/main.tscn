@@ -1,0 +1,39 @@
+[gd_scene load_steps=2 format=3 uid="uid://dagrfjn25txy3"]
+
+[ext_resource type="Script" path="res://scenes/main.gd" id="1_3t38j"]
+
+[node name="Main" type="Node"]
+script = ExtResource("1_3t38j")
+
+[node name="StartScreen" type="VBoxContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 50
+alignment = 1
+
+[node name="Title" type="Label" parent="StartScreen"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 200
+text = "Dragon Cards"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="StartGame" type="Button" parent="StartScreen"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 100
+text = "Start"
+
+[node name="StartCardBattlePlayTest" type="Button" parent="StartScreen"]
+clip_contents = true
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_font_sizes/font_size = 30
+text = "Card Battle Play Test"
+
+[connection signal="pressed" from="StartScreen/StartGame" to="." method="_on_start_game_pressed"]
+[connection signal="pressed" from="StartScreen/StartCardBattlePlayTest" to="." method="_on_start_card_battle_play_test_pressed"]

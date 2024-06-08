@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="PlayerVocation" load_steps=2 format=3 uid="uid://dsmj0uf768rud"]
+
+[ext_resource type="Script" path="res://resources/characters/vocations/player_vocation.gd" id="1_lgqiq"]
+
+[resource]
+script = ExtResource("1_lgqiq")
+max_stamina = 0
+max_hand_size = 0
+armor_types = Array[int]([])
+right_hand_weapon_types = Array[int]([])
+left_hand_weapon_types = Array[int]([])
+vocation_name = ""
+max_health = 0
+starting_defense = 0

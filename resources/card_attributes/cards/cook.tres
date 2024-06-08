@@ -1,0 +1,46 @@
+[gd_resource type="Resource" script_class="Cook" load_steps=9 format=3 uid="uid://b723m4q0gy3df"]
+
+[ext_resource type="Texture2D" uid="uid://cxm6qw1xvjd8q" path="res://art/PixelCardArt/CardRPGPack/card rpg icons&objects/kimchi.png" id="1_71h5r"]
+[ext_resource type="Script" path="res://resources/card_attributes/cards/cook.gd" id="2_blyg8"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_q3wbp"]
+atlas = ExtResource("1_71h5r")
+region = Rect2(0, 0, 33, 33)
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_i1p18"]
+load_path = "res://.godot/imported/pixelCardAssest_V01.png-e42aa1ab89ec593aabb40b22de25cb9b.ctex"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_toe3h"]
+atlas = SubResource("CompressedTexture2D_i1p18")
+region = Rect2(133, 4, 100, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_i43he"]
+atlas = SubResource("CompressedTexture2D_i1p18")
+region = Rect2(226, 337, 100, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0avs0"]
+atlas = SubResource("CompressedTexture2D_i1p18")
+region = Rect2(135, 224, 96, 29)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_m0are"]
+atlas = SubResource("CompressedTexture2D_i1p18")
+region = Rect2(135, 273, 96, 18)
+
+[resource]
+script = ExtResource("2_blyg8")
+card_name = "Cook"
+card_background = SubResource("AtlasTexture_toe3h")
+card_border = SubResource("AtlasTexture_i43he")
+card_art = SubResource("AtlasTexture_q3wbp")
+card_description_plate = SubResource("AtlasTexture_0avs0")
+card_name_plate = SubResource("AtlasTexture_m0are")
+card_description = "Cook them in their armor"
+owner_target_type = 0
+opposer_target_type = 0
+attack = 5
+defense = 0
+stamina_cost = 3
+damage_type = 3
+damage_element = 1
+status_effects_on_card_player = Array[Resource("res://resources/card_attributes/status_effect.gd")]([])
+status_effects_on_card_target = Array[Resource("res://resources/card_attributes/status_effect.gd")]([])

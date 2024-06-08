@@ -1,0 +1,105 @@
+[gd_scene load_steps=2 format=3 uid="uid://bfvr6hdwlj6jc"]
+
+[ext_resource type="Script" path="res://scenes/card_battle/play_test.gd" id="1_6pcae"]
+
+[node name="PlayTestCardBattle" type="CanvasLayer"]
+offset = Vector2(20, 20)
+transform = Transform2D(1, 0, 0, 1, 20, 20)
+script = ExtResource("1_6pcae")
+
+[node name="PlayerContainer" type="VBoxContainer" parent="."]
+offset_right = 859.0
+offset_bottom = 987.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/separation = 50
+
+[node name="VocationContainer" type="HBoxContainer" parent="PlayerContainer"]
+layout_mode = 2
+
+[node name="PlayerVocationLabel" type="Label" parent="PlayerContainer/VocationContainer"]
+layout_mode = 2
+size_flags_vertical = 1
+theme_override_font_sizes/font_size = 30
+text = "Player Vocation:"
+
+[node name="PlayerVocationOptions" type="OptionButton" parent="PlayerContainer/VocationContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 30
+
+[node name="CardsLabel" type="Label" parent="PlayerContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "Cards:"
+
+[node name="CardsContainer" type="ScrollContainer" parent="PlayerContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="CardsSelection" type="GridContainer" parent="PlayerContainer/CardsContainer"]
+layout_mode = 2
+columns = 2
+
+[node name="EnemyContainer" type="VBoxContainer" parent="."]
+offset_left = 959.0
+offset_right = 1818.0
+offset_bottom = 987.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/separation = 300
+alignment = 1
+
+[node name="EnemySelection" type="GridContainer" parent="EnemyContainer"]
+layout_mode = 2
+theme_override_constants/h_separation = 50
+theme_override_constants/v_separation = 50
+columns = 2
+
+[node name="EnemyLabel1" type="Label" parent="EnemyContainer/EnemySelection"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "Enemy 1:"
+
+[node name="Enemy1" type="OptionButton" parent="EnemyContainer/EnemySelection"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+
+[node name="EnemyLabel2" type="Label" parent="EnemyContainer/EnemySelection"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "Enemy 2:"
+
+[node name="Enemy2" type="OptionButton" parent="EnemyContainer/EnemySelection"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+
+[node name="EnemyLabel3" type="Label" parent="EnemyContainer/EnemySelection"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "Enemy 3:"
+
+[node name="Enemy3" type="OptionButton" parent="EnemyContainer/EnemySelection"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+
+[node name="PlayTestControls" type="VBoxContainer" parent="EnemyContainer"]
+custom_minimum_size = Vector2(0, 300)
+layout_mode = 2
+theme_override_constants/separation = 50
+
+[node name="EndlessMode" type="CheckBox" parent="EnemyContainer/PlayTestControls"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 30
+text = "Endless Mode"
+
+[node name="StartGame" type="Button" parent="EnemyContainer/PlayTestControls"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 30
+text = "Start"
+
+[connection signal="pressed" from="EnemyContainer/PlayTestControls/EndlessMode" to="." method="_on_endless_mode_pressed"]
+[connection signal="pressed" from="EnemyContainer/PlayTestControls/StartGame" to="." method="start_battle"]

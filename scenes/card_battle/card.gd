@@ -1,65 +1,191 @@
-class_name Card extends Area2D
+class_name Card
+extends Area2D
+## Base card scene that is instantiated when a card is dealt and/or played
 
-signal card_clicked
+#region Signals ##########################################################################################
 
-@export var attributes: CardAttributes
+## Emitted when the card is clicked
+signal card_clicked(card: Card)
 
-var mouse_entered_card: bool = false
-var is_selected: bool = false
-var prevent_selection: bool = false
-var is_played: bool = false
+#endregion
+#region Enums ############################################################################################
 
 
-func _ready():
-	set_attributes()
+#endregion
+#region Constants ########################################################################################
 
-func set_attributes():
-	$CardAnimationLayer/CardAnimation.hide()
-	$CardBackground.texture = attributes.card_background
-	$CardBackground/CardBorder.texture = attributes.card_border
-	$CardBackground/CardArt.texture = attributes.card_art
-	$CardBackground/CardDescriptionPlate.texture = attributes.card_description_plate
-	$CardBackground/CardNamePlate.texture = attributes.card_name_plate
-	$CardBackground/CardDescriptionPlate/CardDescription.text = attributes.card_description
-	$CardBackground/CardNamePlate/CardName.text = attributes.card_name
-	$CardBackground/CardStaminaContainer/StaminaCost.text = str(attributes.stamina_cost)
+## Minimum label font size
+const MIN_LABEL_FONT_SIZE = 10
+## Maximum label font size
+const MAX_LABEL_FONT_SIZE = 350
 
-	if attributes.attack > 0:
-		$CardBackground/CardAttackContainer/CardAttack.text = str(attributes.attack)
-	else:
-		$CardBackground/CardAttackContainer.hide()
-	if attributes.defense > 0:
-		$CardBackground/CardDefenseContainer/CardDefense.text = str(attributes.defense)
-	else:
-		$CardBackground/CardDefenseContainer.hide()
+#endregion
+#region @export variables ################################################################################
 
-func play_card_animation(animation_name : String, animation_location : Vector2):
-	#var local_animation_location = to_local(animation_location)
-	$CardAnimationLayer/CardAnimation.position = animation_location
-	$CardAnimationLayer/CardAnimation.show()
-	$CardAnimationLayer/CardAnimation.play(animation_name)
-	await $CardAnimationLayer/CardAnimation.animation_finished
-	$CardAnimationLayer/CardAnimation.hide()
+## [CardAttributes] to use for the instantiated [Card]
+@export var card_attributes: CardAttributes = CardAttributes.new()
 
+#endregion
+#region Public variables #################################################################################
+
+
+#endregion
+#region Private variables ################################################################################
+
+var _selected: bool = false
+var _clickable: bool = true
 # Custom handler for input to work around overlapping Area2D objects both getting input
 # See https://github.com/godotengine/godot/issues/29825
 # Resolved in https://github.com/godotengine/godot/pull/75688
 # which was released in Godot v4.3
-func _unhandled_input(event):
-	if (event.is_action_pressed("mouse_left_click")
-	and mouse_entered_card):
-		if !is_played and (!prevent_selection or is_selected):
-			is_selected = !is_selected
-			card_clicked.emit()
+var _mouse_entered_card: bool = false
 
-		self.get_viewport().set_input_as_handled()
+#endregion
+#region @onready variables ###############################################################################
 
 
-func _on_mouse_entered():
-	mouse_entered_card = true
+#endregion
+#region Optional _init method ############################################################################
 
-func _on_mouse_exited():
-	mouse_entered_card = false
+# Here for testing purposes
+func _init(i_card_attributes: CardAttributes = CardAttributes.new()) -> void:
+	card_attributes = i_card_attributes
 
-func _on_cards_selected(max_cards_selected):
-	prevent_selection = max_cards_selected
+#endregion
+#region Optional _enter_tree() method ####################################################################
+
+
+#endregion
+#region Optional _ready method ###########################################################################
+
+func _ready() -> void:
+	$CardAnimationLayer/CardAnimation.hide()
+	card_attributes.triggered_animation.connect(_on_triggered_animation)
+	_set_card_background_textures()
+	# TODO: Remove because this slows down the card scene instantiation SIGNIFICANTLY!
+	_update_label_font_size()
+
+#endregion
+#region Optional remaining built-in virtual methods ######################################################
+
+func _unhandled_input(event: InputEvent) -> void:
+	# Custom handler for input to work around overlapping Area2D objects both getting input
+	# See https://github.com/godotengine/godot/issues/29825
+	# Resolved in https://github.com/godotengine/godot/pull/75688
+	# which was released in Godot v4.3
+	if (
+		event.is_action_pressed("mouse_left_click")
+		and _mouse_entered_card
+		and _clickable
+	):
+		_toggle_selected()
+		get_viewport().set_input_as_handled()
+
+#endregion
+#region Public methods ###################################################################################
+
+func is_selected() -> bool:
+	return _selected
+
+
+func get_stamina_cost() -> int:
+	return card_attributes.stamina_cost
+
+
+func set_selected(selected: bool) -> void:
+	_selected = selected
+
+
+func set_clickable(clickable: bool) -> void:
+	_clickable = clickable
+
+
+## Run the scale animation to change the [member Card.scale] to the [param new_scale]
+## over a set [param duration] (seconds) with an optional [param delay] (seconds)
+## Use `await` to wait for the animation to complete
+func run_scale_animation(new_scale: Vector2, duration: float, delay: float = 0.0) -> void:
+	var tween: Tween = create_tween()
+	tween.tween_property(self, "scale", new_scale, duration).set_delay(delay)
+	await tween.finished
+
+
+func play(card_affectees: CardAttributes.CardAffectees,
+		  card_env: CardAttributes.CardEnvironment) -> void:
+	card_attributes.apply_effects(card_affectees, card_env)
+
+#endregion
+#region Private methods ##############################################################
+
+func _on_triggered_animation(animation_name: String, animation_position: Vector2) -> void:
+	var card_animation: AnimatedSprite2D = $CardAnimationLayer/CardAnimation.duplicate()
+	$CardAnimationLayer.add_child(card_animation)
+	# Check requested animation exists
+	assert(card_animation.sprite_frames.has_animation(animation_name),
+		"Cannot play animation <%s> that does not exist!" % animation_name)
+
+	card_animation.position = animation_position
+	card_animation.show()
+	card_animation.play(animation_name)
+	await card_animation.animation_finished
+	$CardAnimationLayer.remove_child(card_animation)
+	card_animation.queue_free()
+
+
+func _toggle_selected() -> void:
+	_selected = !_selected
+	card_clicked.emit(self)
+
+
+func _set_card_background_textures() -> void:
+	$CardBackground.texture = card_attributes.card_background
+	$CardBackground/CardBorder.texture = card_attributes.card_border
+	$CardBackground/CardArt.texture = card_attributes.card_art
+	$CardBackground/CardDescriptionPlate.texture = card_attributes.card_description_plate
+	$CardBackground/CardNamePlate.texture = card_attributes.card_name_plate
+	$CardBackground/CardDescriptionPlate/CardDescription.text = card_attributes.card_description
+	$CardBackground/CardNamePlate/CardName.text = card_attributes.card_name
+	$CardBackground/CardStaminaContainer/StaminaCost.text = str(card_attributes.stamina_cost)
+
+	if card_attributes.attack > 0:
+		$CardBackground/CardAttackContainer/CardAttack.text = str(card_attributes.attack)
+	else:
+		$CardBackground/CardAttackContainer.hide()
+
+	if card_attributes.defense > 0:
+		$CardBackground/CardDefenseContainer/CardDefense.text = str(card_attributes.defense)
+	else:
+		$CardBackground/CardDefenseContainer.hide()
+
+
+func _update_label_font_size() -> void:
+	# Adjust [Label] font size to fit within the width and height of the [Label]
+	# Includes a minimum font size of 10 to prevent text from disappearing
+	for child_node in find_children("*", "Label", true):
+		if child_node is Label:
+			var label_node: Label = child_node
+			var font: Font = label_node.get_theme_default_font()
+			var font_size: int = MAX_LABEL_FONT_SIZE
+			var width: float = label_node.size.x - 5
+			var height: float = label_node.size.y - 5
+			while (
+				font_size > MIN_LABEL_FONT_SIZE
+				and (font.get_string_size(label_node.text, label_node.horizontal_alignment, -1, font_size).x > width
+				or font.get_string_size(label_node.text, label_node.horizontal_alignment, -1, font_size).y > height)
+			):
+				font_size -= 5
+
+			label_node.add_theme_font_size_override('font_size', font_size)
+
+
+func _on_mouse_entered() -> void:
+	_mouse_entered_card = true
+
+
+func _on_mouse_exited() -> void:
+	_mouse_entered_card = false
+
+#endregion
+#region Subclasses ###################################################################
+
+
+#endregion

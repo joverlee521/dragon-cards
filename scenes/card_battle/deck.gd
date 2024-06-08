@@ -1,66 +1,111 @@
-class_name Deck extends Node2D
+class_name Deck
+extends Node2D
+## Base deck for holding [CardAttributes] that can instantiate [Card]s
 
-signal cards_depleted
-signal cards_peeked(cards: Array[Card])
+#region Signals ##########################################################################################
 
+
+#endregion
+#region Enums ############################################################################################
+
+
+#endregion
+#region Constants ########################################################################################
+
+
+#endregion
+#region @export variables ################################################################################
+
+@export_group("Deck Visual")
+@export var deck_name: String = ""
+## The image of the deck when [member Deck.cards] is not empty
 @export var image: CompressedTexture2D
-@export var card_scene: PackedScene
-@export var cards: Array[CardAttributes] = []
+
+#endregion
+#region Public variables #################################################################################
 
 
-func _ready():
-	if image != null:
-		$DeckImage.texture = image
+#endregion
+#region Private variables ################################################################################
 
-	if cards.is_empty():
-		$DeckImage.hide()
+## The [CardAttributes] currently in the deck
+var _cards: Array[CardAttributes] = []
 
-
-func add_card(card: CardAttributes) -> void:
-	cards.append(card)
-	update_card_count()
-	$DeckImage.show()
+#endregion
+#region @onready variables ###############################################################################
 
 
-func remove_card(index: int) -> CardAttributes:
-	var removed_card = cards.pop_at(index)
-	check_cards_empty()
-	update_card_count()
-	return removed_card
+#endregion
+#region Optional _init method ############################################################################
 
 
-func remove_all_cards() -> Array[CardAttributes]:
-	var removed_cards = cards.duplicate(true)
-	cards.clear()
-	check_cards_empty()
-	update_card_count()
-	return removed_cards
+#endregion
+#region Optional _enter_tree() method ####################################################################
 
 
-func check_cards_empty() -> void:
-	if cards.is_empty():
-		$DeckImage.hide()
-		cards_depleted.emit()
+#endregion
+#region Optional _ready method ###########################################################################
+
+func _ready() -> void:
+	$DeckName.text = deck_name
+	$DeckImage.texture = image
+	_update_displays()
+
+#endregion
+#region Optional remaining built-in virtual methods ######################################################
 
 
-func peek_cards(num: int) -> void:
-	var peeked_cards = []
-	var card_attrs = cards.slice(0, num)
-	for card_attr in card_attrs:
-		var new_card = card_scene.instantiate()
-		new_card.attributes = card_attr
-		peeked_cards.append(new_card)
+#endregion
+#region Public methods ###################################################################################
 
-	emit_signal("cards_peeked", peeked_cards)
+func get_cards() -> Array[CardAttributes]:
+	return _cards
 
 
-func peek_all_cards() -> void:
-	peek_cards(len(cards))
+func is_empty() -> bool:
+	return _cards.is_empty()
 
 
 func shuffle() -> void:
-	cards.shuffle()
+	_cards.shuffle()
 
 
-func update_card_count() -> void:
-	$CardCount.text = str(len(cards))
+func add_card(card: CardAttributes) -> void:
+	_cards.append(card)
+	_update_displays()
+
+
+func remove_all_cards() -> Array[CardAttributes]:
+	var removed_cards: Array[CardAttributes] = _cards.duplicate(true)
+	_cards = []
+	_update_displays()
+	return removed_cards
+
+
+## Returns [CardAttributes] from [member Deck._cards] at the [param index]
+func remove_card(index: int = 0) -> CardAttributes:
+	var removed_card: CardAttributes = _cards.pop_at(index)
+	_update_displays()
+	return removed_card
+
+
+## Replace the [member Deck._cards] with the [param new_cards]
+func replace_cards(new_cards: Array[CardAttributes]) -> void:
+	_cards.clear()
+	_cards.assign(new_cards)
+	_update_displays()
+
+#endregion
+#region Private methods ##############################################################
+
+## Match the displayed card count to the number of [CardAttributes] in [member Deck._cards].
+## Only display deck image if there are [member Deck._cards] is not empty
+func _update_displays() -> void:
+	$CardCount.text = str(len(_cards))
+	$DeckImage.visible = not _cards.is_empty()
+
+#endregion
+#region Subclasses ###################################################################
+
+
+#endregion
