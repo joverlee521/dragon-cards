@@ -95,15 +95,16 @@ func start_battle() -> void:
 
 
 func start_player_turn() -> void:
+	$PlayerControls/EndTurn.disabled = true
 	if $PlayDeck.is_empty():
 		refresh_play_deck_from_discard()
 		# TODO: Add display for skipping player's turn
 		start_enemies_turn()
 		return
 	$PlayerControls/PlayCard.disabled = true
-	$PlayerControls/EndTurn.disabled = false
 	$PlayerHand.reset_stamina(player.vocation.max_stamina)
-	deal_cards(player.vocation.max_hand_size)
+	await deal_cards(player.vocation.max_hand_size)
+	$PlayerControls/EndTurn.disabled = false
 
 
 ## Deal [param num] cards from the [PlayDeck] to the [PlayerHand]
