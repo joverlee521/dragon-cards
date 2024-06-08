@@ -33,6 +33,7 @@ var enemy_options: Array = []
 #endregion
 #region Private variables ##########################################################################
 
+var _card_battle: Node
 
 #endregion
 #region @onready variables #########################################################################
@@ -70,13 +71,13 @@ func _ready() -> void:
 func start_battle() -> void:
 	hide()
 	load_enemies()
-	var new_card_battle := CARD_BATTLE_SCENE.instantiate()
-	new_card_battle.player = load_player()
-	new_card_battle.enemies.assign(enemies.pop_front())
-	#new_card_battle.endless_mode = $EnemyContainer/PlayTestControls/EndlessMode.button_pressed
-	#new_card_battle.return_to_start_screen.connect(end_battle)
-	#new_card_battle.defeated_battle_enemies.connect(load_next_enemies)
-	add_child(new_card_battle)
+	_card_battle = CARD_BATTLE_SCENE.instantiate()
+	_card_battle.player = load_player()
+	_card_battle.enemies.assign(enemies.pop_front())
+	_card_battle.exit_card_battle.connect(end_battle)
+	#_card_battle.endless_mode = $EnemyContainer/PlayTestControls/EndlessMode.button_pressed
+	#_card_battle.defeated_battle_enemies.connect(load_next_enemies)
+	add_child(_card_battle)
 
 
 func load_player() -> Character:
@@ -134,8 +135,8 @@ func load_endless_enemies():
 				enemies.append([first_enemy, second_enemy, third_enemy])
 
 
-func end_battle():
-	remove_child($CardBattle)
+func end_battle(_exit_status: CardBattle.EXIT_STATUS, _player: Character) -> void:
+	remove_child(_card_battle)
 	show()
 
 
