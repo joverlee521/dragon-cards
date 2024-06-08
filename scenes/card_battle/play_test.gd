@@ -134,11 +134,11 @@ func load_endless_enemies() -> void:
 
 
 func end_battle(_exit_status: CardBattle.EXIT_STATUS, _player: Character) -> void:
-	remove_child(_card_battle)
+	get_tree().get_root().remove_child(_card_battle)
 
 	if _endless_mode and _exit_status == CardBattle.EXIT_STATUS.WIN:
 		load_card_battle_enemies()
-		add_child(_card_battle)
+		get_tree().get_root().add_child(_card_battle)
 		_card_battle.start_battle()
 	else:
 		_card_battle.queue_free()
