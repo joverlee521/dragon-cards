@@ -13,6 +13,7 @@ extends Node
 #region Constants ##################################################################################
 
 const CARD_BATTLE_SCENE = preload("res://scenes/card_battle/card_battle.tscn")
+const PLAY_TEST_CARD_BATTLE_SCENE = preload("res://scenes/card_battle/play_test.tscn")
 
 #endregion
 #region @export variables ##########################################################################
@@ -27,6 +28,7 @@ const CARD_BATTLE_SCENE = preload("res://scenes/card_battle/card_battle.tscn")
 
 var _start_screen: Node
 var _card_battle: Node
+var _play_test_card_battle: Node
 
 #endregion
 #region @onready variables #########################################################################
@@ -72,6 +74,14 @@ func _on_exit_card_battle(_exit_status: CardBattle.EXIT_STATUS, _player: Charact
 	# TODO: use _exit_status to determine which scene to switch to here
 	# TODO: pass _player to the next scene
 	add_child(_start_screen)
+
+
+func _on_start_card_battle_play_test_pressed() -> void:
+	print("START CARD BATTLE PLAY TEST")
+	remove_child(_start_screen)
+	_play_test_card_battle = PLAY_TEST_CARD_BATTLE_SCENE.instantiate()
+	add_child(_play_test_card_battle)
+
 
 
 #endregion
