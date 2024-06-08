@@ -37,7 +37,7 @@ window/stretch/mode="canvas_items"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/gdUnit4/plugin.cfg", "res://addons/resources_spreadsheet_view/plugin.cfg")
+enabled=PackedStringArray("res://addons/resources_spreadsheet_view/plugin.cfg", "res://addons/gdUnit4/plugin.cfg")
 
 [gdunit4]
 
