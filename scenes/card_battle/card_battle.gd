@@ -166,6 +166,10 @@ func _exit_card_battle(_exit_status: EXIT_STATUS) -> void:
 	exit_card_battle.emit(_exit_status, player)
 
 
+func _on_all_enemies_defeated() -> void:
+	_exit_card_battle(EXIT_STATUS.WIN)
+
+
 ## Connects the player's emitted stats signals to the label updates
 func _connect_player_stats_signals() -> void:
 	player.health_depleted.connect(_on_player_death)

@@ -110,6 +110,10 @@ func _on_enemy_clicked(clicked_enemy: Enemy) -> void:
 
 func _on_enemy_died(dead_enemy: Enemy) -> void:
 	dead_enemy.remove_from_group(ENEMIES_IN_BATTLE)
+	if get_all_enemies().size() == 0:
+		all_enemies_defeated.emit()
+		return
+
 	var selected_enemies: Array[Enemy] = _as_enemy_array(
 		get_all_enemies().filter(func (enemy: Enemy) -> bool: return enemy.is_selected())
 	)

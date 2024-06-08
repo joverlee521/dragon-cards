@@ -175,3 +175,4 @@ vertical_alignment = 1
 [connection signal="pressed" from="PlayerControls/EndTurn" to="." method="_on_end_turn_pressed"]
 [connection signal="card_selection_changed" from="PlayerHand" to="." method="_player_hand_card_selection_changed"]
 [connection signal="stamina_changed" from="PlayerHand" to="." method="_update_player_stamina_label"]
+[connection signal="all_enemies_defeated" from="EnemyManager" to="." method="_on_all_enemies_defeated"]

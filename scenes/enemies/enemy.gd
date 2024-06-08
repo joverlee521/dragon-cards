@@ -109,17 +109,16 @@ func create_card_target() -> CardAttributes.CardTarget:
 ## Connects the character's emitted stats signals to the label updates
 func _connect_character_stats_signals() -> void:
 	character.health_changed.connect(_update_health_label)
-	character.health_changed.connect(_on_death)
+	character.health_depleted.connect(_on_health_depleted)
 	character.defense_changed.connect(_update_defense_label)
 
 
-func _on_death(health: int = character._health) -> void:
-	if health == 0:
-		var tween := create_tween()
-		tween.tween_property(self, "rotation", 1.5, 1)
-		await tween.finished
-		enemy_died.emit(self)
-		queue_free()
+func _on_health_depleted() -> void:
+	var tween := create_tween()
+	tween.tween_property(self, "rotation", 1.5, 1)
+	await tween.finished
+	enemy_died.emit(self)
+	queue_free()
 
 
 func _update_health_label(new_value: int = character._health) -> void:
