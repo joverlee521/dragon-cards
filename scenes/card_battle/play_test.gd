@@ -89,49 +89,49 @@ func load_player() -> Character:
 
 
 func get_selected_cards() -> Array:
-	var selected_cards = {}
+	var selected_cards := {}
 	for child_node in $PlayerContainer/CardsContainer/CardsSelection.get_children():
 		if is_instance_of(child_node, SpinBox) and child_node.value > 0:
-			var card_filename = child_node.get_meta("filename")
+			var card_filename: String = child_node.get_meta("filename")
 			selected_cards[card_filename] = child_node.value
 
-	var cards: Array[CardAttributes] = []
-	for filename in selected_cards:
-		var card = load(CARD_ATTRIBUTES_DIR + filename)
+	var loaded_cards: Array[CardAttributes] = []
+	for filename: String in selected_cards:
+		var loaded_card: CardAttributes = load(CARD_ATTRIBUTES_DIR + filename)
 		for x in range(selected_cards[filename]):
-			cards.append(card)
+			loaded_cards.append(loaded_card)
 
-	return cards
+	return loaded_cards
 
 
-func load_enemies():
+func load_enemies() -> void:
 
 	if $EnemyContainer/PlayTestControls/EndlessMode.button_pressed:
 		load_endless_enemies()
 	else:
-		var single_battle = []
-		for enemy_option in enemy_options:
+		var single_battle := []
+		for enemy_option: Node in enemy_options:
 			if enemy_option.get_selected_id() >= 0:
 				single_battle.append(load(ENEMY_SCENES_DIR + enemy_option.get_selected_metadata()))
 		print(single_battle)
 		enemies.append(single_battle)
 
 
-func load_endless_enemies():
-	var enemy_scenes = []
+func load_endless_enemies() -> void:
+	var enemy_scenes := []
 	for filename in all_enemies:
 		enemy_scenes.append(load(ENEMY_SCENES_DIR + filename))
 
-	for enemy_scene in enemy_scenes:
+	for enemy_scene: Node in enemy_scenes:
 		enemies.append([enemy_scene])
 
-	for first_enemy in enemy_scenes:
-		for second_enemy in enemy_scenes:
+	for first_enemy: Node in enemy_scenes:
+		for second_enemy: Node in enemy_scenes:
 			enemies.append([first_enemy, second_enemy])
 
-	for first_enemy in enemy_scenes:
-		for second_enemy in enemy_scenes:
-			for third_enemy in enemy_scenes:
+	for first_enemy: Node in enemy_scenes:
+		for second_enemy: Node in enemy_scenes:
+			for third_enemy: Node in enemy_scenes:
 				enemies.append([first_enemy, second_enemy, third_enemy])
 
 
@@ -140,7 +140,7 @@ func end_battle(_exit_status: CardBattle.EXIT_STATUS, _player: Character) -> voi
 	show()
 
 
-func load_next_enemies():
+func load_next_enemies() -> void:
 	await get_tree().create_timer(2).timeout
 	$CardBattle.enemies = enemies.pop_front()
 	$CardBattle.start_battle()
@@ -172,7 +172,7 @@ func get_resources(
 func create_player_vocation_options() -> void:
 	var player_vocation_options: Node = $PlayerContainer/VocationContainer/PlayerVocationOptions
 	for i in range(player_vocations.size()):
-		var vocation = player_vocations[i]
+		var vocation: String = player_vocations[i]
 		player_vocation_options.add_item(vocation)
 		player_vocation_options.set_item_metadata(i, vocation)
 
@@ -185,7 +185,7 @@ func create_card_options() -> void:
 		var card: String = cards[i]
 		var label: Node = Label.new()
 		label.text = card
-		var number_input = SpinBox.new()
+		var number_input := SpinBox.new()
 		number_input.min_value = 0
 		number_input.set_meta("filename", card)
 		cards_selection_options.add_child(label)
