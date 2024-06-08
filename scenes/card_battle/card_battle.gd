@@ -4,10 +4,14 @@ extends Node
 
 #region Signals ##########################################################################################
 
+## Emitted whenever the player exits the card battle
+signal exit_card_battle(exit_status: EXIT_STATUS, player: Character)
 
 #endregion
 #region Enums ############################################################################################
 
+## Player's exit status of the card battle
+enum EXIT_STATUS {WIN, LOSE}
 
 #endregion
 #region Constants ########################################################################################
@@ -75,6 +79,7 @@ func _ready() -> void:
 #region Public methods ###################################################################################
 
 func start_battle() -> void:
+	$EndBattleCanvas.hide()
 	$PlayerSprite.texture = player.vocation.vocation_sprite
 	_update_player_health_label()
 	_update_player_defense_label()
@@ -139,10 +144,37 @@ func start_enemies_turn() -> void:
 #endregion
 #region Private methods ##################################################################################
 
+
+## Stops all processes and emits signal to exit card battle
+## The [param _exit_status] represents whether the player won or lost the card battle
+func _exit_card_battle(_exit_status: EXIT_STATUS) -> void:
+	get_tree().paused = true
+	player.remove_all_defense()
+
+	var end_battle_status_text := ""
+	match _exit_status:
+		EXIT_STATUS.WIN:
+			end_battle_status_text = "YOU WIN!"
+		EXIT_STATUS.LOSE:
+			end_battle_status_text = "YOU LOSE!"
+		_:
+			assert(false, "Encountered unsupported EXIT_STATUS %s" % _exit_status)
+
+	$EndBattleCanvas/EndBattleContainer/EndBattleStatus.text = end_battle_status_text
+	$EndBattleCanvas.show()
+
+	exit_card_battle.emit(_exit_status, player)
+
+
 ## Connects the player's emitted stats signals to the label updates
 func _connect_player_stats_signals() -> void:
+	player.health_depleted.connect(_on_player_death)
 	player.health_changed.connect(_update_player_health_label)
 	player.defense_changed.connect(_update_player_defense_label)
+
+
+func _on_player_death() -> void:
+	_exit_card_battle(EXIT_STATUS.LOSE)
 
 
 func _update_player_health_label(player_health: int = player._health) -> void:
