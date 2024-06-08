@@ -68,6 +68,7 @@ func reset_stamina(stamina: int) -> void:
 
 
 func add_card(card: Card) -> void:
+	card.card_released.connect(_on_card_released)
 	_cards.append(card)
 	add_child(card)
 	card.add_to_group(CARDS_IN_PLAYER_HAND)
@@ -86,6 +87,12 @@ func set_cards_clickable(clickable: bool) -> void:
 
 #endregion
 #region Private methods ##################################################################################
+
+func _on_card_released(card: Card) -> void:
+	# TODO: play card if overlapping with enemy
+	# TODO: play card if card outside of the player hand and applicable to player
+	card.return_to_pre_dragging_position()
+
 
 func _remove_card(card: Card) -> void:
 	_cards.erase(card)
