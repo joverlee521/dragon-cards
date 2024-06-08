@@ -163,6 +163,7 @@ func _exit_card_battle(_exit_status: EXIT_STATUS) -> void:
 	$EndBattleCanvas/EndBattleContainer/EndBattleStatus.text = end_battle_status_text
 	$EndBattleCanvas.show()
 
+	await get_tree().create_timer(1.0).timeout
 	exit_card_battle.emit(_exit_status, player)
 
 

@@ -26,6 +26,7 @@ const CARD_BATTLE_SCENE = preload("res://scenes/card_battle/card_battle.tscn")
 #region Private variables ##########################################################################
 
 var _start_screen: Node
+var _card_battle: Node
 
 #endregion
 #region @onready variables #########################################################################
@@ -57,9 +58,21 @@ func _ready() -> void:
 #region Private methods ############################################################################
 
 func _on_start_game_pressed() -> void:
+	print("START GAME")
 	remove_child(_start_screen)
-	var card_battle = CARD_BATTLE_SCENE.instantiate()
-	add_child(card_battle)
+	_card_battle = CARD_BATTLE_SCENE.instantiate()
+	_card_battle.exit_card_battle.connect(_on_exit_card_battle)
+	add_child(_card_battle)
+
+
+func _on_exit_card_battle(_exit_status: CardBattle.EXIT_STATUS, _player: Character) -> void:
+	remove_child(_card_battle)
+	_card_battle.queue_free()
+	get_tree().paused = false
+	# TODO: use _exit_status to determine which scene to switch to here
+	# TODO: pass _player to the next scene
+	add_child(_start_screen)
+
 
 #endregion
 #region Subclasses #################################################################################
