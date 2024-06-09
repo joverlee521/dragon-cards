@@ -88,6 +88,7 @@ func test_take_damage_ignoring_defense() -> void:
 	assert_int(character._health).is_equal(expected_health)
 
 
+@warning_ignore("unused_parameter")
 func test_calculate_damage(
 		base_attack:int,
 		damage_element: Weapon.DAMAGE_ELEMENT,
