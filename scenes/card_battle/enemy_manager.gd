@@ -1,5 +1,5 @@
 class_name EnemyManager
-extends PanelContainer
+extends Area2D
 ## Container for managing the [Enemy] scenes in the [CardBattle]
 
 #region Signals ##########################################################################################
@@ -44,9 +44,6 @@ const ENEMIES_IN_BATTLE: String = "enemies_in_battle"
 #endregion
 #region Optional _ready method ###########################################################################
 
-func _ready() -> void:
-	# Ignore mouse events here so the individual enemies can be clicked
-	mouse_filter = Control.MOUSE_FILTER_IGNORE
 
 #endregion
 #region Optional remaining built-in virtual methods ######################################################
@@ -64,9 +61,6 @@ func instantiate_enemies(enemies: Array[PackedScene]) -> void:
 		add_child(enemy)
 		enemy.add_to_group(ENEMIES_IN_BATTLE)
 		enemy.set_selected(false)
-		if i == 0:
-			enemy.set_selected(true)
-		enemy.enemy_clicked.connect(_on_enemy_clicked)
 		enemy.enemy_died.connect(_on_enemy_died)
 		enemy.pick_next_card()
 
@@ -79,13 +73,14 @@ func get_all_enemies_as_card_targets() -> Array[CardAttributes.CardTarget]:
 	return _as_card_targets_array(get_all_enemies().map(_get_enemy_card_target))
 
 
-func get_selected_enemy() -> Enemy:
-	var selected_enemies: Array[Enemy] = _as_enemy_array(
-		get_all_enemies().filter(func (enemy: Enemy) -> bool: return enemy.is_selected())
-	)
+func get_selected_enemies() -> Array:
+	return get_all_enemies().filter(
+		func (enemy: Enemy) -> bool: return enemy.is_selected())
 
-	assert(selected_enemies.size() == 1, "There should only be one selected enemy")
-	return selected_enemies[0]
+
+func get_first_selected_enemy_as_card_target() -> CardAttributes.CardTarget:
+	print(get_selected_enemies())
+	return _get_enemy_card_target(get_selected_enemies()[0])
 
 
 func get_all_other_enemies(excluded_enemy: Enemy) -> Array[Enemy]:
@@ -101,11 +96,6 @@ func get_all_other_enemies_as_card_targets(excluded_enemy: Enemy) -> Array[CardA
 
 #endregion
 #region Private methods ##################################################################################
-
-func _on_enemy_clicked(clicked_enemy: Enemy) -> void:
-	for enemy in get_all_enemies():
-		if enemy != clicked_enemy:
-			enemy.set_selected(false)
 
 
 func _on_enemy_died(dead_enemy: Enemy) -> void:
@@ -135,6 +125,17 @@ func _as_card_targets_array(input: Array) -> Array[CardAttributes.CardTarget]:
 	var targets: Array[CardAttributes.CardTarget] = []
 	targets.assign(input)
 	return targets
+
+
+func _on_area_entered(area: Area2D) -> void:
+	if area.name == Card.CARD_DRAGGING_AREA:
+		if area.get_parent().is_group_opposer_target_type():
+			get_tree().call_group(ENEMIES_IN_BATTLE, "set_selected", true)
+
+
+func _on_area_exited(area: Area2D) -> void:
+	if area.name == Card.CARD_DRAGGING_AREA:
+		get_tree().call_group(ENEMIES_IN_BATTLE, "set_selected", false)
 
 #endregion
 #region Subclasses #######################################################################################

@@ -4,10 +4,11 @@ extends PanelContainer
 
 #region Signals ##########################################################################################
 
+## Emitted when a [Card] is dragged and dropped
+signal drag_and_dropped_card(card: Card)
+
 ## Emitted whenever the [member PlayerHand._current_stamina] changes in value
 signal stamina_changed(new_value: int)
-## Emitted whenever [Card] selection changes with boolean of whether selected card is playable
-signal card_selection_changed(selected_card_playable: bool)
 
 #endregion
 #region Enums ############################################################################################
@@ -70,87 +71,55 @@ func reset_stamina(stamina: int) -> void:
 
 
 func add_card(card: Card) -> void:
-	# Signal connection to prevent selecting more cards than the MAX_SELECTED
-	card.card_clicked.connect(_on_card_clicked)
+	card.card_released.connect(_on_card_released)
 	_cards.append(card)
 	add_child(card)
 	card.add_to_group(CARDS_IN_PLAYER_HAND)
 	_position_all_cards()
 
 
-func play_selected_card() -> Card:
-	set_cards_clickable(false)
-	var selected_cards: Array[Card] = _get_selected_card()
-	assert(selected_cards.size() == 1, "Unable to play because no cards are selected")
-
-	var selected_card: Card = selected_cards[0]
-	var stamina_cost: int = selected_card.get_stamina_cost()
-	assert(stamina_cost <= _stamina, "Unable to play selected card because the stamina cost is greater than the player's remaining stamina")
-
-	_stamina -= stamina_cost
-	_remove_card(selected_card)
-	_position_all_cards()
-	card_selection_changed.emit(false)
-	return selected_card
-
-
 func discard_all_cards() -> Array[Card]:
 	var discarded_cards: Array[Card] = _cards.duplicate(true)
 	discarded_cards.map(_remove_card)
 	_cards = []
-	card_selection_changed.emit(false)
 	return discarded_cards
 
 
 func set_cards_clickable(clickable: bool) -> void:
-	get_tree().call_group(CARDS_IN_PLAYER_HAND, "set_clickable", clickable)
+	for card in _cards:
+		# Always deactivate cards that cost more than the available stamina
+		if card.get_stamina_cost() > _stamina:
+			card.set_clickable(false)
+		else:
+			card.set_clickable(clickable)
+
+
+func play_card(card: Card) -> void:
+	set_cards_clickable(false)
+	var stamina_cost: int = card.get_stamina_cost()
+	assert(stamina_cost <= _stamina, "Unable to play card with higher stamina cost than remaining stamina")
+	_stamina -= stamina_cost
+
+	_remove_card(card, [get_parent()])
+	_position_all_cards()
+	set_cards_clickable(true)
+
+
+func reposition_all_cards() -> void:
+	_position_all_cards()
+
 
 #endregion
 #region Private methods ##################################################################################
 
-## Returns selected card, using Array[Card] because there's no optional return types
-func _get_selected_card() -> Array[Card]:
-	var selected_cards: Array[Card] = []
-	for card in get_tree().get_nodes_in_group(CARDS_IN_PLAYER_HAND):
-		if card.is_selected():
-			selected_cards.append(card)
-
-	assert(selected_cards.size() <= 1, "Only one card can be selected in PlayerHand")
-	return selected_cards
-
-
-func _remove_card(card: Card) -> void:
-	_cards.erase(card)
-	card.remove_from_group(CARDS_IN_PLAYER_HAND)
-	remove_child(card)
-
-
-## Checks for selected cards and prevents selecting additional
-## cards if the number of selected cards is equal to [member PlayerHand.MAX_SELECTED]
-func _on_card_clicked(clicked_card: Card) -> void:
-	for card in get_tree().get_nodes_in_group(CARDS_IN_PLAYER_HAND):
-		if card == clicked_card:
-			continue
-
-		if clicked_card.is_selected():
-			card.set_selected(false)
-			card.set_clickable(false)
-		else:
-			card.set_clickable(true)
-
-	_position_all_cards()
-	card_selection_changed.emit(_determine_selected_card_playable())
-
-
-func _determine_selected_card_playable() -> bool:
-	var selected_cards: Array[Card] = _get_selected_card()
-	var one_card_selected: bool = selected_cards.size() == 1
-	var stamina_cost_less_than_player_stamina: bool = false
-
-	if one_card_selected:
-		stamina_cost_less_than_player_stamina = selected_cards[0].get_stamina_cost() <= _stamina
-
-	return one_card_selected and stamina_cost_less_than_player_stamina
+func _on_card_released(card: Card) -> void:
+	var released_position = card.get_dragging_area_position()
+	var player_hand_rect = get_global_rect()
+	# Do not emit card if released within the PlayerHand
+	if player_hand_rect.has_point(released_position):
+		_position_all_cards()
+	else:
+		drag_and_dropped_card.emit(card)
 
 
 ## Position all [member PlayerHand._cards] within the container
@@ -164,13 +133,18 @@ func _position_all_cards() -> void:
 ## Position a single [param card] within the container
 func _position_card(card: Card, card_order: int) -> void:
 	var card_x: int = card_order * _card_spacing
-
 	var current_card_y: int = _card_y
-	if card.is_selected():
-		current_card_y -= 50
-
 	card.position = Vector2(card_x, current_card_y)
 	card.z_index = card_order
+
+
+func _remove_card(card: Card, new_parent: Array = []) -> void:
+	_cards.erase(card)
+	card.remove_from_group(CARDS_IN_PLAYER_HAND)
+	if new_parent.size() == 1:
+		card.reparent(new_parent[0])
+	else:
+		remove_child(card)
 
 
 func _set_stamina(value: int) -> void:

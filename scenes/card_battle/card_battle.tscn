@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://biq1mfvftv7wn"]
+[gd_scene load_steps=18 format=3 uid="uid://biq1mfvftv7wn"]
 
 [ext_resource type="Script" path="res://scenes/card_battle/card_battle.gd" id="1_eqlf3"]
 [ext_resource type="Script" path="res://resources/characters/character.gd" id="2_1gnlo"]
@@ -28,6 +28,9 @@ border_width_right = 1
 border_width_bottom = 1
 border_color = Color(0.113725, 0, 0.0470588, 1)
 border_blend = true
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_a42uu"]
+size = Vector2(1196.5, 482)
 
 [node name="CardBattle" type="Node"]
 script = ExtResource("1_eqlf3")
@@ -84,19 +87,13 @@ text = "0"
 vertical_alignment = 1
 
 [node name="PlayerControls" type="HBoxContainer" parent="."]
-offset_left = 760.0
+offset_left = 1520.0
 offset_top = 608.0
-offset_right = 1145.0
+offset_right = 1905.0
 offset_bottom = 685.0
 theme_override_constants/separation = 100
-alignment = 1
+alignment = 2
 metadata/_edit_group_ = true
-
-[node name="PlayCard" type="Button" parent="PlayerControls"]
-layout_mode = 2
-size_flags_horizontal = 3
-theme_override_font_sizes/font_size = 35
-text = "Play"
 
 [node name="EndTurn" type="Button" parent="PlayerControls"]
 layout_mode = 2
@@ -130,27 +127,30 @@ script = ExtResource("5_dcxec")
 [node name="PlayedCard" type="Marker2D" parent="."]
 position = Vector2(448, 256)
 
-[node name="EnemyManager" type="PanelContainer" parent="."]
-offset_left = 640.0
-offset_top = 32.0
-offset_right = 1880.0
-offset_bottom = 576.0
+[node name="EnemyManager" type="Area2D" parent="."]
+position = Vector2(1296, 272)
 script = ExtResource("15_nb8t6")
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="EnemyManager"]
+shape = SubResource("RectangleShape2D_a42uu")
+debug_color = Color(0, 0.619608, 0.721569, 0.419608)
 
 [node name="Enemy0" type="Marker2D" parent="EnemyManager"]
-position = Vector2(192, 352)
+position = Vector2(-360, 96)
 
 [node name="Enemy1" type="Marker2D" parent="EnemyManager"]
-position = Vector2(608, 160)
+position = Vector2(0, -136)
 
 [node name="Enemy2" type="Marker2D" parent="EnemyManager"]
-position = Vector2(1024, 344)
+position = Vector2(372, 112)
 
 [node name="PlayerSprite" type="Sprite2D" parent="."]
 position = Vector2(152, 280)
 scale = Vector2(3.90984, 4.36207)
 
 [node name="EndBattleCanvas" type="CanvasLayer" parent="."]
+visible = false
 
 [node name="EndBattleContainer" type="CenterContainer" parent="EndBattleCanvas"]
 anchors_preset = 15
@@ -171,8 +171,9 @@ text = "End Card Battle Status"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[connection signal="pressed" from="PlayerControls/PlayCard" to="." method="_on_play_card_pressed"]
 [connection signal="pressed" from="PlayerControls/EndTurn" to="." method="_on_end_turn_pressed"]
-[connection signal="card_selection_changed" from="PlayerHand" to="." method="_player_hand_card_selection_changed"]
+[connection signal="drag_and_dropped_card" from="PlayerHand" to="." method="_on_dragged_and_dropped_card"]
 [connection signal="stamina_changed" from="PlayerHand" to="." method="_update_player_stamina_label"]
 [connection signal="all_enemies_defeated" from="EnemyManager" to="." method="_on_all_enemies_defeated"]
+[connection signal="area_entered" from="EnemyManager" to="EnemyManager" method="_on_area_entered"]
+[connection signal="area_exited" from="EnemyManager" to="EnemyManager" method="_on_area_exited"]

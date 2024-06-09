@@ -101,9 +101,9 @@ func start_player_turn() -> void:
 		# TODO: Add display for skipping player's turn
 		start_enemies_turn()
 		return
-	$PlayerControls/PlayCard.disabled = true
 	$PlayerHand.reset_stamina(player.vocation.max_stamina)
 	await deal_cards(player.vocation.max_hand_size)
+	$PlayerHand.set_cards_clickable(true)
 	$PlayerControls/EndTurn.disabled = false
 
 
@@ -116,6 +116,7 @@ func deal_cards(num: int) -> void:
 		var card_attributes: CardAttributes = $PlayDeck.remove_card()
 		var new_card: Card = card_scene.instantiate()
 		new_card.card_attributes = card_attributes
+		new_card.set_clickable(false)
 		$PlayerHand.add_card(new_card)
 		# TODO: Replace timer with animations
 		await get_tree().create_timer(DEAL_CARD_DELAY).timeout
@@ -135,7 +136,6 @@ func refresh_play_deck_from_discard() -> void:
 
 
 func start_enemies_turn() -> void:
-	$PlayerControls/PlayCard.disabled = true
 	$PlayerControls/EndTurn.disabled = true
 	$PlayerHand.set_cards_clickable(false)
 
@@ -197,25 +197,26 @@ func _update_player_stamina_label(player_stamina: int = player.vocation.max_stam
 	$PlayerStats/Stamina.text = "%s / %s" % [str(player_stamina), str(player.vocation.max_stamina)]
 
 
-func _player_hand_card_selection_changed(selected_cards_playable: bool) -> void:
-	$PlayerControls/PlayCard.disabled = !selected_cards_playable
+func _on_dragged_and_dropped_card(card: Card) -> void:
+	$PlayerControls/EndTurn.disabled = true
+
+	var card_affectee_type = card.get_affectee_type()
+	var selected_enemies: Array[Enemy] = $EnemyManager.get_selected_enemies()
+	if card_affectee_type == CardAttributes.AFFECTEE_TYPE.OWNER_ONLY or selected_enemies.size() > 0:
+		$PlayerHand.play_card(card)
+		await _play_card(card, _create_player_owner_card_affectees(card_affectee_type))
+		discard_card(card)
+	else:
+		$PlayerHand.reposition_all_cards()
+
+	$PlayerControls/EndTurn.disabled = false
 
 
 func _play_card(card: Card, card_affectees: CardAttributes.CardAffectees) -> void:
 	var card_env := CardAttributes.CardEnvironment.new($PlayDeck, $DiscardDeck)
-	add_child(card)
 	card.position = $PlayedCard.position
 	card.play(card_affectees, card_env)
 	await card.run_scale_animation(PLAYED_CARD_SCALE, PLAYED_CARD_DELAY)
-
-
-func _on_play_card_pressed() -> void:
-	$PlayerControls/EndTurn.disabled = true
-	var card: Card = $PlayerHand.play_selected_card()
-	await _play_card(card, _create_player_owner_card_affectees())
-	discard_card(card)
-	$PlayerHand.set_cards_clickable(true)
-	$PlayerControls/EndTurn.disabled = false
 
 
 func _on_end_turn_pressed() -> void:
@@ -230,24 +231,31 @@ func _play_enemy_card(enemy: Enemy) -> void:
 	var card_attributes: CardAttributes = enemy.get_next_card()
 	card.card_attributes = card_attributes
 	card.set_clickable(false)
+	add_child(card)
 	await _play_card(card, _create_enemy_owner_card_affectees(enemy))
 	card.queue_free()
 
 
-func _create_player_owner_card_affectees() -> CardAttributes.CardAffectees:
+func _create_player_owner_card_affectees(card_affectee_type: int) -> CardAttributes.CardAffectees:
 	var card_owner:= CardAttributes.CardTarget.new(player, $PlayerSprite.global_position)
 	var owner_team: Array[CardAttributes.CardTarget] = []
 
-	var selected_enemy: Enemy = $EnemyManager.get_selected_enemy()
-	var opposer: = selected_enemy.create_card_target()
-	var opposer_team: Array[CardAttributes.CardTarget] = $EnemyManager.get_all_other_enemies_as_card_targets(selected_enemy)
+	var opposer: CardAttributes.CardTarget
+	var opposer_team: Array[CardAttributes.CardTarget]
+	var selected_enemy: Enemy
+	if card_affectee_type != CardAttributes.AFFECTEE_TYPE.OWNER_ONLY:
+		selected_enemy = $EnemyManager.get_selected_enemies()[0]
+	else:
+		selected_enemy = $EnemyManager.get_all_enemies()[0]
+
+	opposer = selected_enemy.create_card_target()
+	opposer_team = $EnemyManager.get_all_other_enemies_as_card_targets(selected_enemy)
 	return CardAttributes.CardAffectees.new(card_owner, owner_team, opposer, opposer_team)
 
 
 func _create_enemy_owner_card_affectees(enemy_owner: Enemy) -> CardAttributes.CardAffectees:
 	var card_owner := enemy_owner.create_card_target()
 	var owner_team: Array[CardAttributes.CardTarget] = $EnemyManager.get_all_other_enemies_as_card_targets(enemy_owner)
-
 	var opposer: = CardAttributes.CardTarget.new(player, $PlayerSprite.global_position)
 	var opposer_team: Array[CardAttributes.CardTarget] = []
 	return CardAttributes.CardAffectees.new(card_owner, owner_team, opposer, opposer_team)

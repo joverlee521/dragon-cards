@@ -5,9 +5,6 @@ extends Area2D
 
 #region Signals ##########################################################################################
 
-## Emitted when [Enemy] is clicked
-signal enemy_clicked(enemy: Enemy)
-
 ## Emitted when [Enemy] dies
 signal enemy_died(enemy: Enemy)
 
@@ -39,8 +36,6 @@ var _next_card_attribute: CardAttributes:
 var _selected: bool = false:
 	set = _set_selected
 
-var _mouse_entered_enemy: bool = false
-
 #endregion
 #region @onready variables ###############################################################################
 
@@ -63,21 +58,12 @@ func _ready() -> void:
 	_update_health_label()
 	_update_defense_label()
 	$Sprite/SelectionBorder.hide()
+	area_entered.connect(_on_area_entered)
+	area_exited.connect(_on_area_exited)
 
 #endregion
 #region Optional remaining built-in virtual methods ######################################################
 
-func _unhandled_input(event: InputEvent) -> void:
-	# Custom handler for input to work around overlapping Area2D objects both getting input
-	# See https://github.com/godotengine/godot/issues/29825
-	# Resolved in https://github.com/godotengine/godot/pull/75688
-	# which was released in Godot v4.3
-	if (event.is_action_pressed("mouse_left_click")
-	and _mouse_entered_enemy):
-		_selected = true
-		enemy_clicked.emit(self)
-
-		self.get_viewport().set_input_as_handled()
 
 #endregion
 #region Public methods ###################################################################################
@@ -144,12 +130,18 @@ func _set_selected(value: bool) -> void:
 	$Sprite/SelectionBorder.visible = _selected
 
 
-func _on_mouse_entered() -> void:
-	_mouse_entered_enemy = true
+func _on_area_entered(area: Area2D) -> void:
+	# We only care about individual card targets here because the EnemyManager will
+	# manage selection of multiple enemies
+	if area.name == Card.CARD_DRAGGING_AREA and not area.get_parent().is_group_opposer_target_type():
+		set_selected(true)
 
 
-func _on_mouse_exited() -> void:
-	_mouse_entered_enemy = false
+func _on_area_exited(area: Area2D) -> void:
+	# We only care about individual card targets here because the EnemyManager will
+	# manage selection of multiple enemies
+	if area.name == Card.CARD_DRAGGING_AREA and not area.get_parent().is_group_opposer_target_type():
+		set_selected(false)
 
 #endregion
 #region Subclasses ###################################################################

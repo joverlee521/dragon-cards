@@ -4,8 +4,8 @@ extends Area2D
 
 #region Signals ##########################################################################################
 
-## Emitted when the card is clicked
-signal card_clicked(card: Card)
+## Emitted when the card is released after dragging
+signal card_released(card: Card)
 
 #endregion
 #region Enums ############################################################################################
@@ -14,6 +14,8 @@ signal card_clicked(card: Card)
 #endregion
 #region Constants ########################################################################################
 
+## Name of the Area2D for dragging detectiono
+const CARD_DRAGGING_AREA = "CardDraggingArea"
 ## Minimum label font size
 const MIN_LABEL_FONT_SIZE = 10
 ## Maximum label font size
@@ -32,13 +34,13 @@ const MAX_LABEL_FONT_SIZE = 350
 #endregion
 #region Private variables ################################################################################
 
-var _selected: bool = false
 var _clickable: bool = true
 # Custom handler for input to work around overlapping Area2D objects both getting input
 # See https://github.com/godotengine/godot/issues/29825
 # Resolved in https://github.com/godotengine/godot/pull/75688
 # which was released in Godot v4.3
 var _mouse_entered_card: bool = false
+var _dragging: bool = false
 
 #endregion
 #region @onready variables ###############################################################################
@@ -60,6 +62,7 @@ func _init(i_card_attributes: CardAttributes = CardAttributes.new()) -> void:
 
 func _ready() -> void:
 	$CardAnimationLayer/CardAnimation.hide()
+	get_node(CARD_DRAGGING_AREA).hide()
 	card_attributes.triggered_animation.connect(_on_triggered_animation)
 	_set_card_background_textures()
 	# TODO: Remove because this slows down the card scene instantiation SIGNIFICANTLY!
@@ -68,36 +71,53 @@ func _ready() -> void:
 #endregion
 #region Optional remaining built-in virtual methods ######################################################
 
+func _process(_delta:float) -> void:
+	if _dragging:
+		var mouse_position := get_viewport().get_mouse_position()
+		get_node(CARD_DRAGGING_AREA).global_position = Vector2(mouse_position.x, mouse_position.y)
+
+
 func _unhandled_input(event: InputEvent) -> void:
+	const CARD_SHIFT := 50
 	# Custom handler for input to work around overlapping Area2D objects both getting input
 	# See https://github.com/godotengine/godot/issues/29825
 	# Resolved in https://github.com/godotengine/godot/pull/75688
 	# which was released in Godot v4.3
-	if (
-		event.is_action_pressed("mouse_left_click")
-		and _mouse_entered_card
-		and _clickable
-	):
-		_toggle_selected()
+	if _mouse_entered_card and _clickable and event.is_action_pressed("mouse_left_click"):
+		_dragging = true
+		self.position.y -= CARD_SHIFT
+		get_node(CARD_DRAGGING_AREA).show()
 		get_viewport().set_input_as_handled()
+	elif _dragging and event.is_action_released("mouse_left_click"):
+		_dragging = false
+		self.position.y += CARD_SHIFT
+		get_node(CARD_DRAGGING_AREA).hide()
+		get_viewport().set_input_as_handled()
+		card_released.emit(self)
+
 
 #endregion
 #region Public methods ###################################################################################
 
-func is_selected() -> bool:
-	return _selected
+
+func get_affectee_type() -> int:
+	return card_attributes.affectee_type
 
 
 func get_stamina_cost() -> int:
 	return card_attributes.stamina_cost
 
 
-func set_selected(selected: bool) -> void:
-	_selected = selected
-
-
 func set_clickable(clickable: bool) -> void:
 	_clickable = clickable
+
+
+func is_group_opposer_target_type() -> bool:
+	return card_attributes.opposer_target_type == CardAttributes.TARGET_TYPE.GROUP
+
+
+func get_dragging_area_position() -> Vector2:
+	return get_node(CARD_DRAGGING_AREA).global_position
 
 
 ## Run the scale animation to change the [member Card.scale] to the [param new_scale]
@@ -129,11 +149,6 @@ func _on_triggered_animation(animation_name: String, animation_position: Vector2
 	await card_animation.animation_finished
 	$CardAnimationLayer.remove_child(card_animation)
 	card_animation.queue_free()
-
-
-func _toggle_selected() -> void:
-	_selected = !_selected
-	card_clicked.emit(self)
 
 
 func _set_card_background_textures() -> void:
