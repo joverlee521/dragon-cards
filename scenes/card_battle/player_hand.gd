@@ -86,7 +86,12 @@ func discard_all_cards() -> Array[Card]:
 
 
 func set_cards_clickable(clickable: bool) -> void:
-	get_tree().call_group(CARDS_IN_PLAYER_HAND, "set_clickable", clickable)
+	for card in _cards:
+		# Always deactivate cards that cost more than the available stamina
+		if card.get_stamina_cost() > _stamina:
+			card.set_clickable(false)
+		else:
+			card.set_clickable(clickable)
 
 
 func play_card(card: Card) -> void:
