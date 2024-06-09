@@ -14,6 +14,8 @@ signal card_released(card: Card)
 #endregion
 #region Constants ########################################################################################
 
+## Name of the Area2D for dragging detectiono
+const CARD_DRAGGING_AREA = "CardDraggingArea"
 ## Minimum label font size
 const MIN_LABEL_FONT_SIZE = 10
 ## Maximum label font size
@@ -61,6 +63,7 @@ func _init(i_card_attributes: CardAttributes = CardAttributes.new()) -> void:
 
 func _ready() -> void:
 	$CardAnimationLayer/CardAnimation.hide()
+	get_node(CARD_DRAGGING_AREA).hide()
 	card_attributes.triggered_animation.connect(_on_triggered_animation)
 	_set_card_background_textures()
 	# TODO: Remove because this slows down the card scene instantiation SIGNIFICANTLY!
@@ -72,22 +75,26 @@ func _ready() -> void:
 func _process(_delta:float) -> void:
 	if _dragging:
 		var mouse_position := get_viewport().get_mouse_position()
-		self.global_position = Vector2(mouse_position.x, mouse_position.y)
+		get_node(CARD_DRAGGING_AREA).global_position = Vector2(mouse_position.x, mouse_position.y)
 
 
 func _unhandled_input(event: InputEvent) -> void:
+	const CARD_SHIFT := 50
 	# Custom handler for input to work around overlapping Area2D objects both getting input
 	# See https://github.com/godotengine/godot/issues/29825
 	# Resolved in https://github.com/godotengine/godot/pull/75688
 	# which was released in Godot v4.3
-	if _mouse_entered_card and _clickable:
-		if event.is_action_pressed("mouse_left_click"):
-			_pre_dragging_position = self.global_position
-			_dragging = true
-		elif event.is_action_released("mouse_left_click"):
-			_dragging = false
-			card_released.emit(self)
-
+	if _mouse_entered_card and _clickable and event.is_action_pressed("mouse_left_click"):
+		_pre_dragging_position = self.global_position
+		_dragging = true
+		self.position.y -= CARD_SHIFT
+		get_node(CARD_DRAGGING_AREA).show()
+		get_viewport().set_input_as_handled()
+	elif _dragging and event.is_action_released("mouse_left_click"):
+		_dragging = false
+		self.position.y += CARD_SHIFT
+		get_node(CARD_DRAGGING_AREA).hide()
+		card_released.emit(self)
 		get_viewport().set_input_as_handled()
 
 
@@ -109,6 +116,7 @@ func return_to_pre_dragging_position() -> void:
 
 func is_group_opposer_target_type() -> bool:
 	return card_attributes.opposer_target_type == CardAttributes.TARGET_TYPE.GROUP
+
 
 
 ## Run the scale animation to change the [member Card.scale] to the [param new_scale]
