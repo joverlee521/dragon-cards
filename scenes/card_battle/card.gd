@@ -107,6 +107,10 @@ func return_to_pre_dragging_position() -> void:
 	self.global_position = _pre_dragging_position
 
 
+func is_group_opposer_target_type() -> bool:
+	return card_attributes.opposer_target_type == CardAttributes.TARGET_TYPE.GROUP
+
+
 ## Run the scale animation to change the [member Card.scale] to the [param new_scale]
 ## over a set [param duration] (seconds) with an optional [param delay] (seconds)
 ## Use `await` to wait for the animation to complete

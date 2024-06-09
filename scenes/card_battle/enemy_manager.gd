@@ -125,6 +125,17 @@ func _as_card_targets_array(input: Array) -> Array[CardAttributes.CardTarget]:
 	targets.assign(input)
 	return targets
 
+
+func _on_area_entered(area: Area2D) -> void:
+	if area is Card:
+		if area.is_group_opposer_target_type():
+			get_tree().call_group(ENEMIES_IN_BATTLE, "set_selected", true)
+
+
+func _on_area_exited(area: Area2D) -> void:
+	if area is Card:
+		get_tree().call_group(ENEMIES_IN_BATTLE, "set_selected", false)
+
 #endregion
 #region Subclasses #######################################################################################
 
