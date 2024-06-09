@@ -36,8 +36,6 @@ var _next_card_attribute: CardAttributes:
 var _selected: bool = false:
 	set = _set_selected
 
-var _mouse_entered_enemy: bool = false
-
 #endregion
 #region @onready variables ###############################################################################
 
@@ -60,6 +58,8 @@ func _ready() -> void:
 	_update_health_label()
 	_update_defense_label()
 	$Sprite/SelectionBorder.hide()
+	area_entered.connect(_on_area_entered)
+	area_exited.connect(_on_area_exited)
 
 #endregion
 #region Optional remaining built-in virtual methods ######################################################
@@ -130,12 +130,18 @@ func _set_selected(value: bool) -> void:
 	$Sprite/SelectionBorder.visible = _selected
 
 
-func _on_mouse_entered() -> void:
-	_mouse_entered_enemy = true
+func _on_area_entered(area: Area2D) -> void:
+	# We only care about individual card targets here because the EnemyManager will
+	# manage selection of multiple enemies
+	if area.name == Card.CARD_DRAGGING_AREA and not area.get_parent().is_group_opposer_target_type():
+		set_selected(true)
 
 
-func _on_mouse_exited() -> void:
-	_mouse_entered_enemy = false
+func _on_area_exited(area: Area2D) -> void:
+	# We only care about individual card targets here because the EnemyManager will
+	# manage selection of multiple enemies
+	if area.name == Card.CARD_DRAGGING_AREA and not area.get_parent().is_group_opposer_target_type():
+		set_selected(false)
 
 #endregion
 #region Subclasses ###################################################################

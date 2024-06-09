@@ -127,13 +127,13 @@ func _as_card_targets_array(input: Array) -> Array[CardAttributes.CardTarget]:
 
 
 func _on_area_entered(area: Area2D) -> void:
-	if area is Card:
-		if area.is_group_opposer_target_type():
+	if area.name == Card.CARD_DRAGGING_AREA:
+		if area.get_parent().is_group_opposer_target_type():
 			get_tree().call_group(ENEMIES_IN_BATTLE, "set_selected", true)
 
 
 func _on_area_exited(area: Area2D) -> void:
-	if area is Card:
+	if area.name == Card.CARD_DRAGGING_AREA:
 		get_tree().call_group(ENEMIES_IN_BATTLE, "set_selected", false)
 
 #endregion
