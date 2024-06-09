@@ -9,6 +9,7 @@ export_presets.cfg
 
 # Godot plugin ignores
 addons/resources_spreadsheet_view/saved_state.json
+addons/gdUnit4/GdUnitRunner.cfg
 
 # Imported translations (automatically generated from CSV files)
 *.translation
