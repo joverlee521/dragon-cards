@@ -5,9 +5,6 @@ extends Area2D
 
 #region Signals ##########################################################################################
 
-## Emitted when [Enemy] is clicked
-signal enemy_clicked(enemy: Enemy)
-
 ## Emitted when [Enemy] dies
 signal enemy_died(enemy: Enemy)
 
@@ -67,17 +64,6 @@ func _ready() -> void:
 #endregion
 #region Optional remaining built-in virtual methods ######################################################
 
-func _unhandled_input(event: InputEvent) -> void:
-	# Custom handler for input to work around overlapping Area2D objects both getting input
-	# See https://github.com/godotengine/godot/issues/29825
-	# Resolved in https://github.com/godotengine/godot/pull/75688
-	# which was released in Godot v4.3
-	if (event.is_action_pressed("mouse_left_click")
-	and _mouse_entered_enemy):
-		_selected = true
-		enemy_clicked.emit(self)
-
-		self.get_viewport().set_input_as_handled()
 
 #endregion
 #region Public methods ###################################################################################
