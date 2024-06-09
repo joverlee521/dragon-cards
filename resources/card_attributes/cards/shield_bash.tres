@@ -38,6 +38,7 @@ card_art = SubResource("AtlasTexture_deh3j")
 card_description_plate = SubResource("AtlasTexture_hbvu6")
 card_name_plate = SubResource("AtlasTexture_torsk")
 card_description = "If this kills a monster gain 5 defense"
+affectee_type = 3
 owner_target_type = 0
 opposer_target_type = 0
 attack = 3

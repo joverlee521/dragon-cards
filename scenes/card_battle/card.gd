@@ -102,6 +102,10 @@ func _unhandled_input(event: InputEvent) -> void:
 #region Public methods ###################################################################################
 
 
+func get_affectee_type() -> int:
+	return card_attributes.affectee_type
+
+
 func get_stamina_cost() -> int:
 	return card_attributes.stamina_cost
 
