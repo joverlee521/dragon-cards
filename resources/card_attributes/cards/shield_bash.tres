@@ -46,5 +46,5 @@ defense = 5
 stamina_cost = 2
 damage_type = 2
 damage_element = 0
-status_effects_on_card_player = Array[Resource("res://resources/card_attributes/status_effect.gd")]([])
-status_effects_on_card_target = Array[Resource("res://resources/card_attributes/status_effect.gd")]([])
+status_effects_on_owner = Array[Resource("res://resources/card_attributes/status_effect.gd")]([])
+status_effects_on_opposer = Array[Resource("res://resources/card_attributes/status_effect.gd")]([])
