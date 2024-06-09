@@ -41,7 +41,6 @@ var _clickable: bool = true
 # which was released in Godot v4.3
 var _mouse_entered_card: bool = false
 var _dragging: bool = false
-var _pre_dragging_position: Vector2
 
 #endregion
 #region @onready variables ###############################################################################
@@ -85,7 +84,6 @@ func _unhandled_input(event: InputEvent) -> void:
 	# Resolved in https://github.com/godotengine/godot/pull/75688
 	# which was released in Godot v4.3
 	if _mouse_entered_card and _clickable and event.is_action_pressed("mouse_left_click"):
-		_pre_dragging_position = self.global_position
 		_dragging = true
 		self.position.y -= CARD_SHIFT
 		get_node(CARD_DRAGGING_AREA).show()
@@ -117,6 +115,9 @@ func set_clickable(clickable: bool) -> void:
 func is_group_opposer_target_type() -> bool:
 	return card_attributes.opposer_target_type == CardAttributes.TARGET_TYPE.GROUP
 
+
+func get_dragging_area_position() -> Vector2:
+	return get_node(CARD_DRAGGING_AREA).global_position
 
 
 ## Run the scale animation to change the [member Card.scale] to the [param new_scale]

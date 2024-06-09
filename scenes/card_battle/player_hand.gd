@@ -113,7 +113,13 @@ func reposition_all_cards() -> void:
 #region Private methods ##################################################################################
 
 func _on_card_released(card: Card) -> void:
-	drag_and_dropped_card.emit(card)
+	var released_position = card.get_dragging_area_position()
+	var player_hand_rect = get_global_rect()
+	# Do not emit card if released within the PlayerHand
+	if player_hand_rect.has_point(released_position):
+		_position_all_cards()
+	else:
+		drag_and_dropped_card.emit(card)
 
 
 ## Position all [member PlayerHand._cards] within the container
