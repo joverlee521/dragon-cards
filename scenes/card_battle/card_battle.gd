@@ -200,7 +200,7 @@ func _update_player_stamina_label(player_stamina: int = player.vocation.max_stam
 func _on_dragged_and_dropped_card(card: Card) -> void:
 	$PlayerControls/EndTurn.disabled = true
 
-	var card_affectee_type = card.get_affectee_type()
+	var card_affectee_type: int = card.get_affectee_type()
 	var selected_enemies: Array[Enemy] = $EnemyManager.get_selected_enemies()
 	if card_affectee_type == CardAttributes.AFFECTEE_TYPE.OWNER_ONLY or selected_enemies.size() > 0:
 		$PlayerHand.play_card(card)
