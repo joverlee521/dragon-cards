@@ -1,16 +1,7 @@
-[gd_scene load_steps=10 format=3 uid="uid://dvxykdt47uuju"]
+[gd_scene load_steps=5 format=3 uid="uid://dvxykdt47uuju"]
 
 [ext_resource type="Script" path="res://scenes/enemies/enemy.gd" id="1_0813v"]
-[ext_resource type="Resource" uid="uid://chi4gyal36j7o" path="res://resources/card_attributes/cards/slash.tres" id="2_0dac2"]
 [ext_resource type="Texture2D" uid="uid://cp1s7swi0ovc3" path="res://art/PixelCardArt/CardRPGPack/Card RPG Monsters/goblin_5.png" id="2_ox7bp"]
-[ext_resource type="Resource" uid="uid://di8t8yb5syu3a" path="res://resources/card_attributes/cards/defend.tres" id="3_fkici"]
-[ext_resource type="Script" path="res://resources/characters/character.gd" id="4_br4xl"]
-[ext_resource type="Resource" uid="uid://dvdg0ofo26io0" path="res://resources/characters/vocations/enemy_vocations/goblin.tres" id="5_5jw36"]
-
-[sub_resource type="Resource" id="Resource_vk83f"]
-script = ExtResource("4_br4xl")
-vocation = ExtResource("5_5jw36")
-cards = Array[Resource("res://resources/card_attributes/card_attributes.gd")]([ExtResource("2_0dac2"), ExtResource("3_fkici"), ExtResource("2_0dac2"), ExtResource("3_fkici")])
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8xdh1"]
 resource_local_to_scene = true
@@ -24,7 +15,6 @@ region = Rect2(0, 0, 48.1013, 54.5189)
 [node name="Enemy" type="Area2D"]
 position = Vector2(392, 264)
 script = ExtResource("1_0813v")
-character = SubResource("Resource_vk83f")
 metadata/_edit_group_ = true
 
 [node name="CollisionShape" type="CollisionShape2D" parent="."]
@@ -70,3 +60,7 @@ offset_left = 56.0
 offset_top = -136.0
 offset_right = 96.0
 offset_bottom = -113.0
+
+[node name="StatusEffectsLabel" type="Label" parent="."]
+offset_right = 40.0
+offset_bottom = 23.0

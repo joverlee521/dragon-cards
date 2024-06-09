@@ -57,6 +57,7 @@ func _ready() -> void:
 	_connect_character_stats_signals()
 	_update_health_label()
 	_update_defense_label()
+	_update_status_effect_label()
 	$Sprite/SelectionBorder.hide()
 	area_entered.connect(_on_area_entered)
 	area_exited.connect(_on_area_exited)
@@ -97,6 +98,7 @@ func _connect_character_stats_signals() -> void:
 	character.health_changed.connect(_update_health_label)
 	character.health_depleted.connect(_on_health_depleted)
 	character.defense_changed.connect(_update_defense_label)
+	character.status_effects_changed.connect(_update_status_effect_label)
 
 
 func _on_health_depleted() -> void:
@@ -113,6 +115,15 @@ func _update_health_label(new_value: int = character._health) -> void:
 
 func _update_defense_label(new_value: int = character._defense) -> void:
 	$DefenseLabel.text = str(new_value) if new_value > 0 else ""
+
+
+func _update_status_effect_label(new_value: Dictionary = {}) -> void:
+	var new_status_effect_text := ""
+	for status_effect: int in new_value:
+		var status_effect_name: String = StatusEffect.convert_status_effect_to_string(status_effect)
+		new_status_effect_text += status_effect_name + ": " + str(new_value[status_effect])
+
+	$StatusEffectsLabel.text = new_status_effect_text
 
 
 func _set_next_card_attribute(value: CardAttributes) -> void:

@@ -64,6 +64,28 @@ func _init(_status_effect_type: STATUS_EFFECT_TYPE = STATUS_EFFECT_TYPE.NONE,
 #endregion
 #region Public methods ###################################################################################
 
+static func convert_status_effect_to_string(status_effect: STATUS_EFFECT_TYPE) -> String:
+	var status_effect_string := ""
+
+	match status_effect:
+
+		STATUS_EFFECT_TYPE.NONE:
+			pass
+
+		STATUS_EFFECT_TYPE.POISON:
+			status_effect_string = "Poison"
+
+		STATUS_EFFECT_TYPE.FREEZE:
+			status_effect_string = "Freeze"
+
+		STATUS_EFFECT_TYPE.KNOCKOUT:
+			status_effect_string = "KO"
+
+		STATUS_EFFECT_TYPE.BURN:
+			status_effect_string = "Burn"
+
+	return status_effect_string
+
 
 #endregion
 #region Private methods ##################################################################################
