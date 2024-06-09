@@ -1,5 +1,5 @@
 class_name EnemyManager
-extends PanelContainer
+extends Area2D
 ## Container for managing the [Enemy] scenes in the [CardBattle]
 
 #region Signals ##########################################################################################
@@ -44,9 +44,6 @@ const ENEMIES_IN_BATTLE: String = "enemies_in_battle"
 #endregion
 #region Optional _ready method ###########################################################################
 
-func _ready() -> void:
-	# Ignore mouse events here so the individual enemies can be clicked
-	mouse_filter = Control.MOUSE_FILTER_IGNORE
 
 #endregion
 #region Optional remaining built-in virtual methods ######################################################

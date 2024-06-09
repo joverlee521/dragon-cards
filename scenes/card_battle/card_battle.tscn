@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://biq1mfvftv7wn"]
+[gd_scene load_steps=18 format=3 uid="uid://biq1mfvftv7wn"]
 
 [ext_resource type="Script" path="res://scenes/card_battle/card_battle.gd" id="1_eqlf3"]
 [ext_resource type="Script" path="res://resources/characters/character.gd" id="2_1gnlo"]
@@ -28,6 +28,9 @@ border_width_right = 1
 border_width_bottom = 1
 border_color = Color(0.113725, 0, 0.0470588, 1)
 border_blend = true
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_a42uu"]
+size = Vector2(1196.5, 482)
 
 [node name="CardBattle" type="Node"]
 script = ExtResource("1_eqlf3")
@@ -84,7 +87,6 @@ text = "0"
 vertical_alignment = 1
 
 [node name="PlayerControls" type="HBoxContainer" parent="."]
-anchors_preset = -1
 offset_left = 1520.0
 offset_top = 608.0
 offset_right = 1905.0
@@ -125,21 +127,23 @@ script = ExtResource("5_dcxec")
 [node name="PlayedCard" type="Marker2D" parent="."]
 position = Vector2(448, 256)
 
-[node name="EnemyManager" type="PanelContainer" parent="."]
-offset_left = 640.0
-offset_top = 32.0
-offset_right = 1880.0
-offset_bottom = 576.0
+[node name="EnemyManager" type="Area2D" parent="."]
+position = Vector2(1296, 272)
 script = ExtResource("15_nb8t6")
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="EnemyManager"]
+shape = SubResource("RectangleShape2D_a42uu")
+debug_color = Color(0, 0.619608, 0.721569, 0.419608)
 
 [node name="Enemy0" type="Marker2D" parent="EnemyManager"]
-position = Vector2(192, 352)
+position = Vector2(-360, 96)
 
 [node name="Enemy1" type="Marker2D" parent="EnemyManager"]
-position = Vector2(608, 160)
+position = Vector2(0, -136)
 
 [node name="Enemy2" type="Marker2D" parent="EnemyManager"]
-position = Vector2(1024, 344)
+position = Vector2(372, 112)
 
 [node name="PlayerSprite" type="Sprite2D" parent="."]
 position = Vector2(152, 280)
