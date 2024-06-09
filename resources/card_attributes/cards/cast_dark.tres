@@ -1,8 +1,9 @@
-[gd_resource type="Resource" script_class="CardAttributes" load_steps=9 format=3 uid="uid://df4d4hymojulf"]
+[gd_resource type="Resource" script_class="CardAttributes" load_steps=11 format=3 uid="uid://df4d4hymojulf"]
 
 [ext_resource type="Texture2D" uid="uid://be0ud8tv4vgd" path="res://art/PixelCardArt/CardRPGPack/Card RPG items/weapon_wand5.png" id="1_u1515"]
 [ext_resource type="Texture2D" uid="uid://b8yvew12myo05" path="res://art/PixelCardArt/FantasyCardPack/pixelCardAssest_V01.png" id="2_pnl3j"]
 [ext_resource type="Script" path="res://resources/card_attributes/card_attributes.gd" id="3_18grt"]
+[ext_resource type="Script" path="res://resources/card_attributes/status_effect.gd" id="4_uecox"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_nc6d7"]
 atlas = ExtResource("1_u1515")
@@ -24,6 +25,11 @@ region = Rect2(135, 224, 96, 29)
 atlas = ExtResource("2_pnl3j")
 region = Rect2(135, 273, 96, 18)
 
+[sub_resource type="Resource" id="Resource_xrvki"]
+script = ExtResource("4_uecox")
+status_effect_type = 1
+applied_number = 5
+
 [resource]
 script = ExtResource("3_18grt")
 card_name = "Cast Darkness"
@@ -41,5 +47,5 @@ defense = 0
 stamina_cost = 2
 damage_type = 3
 damage_element = 6
-status_effects_on_card_player = Array[Resource("res://resources/card_attributes/status_effect.gd")]([])
-status_effects_on_card_target = Array[Resource("res://resources/card_attributes/status_effect.gd")]([])
+status_effects_on_card_player = Array[ExtResource("4_uecox")]([])
+status_effects_on_card_target = Array[ExtResource("4_uecox")]([SubResource("Resource_xrvki")])
