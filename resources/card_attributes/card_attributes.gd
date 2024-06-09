@@ -75,9 +75,9 @@ enum TARGET_TYPE {
 ## Card's base damage element
 @export var damage_element: Weapon.DAMAGE_ELEMENT = Weapon.DAMAGE_ELEMENT.NONE
 ## Card's status effects applied to the owner/owner team
-@export var status_effects_on_owner: Array[StatusEffect]
+@export var status_effects_on_owner: Array[StatusEffect] = []
 ## Card's status effects applied to the opposer/opposer team
-@export var status_effects_on_opposer: Array[StatusEffect]
+@export var status_effects_on_opposer: Array[StatusEffect] = []
 
 #endregion
 #region Public variables ###########################################################################
@@ -131,16 +131,20 @@ func apply_effects(card_affectees: CardAffectees, _card_env: CardEnvironment) ->
 
 func apply_effects_to_owner(card_affectees: CardAffectees, _card_env: CardEnvironment) -> void:
 	apply_defense(card_affectees.owner)
+	apply_status_effects(card_affectees.owner, status_effects_on_owner)
 	if owner_target_type == TARGET_TYPE.GROUP:
 		for target in card_affectees.owner_team:
 			apply_defense(target)
+			apply_status_effects(target, status_effects_on_owner)
 
 
 func apply_effects_to_opposer(card_affectees: CardAffectees, _card_env: CardEnvironment) -> void:
 	apply_attack(card_affectees.opposer)
+	apply_status_effects(card_affectees.opposer, status_effects_on_opposer)
 	if opposer_target_type == TARGET_TYPE.GROUP:
 		for target in card_affectees.opposer_team:
 			apply_attack(target)
+			apply_status_effects(target, status_effects_on_opposer)
 
 
 func apply_attack(target: CardTarget, ignore_defense: bool = false) -> void:
@@ -153,6 +157,13 @@ func apply_defense(target: CardTarget) -> void:
 	if defense > 0:
 		triggered_animation.emit(_get_defense_animation_string(), target.global_position)
 		target.character.add_defense(defense)
+
+
+func apply_status_effects(target: CardTarget, status_effects: Array[StatusEffect]) -> void:
+	if status_effects.size() > 0:
+		# TODO: Add animation for applying status effects?
+		target.character.add_status_effects(status_effects)
+
 
 #endregion
 #region Private methods ############################################################################

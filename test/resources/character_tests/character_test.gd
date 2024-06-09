@@ -99,3 +99,25 @@ func test_calculate_damage(
 		]) -> void:
 	var damage: int = character._calculate_damage(base_attack, damage_element)
 	assert_int(damage).is_equal(expected_damage)
+
+
+func test_add_status_effects() -> void:
+	var status_effects: Array[StatusEffect] = [
+		StatusEffect.new(StatusEffect.STATUS_EFFECT_TYPE.POISON, 5),
+		StatusEffect.new(StatusEffect.STATUS_EFFECT_TYPE.POISON, 5),
+		StatusEffect.new(StatusEffect.STATUS_EFFECT_TYPE.BURN, 3),
+	]
+	const FIRST_STATUS_EFFECTS = {
+		StatusEffect.STATUS_EFFECT_TYPE.POISON: 10,
+		StatusEffect.STATUS_EFFECT_TYPE.BURN: 3
+	}
+	const SECOND_STATUS_EFFECTS = {
+		StatusEffect.STATUS_EFFECT_TYPE.POISON: 20,
+		StatusEffect.STATUS_EFFECT_TYPE.BURN: 6
+	}
+	character.add_status_effects(status_effects)
+	assert_dict(character._status_effects).is_equal(FIRST_STATUS_EFFECTS)
+	await assert_signal(emitter).is_emitted("status_effects_changed", [FIRST_STATUS_EFFECTS])
+	character.add_status_effects(status_effects)
+	assert_dict(character._status_effects).is_equal(SECOND_STATUS_EFFECTS)
+	await assert_signal(emitter).is_emitted("status_effects_changed", [SECOND_STATUS_EFFECTS])

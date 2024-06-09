@@ -43,6 +43,11 @@ enum STATUS_EFFECT_TYPE {
 #endregion
 #region Optional _init method ############################################################################
 
+# Here for testing purposes
+func _init(_status_effect_type: STATUS_EFFECT_TYPE = STATUS_EFFECT_TYPE.NONE,
+		   _applied_number: int = 0) -> void:
+	status_effect_type = _status_effect_type
+	applied_number = _applied_number
 
 #endregion
 #region Optional _enter_tree() method ####################################################################

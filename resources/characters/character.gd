@@ -10,6 +10,8 @@ signal health_depleted
 signal health_changed(new_value: int)
 ## Emitted whenever [member Character._defense] changes in value
 signal defense_changed(new_value: int)
+## Emitted whenever [member Character._status_effects] changes in value
+signal status_effects_changed(new_value: Dictionary)
 
 #endregion
 #region Enums ############################################################################################
@@ -42,6 +44,12 @@ var _defense: int = 0:
 ## Character's current health
 var _health: int = 0:
 	set = _set_health
+
+## Character's current status effects as a Dictionary[int, int]
+## key: StatusEffect.STATUS_EFFECT_TYPE
+## value: applied number
+var _status_effects: Dictionary = {}
+
 
 #endregion
 #region @onready variables ###############################################################################
@@ -124,6 +132,20 @@ func take_damage(base_attack: int,
 			damage = 0
 
 	_health -= damage
+
+
+## Adds [param status_effects] to the [member Character._status_effects]
+func add_status_effects(status_effects: Array[StatusEffect]) -> void:
+	for status_effect: StatusEffect in status_effects:
+		var effect_type: int = status_effect.status_effect_type
+		var applied_number: int = status_effect.applied_number
+
+		if not _status_effects.has(effect_type):
+			_status_effects[effect_type] = 0
+
+		_status_effects[effect_type] += applied_number
+
+	status_effects_changed.emit(_status_effects)
 
 #endregion
 #region Private methods ##################################################################################
