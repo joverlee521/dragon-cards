@@ -197,9 +197,22 @@ func _update_player_stamina_label(player_stamina: int = player.vocation.max_stam
 	$PlayerStats/Stamina.text = "%s / %s" % [str(player_stamina), str(player.vocation.max_stamina)]
 
 
+func _on_dragged_and_dropped_card(card: Card) -> void:
+	$PlayerControls/EndTurn.disabled = true
+
+	var selected_enemies: Array[Enemy] = $EnemyManager.get_selected_enemies()
+	if selected_enemies.size() > 0:
+		$PlayerHand.play_card(card)
+		await _play_card(card, _create_player_owner_card_affectees())
+		discard_card(card)
+	else:
+		$PlayerHand.reposition_all_cards()
+
+	$PlayerControls/EndTurn.disabled = false
+
+
 func _play_card(card: Card, card_affectees: CardAttributes.CardAffectees) -> void:
 	var card_env := CardAttributes.CardEnvironment.new($PlayDeck, $DiscardDeck)
-	add_child(card)
 	card.position = $PlayedCard.position
 	card.play(card_affectees, card_env)
 	await card.run_scale_animation(PLAYED_CARD_SCALE, PLAYED_CARD_DELAY)
@@ -217,6 +230,7 @@ func _play_enemy_card(enemy: Enemy) -> void:
 	var card_attributes: CardAttributes = enemy.get_next_card()
 	card.card_attributes = card_attributes
 	card.set_clickable(false)
+	add_child(card)
 	await _play_card(card, _create_enemy_owner_card_affectees(enemy))
 	card.queue_free()
 
@@ -225,7 +239,7 @@ func _create_player_owner_card_affectees() -> CardAttributes.CardAffectees:
 	var card_owner:= CardAttributes.CardTarget.new(player, $PlayerSprite.global_position)
 	var owner_team: Array[CardAttributes.CardTarget] = []
 
-	var selected_enemy: Enemy = $EnemyManager.get_selected_enemy()
+	var selected_enemy: Enemy = $EnemyManager.get_selected_enemies()[0]
 	var opposer: = selected_enemy.create_card_target()
 	var opposer_team: Array[CardAttributes.CardTarget] = $EnemyManager.get_all_other_enemies_as_card_targets(selected_enemy)
 	return CardAttributes.CardAffectees.new(card_owner, owner_team, opposer, opposer_team)

@@ -73,13 +73,14 @@ func get_all_enemies_as_card_targets() -> Array[CardAttributes.CardTarget]:
 	return _as_card_targets_array(get_all_enemies().map(_get_enemy_card_target))
 
 
-func get_selected_enemy() -> Enemy:
-	var selected_enemies: Array[Enemy] = _as_enemy_array(
-		get_all_enemies().filter(func (enemy: Enemy) -> bool: return enemy.is_selected())
-	)
+func get_selected_enemies() -> Array:
+	return get_all_enemies().filter(
+		func (enemy: Enemy) -> bool: return enemy.is_selected())
 
-	assert(selected_enemies.size() == 1, "There should only be one selected enemy")
-	return selected_enemies[0]
+
+func get_first_selected_enemy_as_card_target() -> CardAttributes.CardTarget:
+	print(get_selected_enemies())
+	return _get_enemy_card_target(get_selected_enemies()[0])
 
 
 func get_all_other_enemies(excluded_enemy: Enemy) -> Array[Enemy]:

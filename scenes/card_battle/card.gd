@@ -94,8 +94,8 @@ func _unhandled_input(event: InputEvent) -> void:
 		_dragging = false
 		self.position.y += CARD_SHIFT
 		get_node(CARD_DRAGGING_AREA).hide()
-		card_released.emit(self)
 		get_viewport().set_input_as_handled()
+		card_released.emit(self)
 
 
 #endregion
@@ -108,10 +108,6 @@ func get_stamina_cost() -> int:
 
 func set_clickable(clickable: bool) -> void:
 	_clickable = clickable
-
-
-func return_to_pre_dragging_position() -> void:
-	self.global_position = _pre_dragging_position
 
 
 func is_group_opposer_target_type() -> bool:

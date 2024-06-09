@@ -4,6 +4,9 @@ extends PanelContainer
 
 #region Signals ##########################################################################################
 
+## Emitted when a [Card] is dragged and dropped
+signal drag_and_dropped_card(card: Card)
+
 ## Emitted whenever the [member PlayerHand._current_stamina] changes in value
 signal stamina_changed(new_value: int)
 
@@ -85,19 +88,27 @@ func discard_all_cards() -> Array[Card]:
 func set_cards_clickable(clickable: bool) -> void:
 	get_tree().call_group(CARDS_IN_PLAYER_HAND, "set_clickable", clickable)
 
+
+func play_card(card: Card) -> void:
+	set_cards_clickable(false)
+	var stamina_cost: int = card.get_stamina_cost()
+	assert(stamina_cost <= _stamina, "Unable to play card with higher stamina cost than remaining stamina")
+	_stamina -= stamina_cost
+
+	_remove_card(card, [get_parent()])
+	_position_all_cards()
+	set_cards_clickable(true)
+
+
+func reposition_all_cards() -> void:
+	_position_all_cards()
+
+
 #endregion
 #region Private methods ##################################################################################
 
 func _on_card_released(card: Card) -> void:
-	# TODO: play card if overlapping with enemy
-	# TODO: play card if card outside of the player hand and applicable to player
-	card.return_to_pre_dragging_position()
-
-
-func _remove_card(card: Card) -> void:
-	_cards.erase(card)
-	card.remove_from_group(CARDS_IN_PLAYER_HAND)
-	remove_child(card)
+	drag_and_dropped_card.emit(card)
 
 
 ## Position all [member PlayerHand._cards] within the container
@@ -114,6 +125,15 @@ func _position_card(card: Card, card_order: int) -> void:
 	var current_card_y: int = _card_y
 	card.position = Vector2(card_x, current_card_y)
 	card.z_index = card_order
+
+
+func _remove_card(card: Card, new_parent: Array = []) -> void:
+	_cards.erase(card)
+	card.remove_from_group(CARDS_IN_PLAYER_HAND)
+	if new_parent.size() == 1:
+		card.reparent(new_parent[0])
+	else:
+		remove_child(card)
 
 
 func _set_stamina(value: int) -> void:
